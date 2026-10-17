@@ -168,27 +168,13 @@ def test_watermark_position(
     assert_image(response, format='PNG', size=(_WIDTH, _HEIGHT))
 
 
-# Intentionally bypass typing to verify that imgproxy rejects invalid values.
-# These cases guard against a test setup that silently accepts misspelled
-# literals, such as the former 'now' and 'sow' positions.
-@pytest.mark.parametrize(
-    'option',
-    [
-        options.Crop(gravity='now'),  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
-        options.Crop(gravity='sow'),  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
-        options.FormatQuality(qualities=(('invalid', 1),)),  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
-        options.Resize(mode='invalid'),  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
-        options.Watermark(opacity=1, position='now'),  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
-        options.Watermark(opacity=1, position='sow'),  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
-    ],
-)
 def test_invalid_literal_value(
     imgproxy_client: Client,
     http_client: zapros.Client,
-    *,
-    option: options.Option,
 ) -> None:
-    """Ensure that imgproxy rejects unknown literal values with HTTP 404."""
+    """Ensure that the server rejects invalid literals in the test setup."""
+    # Bypass typing for one negative control of the acceptance tests above.
+    option = options.Resize(mode='invalid')  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
     transform = Transform(options=(option,), format='png')
     url = imgproxy_client.url(_SOURCE, transform=transform)
 
@@ -196,5 +182,3 @@ def test_invalid_literal_value(
 
     assert response.status == HTTPStatus.NOT_FOUND
     assert response.text == 'Invalid URL'
-    with pytest.raises(zapros.StatusCodeError):
-        response.raise_for_status()

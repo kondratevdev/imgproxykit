@@ -2,6 +2,7 @@ from email.message import Message
 
 import pytest
 import zapros
+from faker import Faker
 
 from imgproxykit import Client, Transform
 from imgproxykit.options import Filename, ReturnAttachment
@@ -13,6 +14,7 @@ from tests.test_integration.assertions import assert_image
     [(True, 'attachment'), (False, 'inline')],
 )
 def test_content_disposition(
+    faker: Faker,
     imgproxy_client: Client,
     http_client: zapros.Client,
     *,
@@ -20,9 +22,10 @@ def test_content_disposition(
     disposition: str,
 ) -> None:
     """Ensure that filenames and attachment flags reach response headers."""
+    filename = faker.sentence()
     transform = Transform(
         options=(
-            Filename(value='product photo'),
+            Filename(value=filename),
             ReturnAttachment(value=attachment),
         ),
         format='png',
@@ -36,4 +39,4 @@ def test_content_disposition(
     headers = Message()
     headers['Content-Disposition'] = response.headers['Content-Disposition']
     assert headers.get_content_disposition() == disposition
-    assert headers.get_filename() == 'product photo.png'
+    assert headers.get_filename() == f'{filename}.png'

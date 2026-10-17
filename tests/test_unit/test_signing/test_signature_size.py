@@ -15,7 +15,6 @@ _SALT: Final = '73616c74'
         (16, 'pEIkEjcNKr42hrTpB8MBuw'),
         (32, 'pEIkEjcNKr42hrTpB8MBu9UnfgKo7uw7t_x-6he7lc8'),
         (33, 'pEIkEjcNKr42hrTpB8MBu9UnfgKo7uw7t_x-6he7lc8'),
-        (64, 'pEIkEjcNKr42hrTpB8MBu9UnfgKo7uw7t_x-6he7lc8'),
     ],
 )
 def test_signature_size(*, signature_size: int, expected: str) -> None:

@@ -60,6 +60,7 @@ wemake-python-styleguide = "^1.8"
 testcontainers = ">=4.15,<5"
 pillow = ">=12,<13"
 zapros = ">=0.21,<0.22"
+faker = ">=37,<41"
 
 [tool.poetry.group.docs]
 optional = true

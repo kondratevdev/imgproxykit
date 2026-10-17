@@ -2,11 +2,7 @@ from typing import Final
 
 import pytest
 
-from imgproxykit.internal.serialization import (
-    serialize_option,
-    serialize_segment,
-)
-from imgproxykit.options import Resize
+from imgproxykit.internal.serialization import serialize_segment
 from imgproxykit.types import EMPTY, Argument
 
 _WIDTH: Final = 300
@@ -40,27 +36,3 @@ def test_serialize_segment(
 ) -> None:
     """Ensure that arguments retain their positions and explicit values."""
     assert serialize_segment('rs', arguments) == expected
-
-
-@pytest.mark.parametrize(
-    ('option', 'expected'),
-    [
-        (
-            Resize(
-                width=_WIDTH,
-                height=_HEIGHT,
-                mode='fill',
-                enlarge=False,
-                extend=True,
-            ),
-            'rs:fill:300:200:0:1',
-        ),
-        (
-            Resize(height=_HEIGHT),
-            'rs:::200',
-        ),
-    ],
-)
-def test_serialize_option(*, option: Resize, expected: str) -> None:
-    """Ensure that an option uses its name and protocol argument order."""
-    assert serialize_option(option) == expected

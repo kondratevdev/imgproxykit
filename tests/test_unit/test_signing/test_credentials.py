@@ -1,54 +1,69 @@
-from typing import Final
-
 import pytest
+from faker import Faker
 
 from imgproxykit.signing import URLSigner
 from imgproxykit.types import EMPTY
 
-_KEY: Final = '736563726574'
-_SALT: Final = '73616c74'
+
+@pytest.fixture
+def credentials(faker: Faker) -> dict[str, str]:
+    """Provide valid hexadecimal signing credentials."""
+    return {
+        'key': faker.binary(length=32).hex(),  # noqa: WPS432
+        'salt': faker.binary(length=16).hex(),  # noqa: WPS432
+    }
 
 
-@pytest.mark.parametrize(
-    ('key', 'salt'),
-    [('00', _SALT), (_KEY, '00')],
-)
-def test_different_credentials(*, key: str, salt: str) -> None:
-    """Ensure that both the key and salt affect the signature."""
-    signer = URLSigner(key=_KEY, salt=_SALT)
+@pytest.mark.parametrize('credential', ['key', 'salt'])
+def test_different_credentials(
+    credentials: dict[str, str],
+    *,
+    credential: str,
+) -> None:
+    """Ensure that changing either credential changes the signature."""
+    signer = URLSigner(key=credentials['key'], salt=credentials['salt'])
+    replacement = bytearray.fromhex(credentials[credential])
+    replacement[0] ^= 1
+    changed = {**credentials, credential: replacement.hex()}
 
-    assert URLSigner(key=key, salt=salt)('/b') != signer('/b')
+    changed_signer = URLSigner(key=changed['key'], salt=changed['salt'])
 
-
-@pytest.mark.parametrize('salt', [_SALT, _SALT.upper()])
-def test_uppercase_credentials(*, salt: str) -> None:
-    """Ensure that hexadecimal credentials are case insensitive."""
-    signer = URLSigner(key='ABCDEF', salt=salt)
-
-    assert signer('/b') == URLSigner(key='abcdef', salt=_SALT)('/b')
+    assert changed_signer('/b') != signer('/b')
 
 
-@pytest.mark.parametrize(
-    ('key', 'salt'),
-    [
-        (_KEY, EMPTY),
-        (EMPTY, _SALT),
-    ],
-)
-def test_incomplete_credentials(*, key: str | EMPTY, salt: str | EMPTY) -> None:
+def test_uppercase_credentials() -> None:
+    """Ensure that both hexadecimal credentials are case insensitive."""
+    assert URLSigner(key='ABCDEF', salt='FEDCBA')('/b') == URLSigner(
+        key='abcdef',
+        salt='fedcba',
+    )('/b')
+
+
+@pytest.mark.parametrize('credential', ['key', 'salt'])
+def test_incomplete_credentials(
+    credentials: dict[str, str],
+    *,
+    credential: str,
+) -> None:
     """Ensure that signing requires both credentials together."""
     with pytest.raises(
-        ValueError,
-        match='key and salt must be supplied together',
+        ValueError, match='key and salt must be supplied together'
     ):
-        URLSigner(key=key, salt=salt)
+        URLSigner(
+            key=EMPTY if credential == 'key' else credentials['key'],
+            salt=EMPTY if credential == 'salt' else credentials['salt'],
+        )
 
 
 @pytest.mark.parametrize('invalid', ['', '   ', 'invalid', '0'])
 @pytest.mark.parametrize('credential', ['key', 'salt'])
-def test_invalid_credentials(*, invalid: str, credential: str) -> None:
+def test_invalid_credentials(
+    credentials: dict[str, str],
+    *,
+    invalid: str,
+    credential: str,
+) -> None:
     """Ensure that either credential rejects empty or invalid hex data."""
-    credentials = {'key': _KEY, 'salt': _SALT}
     credentials[credential] = invalid
 
     with pytest.raises(

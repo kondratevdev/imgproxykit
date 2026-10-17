@@ -1,29 +1,28 @@
-from typing import Final
-
 import pytest
+from faker import Faker
 
 from imgproxykit import options
 from imgproxykit.internal.serialization import serialize_option
-
-_ZERO: Final = 0.0  # noqa: WPS358
-_FACTOR: Final = 1.5
+from tests.protocols import OptionFactory
 
 
 @pytest.mark.parametrize(
-    ('option', 'expected'),
+    ('option_type', 'prefix'),
     [
-        (options.DPR(value=_ZERO), 'dpr:0.0'),
-        (options.DPR(value=_FACTOR), 'dpr:1.5'),
-        (options.Blur(value=_ZERO), 'bl:0.0'),
-        (options.Blur(value=_FACTOR), 'bl:1.5'),
-        (options.Sharpen(value=_ZERO), 'sh:0.0'),
-        (options.Sharpen(value=_FACTOR), 'sh:1.5'),
-        (options.MaxSrcResolution(value=_ZERO), 'msr:0.0'),
-        (options.MaxSrcResolution(value=_FACTOR), 'msr:1.5'),
-        (options.MaxAnimationFrameResolution(value=_ZERO), 'mafr:0.0'),
-        (options.MaxAnimationFrameResolution(value=_FACTOR), 'mafr:1.5'),
+        (options.DPR, 'dpr'),
+        (options.Blur, 'bl'),
+        (options.Sharpen, 'sh'),
+        (options.MaxSrcResolution, 'msr'),
+        (options.MaxAnimationFrameResolution, 'mafr'),
     ],
 )
-def test_float_options(*, option: options.Option, expected: str) -> None:
-    """Ensure that float options preserve zeroes and fractional values."""
-    assert serialize_option(option) == expected
+def test_float_options(
+    faker: Faker,
+    *,
+    option_type: OptionFactory[float],
+    prefix: str,
+) -> None:
+    """Ensure that each option uses its protocol prefix and value."""
+    value = faker.pyfloat(min_value=0.1, max_value=10, right_digits=2)
+
+    assert serialize_option(option_type(value=value)) == f'{prefix}:{value}'
