@@ -12,6 +12,12 @@ but with a deprecation period.
 
 ### Breaking changes
 
+- Replaced the `presets` argument of `Client.url` and `PathBuilder`
+  with the `Preset` option, which can be combined with other
+  processing options in `Transform`, #12
+- Removed the `format` argument of `Client.url` and the `output_format`
+  argument of `PathBuilder`. Set `Transform.format` instead, #12
+
 ### Features
 
 - Added `unsigned_signature` parameter to `Client` and `URLSigner`
