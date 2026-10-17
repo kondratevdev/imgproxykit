@@ -3,7 +3,7 @@ from typing import ClassVar, overload
 from imgproxykit.builders import PathBuilder
 from imgproxykit.signing import URLSigner
 from imgproxykit.transform import Transform
-from imgproxykit.types import EMPTY, FormatType
+from imgproxykit.types import EMPTY
 
 
 class Client:
@@ -15,7 +15,7 @@ class Client:
     the source and processes the image when that URL is requested.
 
     Processing parameters can come from a :class:`~imgproxykit.Transform`
-    defined in Python or from preset names configured on the imgproxy server.
+    containing options and preset names configured on the imgproxy server.
 
     Subclass this client and override :attr:`path_builder_cls` or
     :attr:`signer_cls` to customize path construction or signing.
@@ -112,62 +112,29 @@ class Client:
             unsigned_signature=unsigned_signature,
         )
 
-    # TODO: Remove the separate format argument once Format is an option;
-    # express format-only URLs and presets with formats through Transform.
-    @overload
-    def url(
-        self,
-        source: str,
-        *,
-        transform: Transform | EMPTY = ...,
-    ) -> str: ...
-
-    @overload
-    def url(
-        self,
-        source: str,
-        *,
-        presets: tuple[str, ...],
-        format: FormatType | EMPTY = EMPTY,
-    ) -> str: ...
-
     def url(
         self,
         source: str,
         *,
         transform: Transform | EMPTY = EMPTY,
-        presets: tuple[str, ...] | EMPTY = EMPTY,
-        format: FormatType | EMPTY = EMPTY,  # noqa: A002
     ) -> str:
         """
-        Build a URL for one source using a transform or server presets.
+        Build a URL using processing options and server preset references.
 
-        Pass ``transform`` for processing parameters defined in Python.
-        Pass ``presets`` to reference named server presets instead.
+        Pass options, including Preset instances, through ``transform``.
         Preset definitions remain on the server and are not expanded here.
-
-        With a Python transform, set the output format on that transform.
-        With server presets, use the ``format`` argument. Omitted processing
-        parameters and formats are left to the server.
+        Set the output format on the transform. Omitted processing parameters
+        and formats are left to the server.
 
         Args:
             source: Complete source URI understood by the imgproxy server.
                 The default builder Base64-encodes it without changing its
                 contents or resolving storage-relative paths.
             transform: Reusable processing options and optional output format.
-                Omitting both ``transform`` and ``presets`` adds no options.
-            presets: Names of server presets, in the supplied order.
-                Mutually exclusive with ``transform``.
-            format: Output format when using ``presets``. Must be omitted
-                when using a Python transform.
+                Omit to add no processing options.
 
         Returns:
             The complete imgproxy URL, signed when credentials were supplied.
-
-        Raises:
-            ValueError: With the default builder, if ``transform`` and
-                ``presets`` are supplied together, or ``format`` is supplied
-                without ``presets``.
 
         Usage:
 
@@ -180,18 +147,11 @@ class Client:
         ... )
         >>> source = 'https://example.com/photo.jpg'
         >>> local_options_url = client.url(source, transform=thumbnail)
-        >>> server_presets_url = client.url(
-        ...     source,
-        ...     presets=('thumbnail', 'watermarked'),
-        ...     format='webp',
-        ... )
 
         """
         path = self._path_builder(
             source,
             transform=transform,
-            presets=presets,
-            output_format=format,
         )
         signature = self._signer(path)
         return f'{self._base_url}/{signature}{path}'

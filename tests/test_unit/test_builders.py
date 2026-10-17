@@ -5,8 +5,7 @@ from inline_snapshot import snapshot
 
 from imgproxykit import Transform
 from imgproxykit.builders import PathBuilder
-from imgproxykit.options import Quality, Resize
-from imgproxykit.types import EMPTY
+from imgproxykit.options import Preset, Quality, Resize
 
 _SOURCE: Final = 'https://example.com/photo.jpg'
 _WIDTH: Final = 300
@@ -65,7 +64,9 @@ def test_partial_transform_path(*, transform: Transform, expected: str) -> None:
 
 def test_empty_presets_path() -> None:
     """Ensure that explicit empty presets retain the preset segment."""
-    assert PathBuilder()(_SOURCE, presets=()) == snapshot(
+    assert PathBuilder()(
+        _SOURCE, transform=Transform(options=(Preset(names=()),))
+    ) == snapshot(
         '/pr/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
     )
 
@@ -74,26 +75,31 @@ def test_presets_path() -> None:
     """Ensure that presets retain their order and accept an output format."""
     assert PathBuilder()(
         _SOURCE,
-        presets=('thumbnail', 'watermarked'),
+        transform=Transform(
+            options=(Preset(names=('thumbnail', 'watermarked')),)
+        ),
     ) == snapshot(
         '/pr:thumbnail:watermarked/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
     )
     assert PathBuilder()(
         _SOURCE,
-        presets=('thumbnail',),
-        output_format='avif',
+        transform=Transform(
+            options=(Preset(names=('thumbnail',)),),
+            format='avif',
+        ),
     ) == snapshot('/pr:thumbnail/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc.avif')
 
 
-@pytest.mark.parametrize('presets', [(), ('thumbnail',)])
-def test_transform_with_presets(*, presets: tuple[str, ...]) -> None:
-    """Ensure that even empty transforms and presets are mutually exclusive."""
-    with pytest.raises(ValueError, match='Choose transform or presets'):
-        PathBuilder()(_SOURCE, transform=Transform(), presets=presets)
-
-
-@pytest.mark.parametrize('transform', [EMPTY, Transform()])
-def test_output_format_without_presets(*, transform: Transform | EMPTY) -> None:
-    """Ensure that a separate output format requires server presets."""
-    with pytest.raises(ValueError, match='Set format on the Python transform'):
-        PathBuilder()(_SOURCE, transform=transform, output_format='webp')
+def test_interleaved_presets() -> None:
+    """Ensure that preset references preserve positions around overrides."""
+    transform = Transform(
+        options=(
+            Preset(names=('thumbnail',)),
+            Quality(_QUALITY),
+            Preset(names=('watermarked',)),
+        )
+    )
+    assert PathBuilder()(_SOURCE, transform=transform) == (
+        '/pr:thumbnail/q:85/pr:watermarked/'
+        'aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc'
+    )

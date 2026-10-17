@@ -17,6 +17,7 @@ type FormatType = Literal[
     'tiff',
 ]
 type OptionType = Literal[
+    'pr',
     'w',
     'h',
     'mw',

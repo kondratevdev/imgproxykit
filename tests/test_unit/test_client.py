@@ -4,7 +4,7 @@ import pytest
 from inline_snapshot import snapshot
 
 from imgproxykit import Client, Transform
-from imgproxykit.options import Resize
+from imgproxykit.options import Preset, Resize
 
 _SOURCE: Final = 'https://example.com/photo.jpg'
 _WIDTH: Final = 300
@@ -60,8 +60,10 @@ def test_presets_url() -> None:
 
     assert client.url(
         _SOURCE,
-        presets=('thumbnail', 'watermarked'),
-        format='avif',
+        transform=Transform(
+            options=(Preset(names=('thumbnail', 'watermarked')),),
+            format='avif',
+        ),
     ) == snapshot(
         'https://images.example.com/unsafe/pr:thumbnail:watermarked/'
         'aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc.avif',

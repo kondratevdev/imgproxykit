@@ -176,6 +176,12 @@ Pixelate
 .. autoclass:: imgproxykit.options.Pixelate
    :members:
 
+Preset
+~~~~~~
+
+.. autoclass:: imgproxykit.options.Preset
+   :members:
+
 PreserveHDR
 ~~~~~~~~~~~
 

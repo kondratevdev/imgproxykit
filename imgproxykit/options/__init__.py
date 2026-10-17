@@ -41,6 +41,7 @@ from imgproxykit.options.min_width import MinWidth as MinWidth
 from imgproxykit.options.padding import Padding as Padding
 from imgproxykit.options.pixelate import Pixelate as Pixelate
 from imgproxykit.options.preserve_hdr import PreserveHDR as PreserveHDR
+from imgproxykit.options.preset import Preset as Preset
 from imgproxykit.options.quality import Quality as Quality
 from imgproxykit.options.raw import Raw as Raw
 from imgproxykit.options.resize import Resize as Resize
