@@ -27,6 +27,8 @@ class PathBuilder:
 
     __slots__ = ()
 
+    # TODO: Support source_url_encryption_key for source URL encryption (Pro).
+    # TODO: Support the plain option for unencoded source URLs.
     def __call__(
         self,
         source: str,

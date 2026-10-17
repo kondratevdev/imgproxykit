@@ -35,10 +35,24 @@ class Client:
     signer_cls: ClassVar[type[URLSigner]] = URLSigner
 
     @overload
-    def __init__(self, base_url: str, /) -> None: ...
+    def __init__(
+        self,
+        base_url: str,
+        /,
+        *,
+        unsigned_signature: str = 'unsafe',
+    ) -> None: ...
 
     @overload
-    def __init__(self, base_url: str, /, *, key: str, salt: str) -> None: ...
+    def __init__(
+        self,
+        base_url: str,
+        /,
+        *,
+        key: str,
+        salt: str,
+        signature_size: int = 32,
+    ) -> None: ...
 
     def __init__(
         self,
@@ -47,6 +61,8 @@ class Client:
         *,
         key: str | EMPTY = EMPTY,
         salt: str | EMPTY = EMPTY,
+        signature_size: int = 32,
+        unsigned_signature: str = 'unsafe',
     ) -> None:
         """
         Configure the imgproxy address and create the client components.
@@ -59,12 +75,19 @@ class Client:
             base_url: Public imgproxy address, including any deployment path
                 prefix. Required positional argument. Trailing slashes
                 are removed.
+            unsigned_signature: URL marker used when key and salt are omitted.
+                Defaults to 'unsafe'. With server signing enabled, configure
+                this marker in IMGPROXY_TRUSTED_SIGNATURES.
             key: Hex-encoded signing key matching the server configuration.
             salt: Hex-encoded signing salt matching the server configuration.
+            signature_size: Positive digest byte count to encode. Must match
+                the server's IMGPROXY_SIGNATURE_SIZE. Defaults to 32.
+                Values of 32 or more use the full digest.
 
         Raises:
             ValueError: With the default signer, if only one signing
-                credential is supplied, or either is empty or invalid hex.
+                credential is supplied, either is empty or invalid hex,
+                or signature_size is not positive.
 
         Usage:
 
@@ -82,7 +105,12 @@ class Client:
         # TODO: Define runtime validation for base URLs and empty sources.
         self._base_url = base_url.rstrip('/')
         self._path_builder = self.path_builder_cls()
-        self._signer = self.signer_cls(key=key, salt=salt)
+        self._signer = self.signer_cls(
+            key=key,
+            salt=salt,
+            signature_size=signature_size,
+            unsigned_signature=unsigned_signature,
+        )
 
     # TODO: Remove the separate format argument once Format is an option;
     # express format-only URLs and presets with formats through Transform.
