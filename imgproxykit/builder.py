@@ -1,7 +1,7 @@
-from imgproxykit.internal.paths import build_path
+from imgproxykit.internal.encoding import encode_base64
 from imgproxykit.internal.serialization import serialize_option
 from imgproxykit.transform import Transform
-from imgproxykit.types import EMPTY, FormatType
+from imgproxykit.types import EMPTY
 
 
 class PathBuilder:
@@ -64,29 +64,30 @@ class PathBuilder:
         ... )
 
         """
-        options, selected_format = self._resolve_options(
-            transform,
-        )
-        return build_path(
-            source,
-            options=options,
-            output_format=selected_format,
-        )
+        return self._build(source, transform=transform)
 
-    def _resolve_options(
+    def _build(
         self,
-        transform: Transform | EMPTY,
-    ) -> tuple[tuple[str, ...], FormatType | EMPTY]:
+        source: str,
+        *,
+        transform: Transform | EMPTY = EMPTY,
+    ) -> str:
         """
-        Serialize options in supplied order and resolve the output format.
+        Assemble processing options, an encoded source, and an extension.
 
-        Preset references remain in place alongside other processing options.
+        The leading ``/`` is part of the path supplied to the signer.
+        The source is encoded as URL-safe Base64 without padding. An omitted
+        output format adds no extension, leaving format selection to imgproxy.
 
         """
-        if transform is EMPTY:
-            return (), EMPTY
-
-        return (
-            tuple(serialize_option(option) for option in transform.options),
-            transform.format,
+        options = (
+            ()
+            if transform is EMPTY
+            else tuple(serialize_option(option) for option in transform.options)
         )
+        path = '/'.join(('', *options, encode_base64(source)))
+
+        if transform is EMPTY or transform.format is EMPTY:
+            return path
+
+        return f'{path}.{transform.format}'

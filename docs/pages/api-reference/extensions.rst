@@ -15,6 +15,6 @@ Path builder
 URL signer
 ----------
 
-.. autoclass:: imgproxykit.signing.URLSigner
+.. autoclass:: imgproxykit.signing.UrlSigner
    :members:
    :special-members: __init__, __call__

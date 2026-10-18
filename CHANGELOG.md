@@ -20,9 +20,9 @@ but with a deprecation period.
 
 ### Features
 
-- Added `unsigned_signature` parameter to `Client` and `URLSigner`
+- Added `unsigned_signature` parameter to `Client` and `UrlSigner`
   to customize the unsigned URL marker, defaults to `unsafe`, #6
-- Added `signature_size` parameter to `Client` and `URLSigner`
+- Added `signature_size` parameter to `Client` and `UrlSigner`
   to truncate signatures to match `IMGPROXY_SIGNATURE_SIZE`, #6
 
 ### Bugfixes

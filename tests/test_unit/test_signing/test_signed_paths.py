@@ -3,7 +3,7 @@ from typing import Final
 import pytest
 from faker import Faker
 
-from imgproxykit.signing import URLSigner
+from imgproxykit.signing import UrlSigner
 
 _KEY: Final = '736563726574'
 _SALT: Final = '73616c74'
@@ -11,7 +11,7 @@ _SALT: Final = '73616c74'
 
 def test_unsigned_path(faker: Faker) -> None:
     """Ensure that omitted credentials select the unsafe marker."""
-    assert URLSigner()(faker.file_path()) == 'unsafe'
+    assert UrlSigner()(faker.file_path()) == 'unsafe'
 
 
 @pytest.mark.parametrize(
@@ -32,14 +32,14 @@ def test_unsigned_path(faker: Faker) -> None:
 def test_signed_path(*, path: str, expected: str) -> None:
     """Ensure that the exact UTF-8 path matches independent test vectors."""
     # Vectors use OpenSSL HMAC-SHA256 with key b'secret' and salt b'salt'.
-    signer = URLSigner(key=_KEY, salt=_SALT)
+    signer = UrlSigner(key=_KEY, salt=_SALT)
 
     assert signer(path) == expected
 
 
 def test_signer_reuse(faker: Faker) -> None:
     """Ensure that signing another path does not change previous signatures."""
-    signer = URLSigner(key=_KEY, salt=_SALT)
+    signer = UrlSigner(key=_KEY, salt=_SALT)
 
     path = faker.file_path()
     signature = signer(path)

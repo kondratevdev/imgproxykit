@@ -1,7 +1,7 @@
 import pytest
 from faker import Faker
 
-from imgproxykit.signing import URLSigner
+from imgproxykit.signing import UrlSigner
 from imgproxykit.types import EMPTY
 
 
@@ -21,19 +21,19 @@ def test_different_credentials(
     credential: str,
 ) -> None:
     """Ensure that changing either credential changes the signature."""
-    signer = URLSigner(key=credentials['key'], salt=credentials['salt'])
+    signer = UrlSigner(key=credentials['key'], salt=credentials['salt'])
     replacement = bytearray.fromhex(credentials[credential])
     replacement[0] ^= 1
     changed = {**credentials, credential: replacement.hex()}
 
-    changed_signer = URLSigner(key=changed['key'], salt=changed['salt'])
+    changed_signer = UrlSigner(key=changed['key'], salt=changed['salt'])
 
     assert changed_signer('/b') != signer('/b')
 
 
 def test_uppercase_credentials() -> None:
     """Ensure that both hexadecimal credentials are case insensitive."""
-    assert URLSigner(key='ABCDEF', salt='FEDCBA')('/b') == URLSigner(
+    assert UrlSigner(key='ABCDEF', salt='FEDCBA')('/b') == UrlSigner(
         key='abcdef',
         salt='fedcba',
     )('/b')
@@ -49,7 +49,7 @@ def test_incomplete_credentials(
     with pytest.raises(
         ValueError, match='key and salt must be supplied together'
     ):
-        URLSigner(
+        UrlSigner(
             key=EMPTY if credential == 'key' else credentials['key'],
             salt=EMPTY if credential == 'salt' else credentials['salt'],
         )
@@ -70,4 +70,4 @@ def test_invalid_credentials(
         ValueError,
         match='Signing credentials must be nonempty hex strings',
     ):
-        URLSigner(key=credentials['key'], salt=credentials['salt'])
+        UrlSigner(key=credentials['key'], salt=credentials['salt'])

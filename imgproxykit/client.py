@@ -1,7 +1,7 @@
 from typing import ClassVar, overload
 
 from imgproxykit.builder import PathBuilder
-from imgproxykit.signing import URLSigner
+from imgproxykit.signing import UrlSigner
 from imgproxykit.transform import Transform
 from imgproxykit.types import EMPTY
 
@@ -32,7 +32,7 @@ class Client:
     #: Component that resolves processing parameters and builds unsigned paths.
     path_builder_cls: ClassVar[type[PathBuilder]] = PathBuilder
     #: Component that signs paths or returns the unsigned URL marker.
-    signer_cls: ClassVar[type[URLSigner]] = URLSigner
+    signer_cls: ClassVar[type[UrlSigner]] = UrlSigner
 
     @overload
     def __init__(

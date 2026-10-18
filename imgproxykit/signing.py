@@ -6,7 +6,7 @@ from imgproxykit.internal.encoding import encode_base64
 from imgproxykit.types import EMPTY
 
 
-class URLSigner:
+class UrlSigner:
     """
     Sign imgproxy paths using a reusable key and salt pair.
 
@@ -25,10 +25,6 @@ class URLSigner:
         '_signature_size',
         '_unsigned_signature',
     )
-
-    # Private API:
-    _credentials: tuple[bytes, bytes] | None
-    _signature_size: int
 
     def __init__(
         self,
@@ -60,9 +56,9 @@ class URLSigner:
 
         Usage:
 
-        >>> from imgproxykit.signing import URLSigner
-        >>> unsigned = URLSigner()
-        >>> signed = URLSigner(
+        >>> from imgproxykit.signing import UrlSigner
+        >>> unsigned = UrlSigner()
+        >>> signed = UrlSigner(
         ...     key='736563726574',
         ...     salt='73616c74',
         ... )

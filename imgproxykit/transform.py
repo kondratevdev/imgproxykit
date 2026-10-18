@@ -52,5 +52,5 @@ class Transform:
         format: FormatType | EMPTY = EMPTY,  # noqa: A002
     ) -> None:
         """Collect processing options in order and set the output format."""
-        self.options: tuple[Option, ...] = options
-        self.format: FormatType | EMPTY = format
+        self.options = options
+        self.format = format
