@@ -16,7 +16,7 @@ layers =
   # Coordinate path construction and signing:
   client
   # Independent client components:
-  builders | signing
+  builder | signing
   # Serialize processing options and assemble paths:
   internal.paths | internal.serialization
   # Reusable processing configuration:
@@ -45,7 +45,7 @@ source_modules =
   imgproxykit.signing
 
 forbidden_modules =
-  imgproxykit.builders
+  imgproxykit.builder
   imgproxykit.transform
   imgproxykit.options
   imgproxykit.internal.paths

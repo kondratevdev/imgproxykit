@@ -4,7 +4,7 @@ import pytest
 from inline_snapshot import snapshot
 
 from imgproxykit import Transform
-from imgproxykit.builders import PathBuilder
+from imgproxykit.builder import PathBuilder
 from imgproxykit.options import Preset, Quality, Resize
 
 _SOURCE: Final = 'https://example.com/photo.jpg'

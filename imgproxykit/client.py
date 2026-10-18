@@ -1,6 +1,6 @@
 from typing import ClassVar, overload
 
-from imgproxykit.builders import PathBuilder
+from imgproxykit.builder import PathBuilder
 from imgproxykit.signing import URLSigner
 from imgproxykit.transform import Transform
 from imgproxykit.types import EMPTY

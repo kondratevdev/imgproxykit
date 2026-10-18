@@ -8,7 +8,7 @@ to :attr:`imgproxykit.Client.path_builder_cls` or
 Path builder
 ------------
 
-.. autoclass:: imgproxykit.builders.PathBuilder
+.. autoclass:: imgproxykit.builder.PathBuilder
    :members:
    :special-members: __call__
 

@@ -46,7 +46,7 @@ class PathBuilder:
         Usage:
 
         >>> from imgproxykit import Transform
-        >>> from imgproxykit.builders import PathBuilder
+        >>> from imgproxykit.builder import PathBuilder
         >>> from imgproxykit.options import Preset, Resize
         >>> builder = PathBuilder()
         >>> source = 'https://example.com/photo.jpg'
