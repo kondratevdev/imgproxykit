@@ -6,7 +6,7 @@ from imgproxykit.types import Argument, OptionType
 
 
 @final
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True)
 class MaxSrcFileSize(Option):
     """
     Override source byte limit; requires ALLOW_SECURITY_OPTIONS.
@@ -19,7 +19,7 @@ class MaxSrcFileSize(Option):
 
     Usage:
 
-    >>> option = MaxSrcFileSize(value=10_000_000)
+    >>> option = MaxSrcFileSize(10_000_000)
     >>> option.arguments
     (10000000,)
 

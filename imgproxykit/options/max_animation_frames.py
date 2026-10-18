@@ -6,7 +6,7 @@ from imgproxykit.types import Argument, OptionType
 
 
 @final
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True)
 class MaxAnimationFrames(Option):
     """
     Override animation frame limit; requires ALLOW_SECURITY_OPTIONS.
@@ -19,7 +19,7 @@ class MaxAnimationFrames(Option):
 
     Usage:
 
-    >>> option = MaxAnimationFrames(value=100)
+    >>> option = MaxAnimationFrames(100)
     >>> option.arguments
     (100,)
 

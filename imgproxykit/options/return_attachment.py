@@ -6,7 +6,7 @@ from imgproxykit.types import Argument, OptionType
 
 
 @final
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True)
 class ReturnAttachment(Option):
     """
     Request attachment disposition for downloading.
@@ -19,7 +19,7 @@ class ReturnAttachment(Option):
 
     Usage:
 
-    >>> option = ReturnAttachment(value=True)
+    >>> option = ReturnAttachment(True)
     >>> option.arguments
     (True,)
 

@@ -6,7 +6,7 @@ from imgproxykit.types import Argument, OptionType
 
 
 @final
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True)
 class Rotate(Option):
     """
     Rotate clockwise by a multiple of 90 degrees.
@@ -18,7 +18,7 @@ class Rotate(Option):
 
     Usage:
 
-    >>> option = Rotate(value=90)
+    >>> option = Rotate(90)
     >>> option.arguments
     (90,)
 

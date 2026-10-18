@@ -6,7 +6,7 @@ from imgproxykit.types import Argument, OptionType, ResizeType
 
 
 @final
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True)
 class ResizingType(Option):
     """
     Choose the resizing strategy.
@@ -19,7 +19,7 @@ class ResizingType(Option):
 
     Usage:
 
-    >>> option = ResizingType(value='fill')
+    >>> option = ResizingType('fill')
     >>> option.arguments
     ('fill',)
 

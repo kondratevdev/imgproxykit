@@ -6,7 +6,7 @@ from imgproxykit.types import Argument, OptionType
 
 
 @final
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True)
 class MaxResultDimension(Option):
     """
     Override output dimension limit; requires ALLOW_SECURITY_OPTIONS.
@@ -19,7 +19,7 @@ class MaxResultDimension(Option):
 
     Usage:
 
-    >>> option = MaxResultDimension(value=4096)
+    >>> option = MaxResultDimension(4096)
     >>> option.arguments
     (4096,)
 

@@ -6,7 +6,7 @@ from imgproxykit.types import Argument, OptionType
 
 
 @final
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True)
 class Height(Option):
     """
     Set the target height in pixels.
@@ -19,7 +19,7 @@ class Height(Option):
 
     Usage:
 
-    >>> option = Height(value=200)
+    >>> option = Height(200)
     >>> option.arguments
     (200,)
 

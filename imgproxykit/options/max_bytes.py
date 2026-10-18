@@ -6,7 +6,7 @@ from imgproxykit.types import Argument, OptionType
 
 
 @final
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True)
 class MaxBytes(Option):
     """
     Reduce output quality to meet the requested byte limit.
@@ -19,7 +19,7 @@ class MaxBytes(Option):
 
     Usage:
 
-    >>> option = MaxBytes(value=100_000)
+    >>> option = MaxBytes(100_000)
     >>> option.arguments
     (100000,)
 

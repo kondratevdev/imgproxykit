@@ -6,7 +6,7 @@ from imgproxykit.types import Argument, OptionType
 
 
 @final
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True)
 class Width(Option):
     """
     Set the target width in pixels.
@@ -19,7 +19,7 @@ class Width(Option):
 
     Usage:
 
-    >>> option = Width(value=300)
+    >>> option = Width(300)
     >>> option.arguments
     (300,)
 

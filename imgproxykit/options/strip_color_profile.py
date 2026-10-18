@@ -6,7 +6,7 @@ from imgproxykit.types import Argument, OptionType
 
 
 @final
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True)
 class StripColorProfile(Option):
     """
     Convert the embedded profile to sRGB and remove it.
@@ -19,7 +19,7 @@ class StripColorProfile(Option):
 
     Usage:
 
-    >>> option = StripColorProfile(value=True)
+    >>> option = StripColorProfile(True)
     >>> option.arguments
     (True,)
 

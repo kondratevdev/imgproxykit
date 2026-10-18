@@ -6,7 +6,7 @@ from imgproxykit.types import Argument, OptionType
 
 
 @final
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True)
 class MaxSrcResolution(Option):
     """
     Override source megapixel limit; requires ALLOW_SECURITY_OPTIONS.
@@ -19,7 +19,7 @@ class MaxSrcResolution(Option):
 
     Usage:
 
-    >>> option = MaxSrcResolution(value=50)
+    >>> option = MaxSrcResolution(50)
     >>> option.arguments
     (50,)
 

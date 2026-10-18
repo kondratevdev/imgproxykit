@@ -6,7 +6,7 @@ from imgproxykit.types import Argument, OptionType
 
 
 @final
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True)
 class Blur(Option):
     """
     Apply Gaussian blur with the given sigma.
@@ -18,7 +18,7 @@ class Blur(Option):
 
     Usage:
 
-    >>> option = Blur(value=2.0)
+    >>> option = Blur(2.0)
     >>> option.arguments
     (2.0,)
 

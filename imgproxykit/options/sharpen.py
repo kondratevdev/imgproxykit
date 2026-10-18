@@ -6,7 +6,7 @@ from imgproxykit.types import Argument, OptionType
 
 
 @final
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True)
 class Sharpen(Option):
     """
     Apply sharpening with the given sigma.
@@ -18,7 +18,7 @@ class Sharpen(Option):
 
     Usage:
 
-    >>> option = Sharpen(value=1.0)
+    >>> option = Sharpen(1.0)
     >>> option.arguments
     (1.0,)
 

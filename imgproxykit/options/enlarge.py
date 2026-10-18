@@ -6,7 +6,7 @@ from imgproxykit.types import Argument, OptionType
 
 
 @final
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True)
 class Enlarge(Option):
     """
     Allow upscaling smaller source images.
@@ -18,7 +18,7 @@ class Enlarge(Option):
 
     Usage:
 
-    >>> option = Enlarge(value=True)
+    >>> option = Enlarge(True)
     >>> option.arguments
     (True,)
 

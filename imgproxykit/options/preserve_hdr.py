@@ -6,7 +6,7 @@ from imgproxykit.types import Argument, OptionType
 
 
 @final
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True)
 class PreserveHDR(Option):
     """
     Preserve high bit depth instead of converting to 8 bit.
@@ -18,7 +18,7 @@ class PreserveHDR(Option):
 
     Usage:
 
-    >>> option = PreserveHDR(value=True)
+    >>> option = PreserveHDR(True)
     >>> option.arguments
     (True,)
 

@@ -5,6 +5,10 @@ Import built-in options from ``imgproxykit.options`` and pass their instances
 in :attr:`imgproxykit.Transform.options`. Constructors describe accepted
 arguments; imgproxy applies processing behavior and server defaults.
 
+Scalar options accept their ``value`` either positionally or by keyword,
+for example ``Blur(2)`` or ``Blur(value=2)``. Options with multiple arguments
+and options accepting structured values use keyword-only arguments.
+
 Base option
 -----------
 

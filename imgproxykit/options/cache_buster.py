@@ -7,7 +7,7 @@ from imgproxykit.types import Argument, OptionType
 
 
 @final
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True)
 class CacheBuster(Option):
     """
     Add an escaped version string to the signed URL to bypass caches.
@@ -20,7 +20,7 @@ class CacheBuster(Option):
 
     Usage:
 
-    >>> option = CacheBuster(value='v2')
+    >>> option = CacheBuster('v2')
     >>> option.arguments
     ('v2',)
 

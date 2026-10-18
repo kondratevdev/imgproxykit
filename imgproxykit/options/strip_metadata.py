@@ -6,7 +6,7 @@ from imgproxykit.types import Argument, OptionType
 
 
 @final
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True)
 class StripMetadata(Option):
     """
     Remove image metadata.
@@ -18,7 +18,7 @@ class StripMetadata(Option):
 
     Usage:
 
-    >>> option = StripMetadata(value=True)
+    >>> option = StripMetadata(True)
     >>> option.arguments
     (True,)
 

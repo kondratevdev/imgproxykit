@@ -6,7 +6,7 @@ from imgproxykit.types import Argument, OptionType
 
 
 @final
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True)
 class KeepCopyright(Option):
     """
     Preserve copyright information when stripping metadata.
@@ -18,7 +18,7 @@ class KeepCopyright(Option):
 
     Usage:
 
-    >>> option = KeepCopyright(value=True)
+    >>> option = KeepCopyright(True)
     >>> option.arguments
     (True,)
 

@@ -6,7 +6,7 @@ from imgproxykit.types import Argument, OptionType
 
 
 @final
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True)
 class Pixelate(Option):
     """
     Set the pixelation block size.
@@ -18,7 +18,7 @@ class Pixelate(Option):
 
     Usage:
 
-    >>> option = Pixelate(value=10)
+    >>> option = Pixelate(10)
     >>> option.arguments
     (10,)
 

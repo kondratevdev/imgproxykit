@@ -6,7 +6,7 @@ from imgproxykit.types import Argument, OptionType
 
 
 @final
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True)
 class EnforceThumbnail(Option):
     """
     Use an embedded HEIC or AVIF thumbnail when available.
@@ -19,7 +19,7 @@ class EnforceThumbnail(Option):
 
     Usage:
 
-    >>> option = EnforceThumbnail(value=True)
+    >>> option = EnforceThumbnail(True)
     >>> option.arguments
     (True,)
 

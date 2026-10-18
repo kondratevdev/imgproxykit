@@ -29,10 +29,6 @@ class Option(ABC):
     # Leave configuration-dependent restrictions to the imgproxy server.
     # TODO: Allow custom option names without type ignores; decide whether
     # Option.name should return str, keeping OptionType for built-in names.
-    # TODO: Unify constructors: Quality and DPR allow positional values,
-    # while other single-value options require keywords. Allow positional
-    # scalar values consistently (for example, Blur(2) and Rotate(90)),
-    # keeping multi-argument options keyword-only.
 
     # Private API:
     _name: ClassVar[OptionType]

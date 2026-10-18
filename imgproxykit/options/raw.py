@@ -6,7 +6,7 @@ from imgproxykit.types import Argument, OptionType
 
 
 @final
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True)
 class Raw(Option):
     """
     Stream the unchecked source file without processing.
@@ -19,7 +19,7 @@ class Raw(Option):
 
     Usage:
 
-    >>> option = Raw(value=True)
+    >>> option = Raw(True)
     >>> option.arguments
     (True,)
 

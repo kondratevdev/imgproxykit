@@ -6,7 +6,7 @@ from imgproxykit.types import Argument, OptionType
 
 
 @final
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True)
 class MinHeight(Option):
     """
     Set the minimum resulting height in pixels.
@@ -18,7 +18,7 @@ class MinHeight(Option):
 
     Usage:
 
-    >>> option = MinHeight(value=200)
+    >>> option = MinHeight(200)
     >>> option.arguments
     (200,)
 

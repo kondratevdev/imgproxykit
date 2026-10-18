@@ -6,7 +6,7 @@ from imgproxykit.types import Argument, OptionType
 
 
 @final
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True)
 class AutoRotate(Option):
     """
     Apply the source EXIF orientation before processing.
@@ -19,7 +19,7 @@ class AutoRotate(Option):
 
     Usage:
 
-    >>> option = AutoRotate(value=False)
+    >>> option = AutoRotate(False)
     >>> option.arguments
     (False,)
 

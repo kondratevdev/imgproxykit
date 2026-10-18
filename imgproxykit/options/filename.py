@@ -7,7 +7,7 @@ from imgproxykit.types import Argument, OptionType
 
 
 @final
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True)
 class Filename(Option):
     """
     Set the response filename using URL-safe Base64 encoding.
@@ -21,7 +21,7 @@ class Filename(Option):
 
     Usage:
 
-    >>> option = Filename(value='product photo.jpg')
+    >>> option = Filename('product photo.jpg')
     >>> option.arguments
     ('cHJvZHVjdCBwaG90by5qcGc', True)
 

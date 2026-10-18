@@ -6,7 +6,7 @@ from imgproxykit.types import Argument, OptionType
 
 
 @final
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True)
 class MinWidth(Option):
     """
     Set the minimum resulting width in pixels.
@@ -18,7 +18,7 @@ class MinWidth(Option):
 
     Usage:
 
-    >>> option = MinWidth(value=300)
+    >>> option = MinWidth(300)
     >>> option.arguments
     (300,)
 
