@@ -2,7 +2,7 @@ imgproxykit
 ===========
 
 A typed Python toolkit for building imgproxy URLs.
-Define immutable image transformations and generate signed URLs or reference
+Define reusable image transformations and generate signed URLs or reference
 presets configured on your imgproxy server.
 
 .. _quick-start:
@@ -33,14 +33,12 @@ Create a Retina-ready product card with smart cropping and WebP output:
     imgproxy = Client('https://imgproxy.your-app.com')
 
     card = Transform(
-        options=(
-            Resize(width=400, height=400, mode='fill'),
-            Gravity(position='sm'),
-            DPR(2),
-            Quality(80),
-            Sharpen(value=0.5),
-            StripMetadata(value=True),
-        ),
+        Resize(width=400, height=400, mode='fill'),
+        Gravity(position='sm'),
+        DPR(2),
+        Quality(80),
+        Sharpen(value=0.5),
+        StripMetadata(value=True),
         format='webp',
     )
 

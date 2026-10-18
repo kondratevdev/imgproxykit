@@ -48,7 +48,7 @@ def test_modified_path(
 ) -> None:
     """Ensure that changing a signed path invalidates its signature."""
     transform = Transform(
-        options=(Resize(width=_WIDTH, height=_HEIGHT, mode='fill'),),
+        Resize(width=_WIDTH, height=_HEIGHT, mode='fill'),
         format='png',
     )
     url = imgproxy_client.url('local:///source.png', transform=transform)

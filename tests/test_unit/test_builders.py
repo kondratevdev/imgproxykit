@@ -31,10 +31,8 @@ def test_source_path(*, source: str, expected: str) -> None:
 def test_transform_path() -> None:
     """Ensure that transform options retain their order before the source."""
     transform = Transform(
-        options=(
-            Quality(_QUALITY),
-            Resize(width=_WIDTH, height=_HEIGHT, mode='fill'),
-        ),
+        Quality(_QUALITY),
+        Resize(width=_WIDTH, height=_HEIGHT, mode='fill'),
         format='webp',
     )
 
@@ -52,7 +50,7 @@ def test_transform_path() -> None:
             '/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc.webp',
         ),
         (
-            Transform(options=(Quality(_QUALITY),)),
+            Transform(Quality(_QUALITY)),
             '/q:85/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
         ),
     ],
@@ -65,7 +63,7 @@ def test_partial_transform_path(*, transform: Transform, expected: str) -> None:
 def test_empty_presets_path() -> None:
     """Ensure that explicit empty presets retain the preset segment."""
     assert PathBuilder()(
-        _SOURCE, transform=Transform(options=(Preset(names=()),))
+        _SOURCE, transform=Transform(Preset(names=()))
     ) == snapshot(
         '/pr/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
     )
@@ -75,16 +73,14 @@ def test_presets_path() -> None:
     """Ensure that presets retain their order and accept an output format."""
     assert PathBuilder()(
         _SOURCE,
-        transform=Transform(
-            options=(Preset(names=('thumbnail', 'watermarked')),)
-        ),
+        transform=Transform(Preset(names=('thumbnail', 'watermarked'))),
     ) == snapshot(
         '/pr:thumbnail:watermarked/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
     )
     assert PathBuilder()(
         _SOURCE,
         transform=Transform(
-            options=(Preset(names=('thumbnail',)),),
+            Preset(names=('thumbnail',)),
             format='avif',
         ),
     ) == snapshot('/pr:thumbnail/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc.avif')
@@ -93,11 +89,9 @@ def test_presets_path() -> None:
 def test_interleaved_presets() -> None:
     """Ensure that preset references preserve positions around overrides."""
     transform = Transform(
-        options=(
-            Preset(names=('thumbnail',)),
-            Quality(_QUALITY),
-            Preset(names=('watermarked',)),
-        )
+        Preset(names=('thumbnail',)),
+        Quality(_QUALITY),
+        Preset(names=('watermarked',)),
     )
     assert PathBuilder()(_SOURCE, transform=transform) == (
         '/pr:thumbnail/q:85/pr:watermarked/'

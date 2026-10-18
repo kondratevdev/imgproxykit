@@ -25,7 +25,7 @@ def test_signed_resize(
 ) -> None:
     """Ensure that signed transforms select the expected size and format."""
     transform = Transform(
-        options=(Resize(width=_WIDTH, height=_HEIGHT, mode='fill'),),
+        Resize(width=_WIDTH, height=_HEIGHT, mode='fill'),
         format=output_format,
     )
     url = imgproxy_client.url('local:///source.png', transform=transform)
@@ -40,7 +40,7 @@ def test_resize_height(
     http_client: zapros.Client,
 ) -> None:
     """Ensure that omitted resize arguments preserve source proportions."""
-    transform = Transform(options=(Resize(height=_HEIGHT),), format='png')
+    transform = Transform(Resize(height=_HEIGHT), format='png')
     url = imgproxy_client.url('local:///source.png', transform=transform)
 
     response = http_client.get(url)

@@ -37,12 +37,10 @@ def test_signed_url() -> None:
         salt='73616c74',
     )
     transform = Transform(
-        options=(
-            Resize(
-                width=_WIDTH,
-                height=_HEIGHT,
-                mode='fill',
-            ),
+        Resize(
+            width=_WIDTH,
+            height=_HEIGHT,
+            mode='fill',
         ),
         format='webp',
     )
@@ -61,7 +59,7 @@ def test_presets_url() -> None:
     assert client.url(
         _SOURCE,
         transform=Transform(
-            options=(Preset(names=('thumbnail', 'watermarked')),),
+            Preset(names=('thumbnail', 'watermarked')),
             format='avif',
         ),
     ) == snapshot(

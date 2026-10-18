@@ -24,10 +24,8 @@ def test_content_disposition(
     """Ensure that filenames and attachment flags reach response headers."""
     filename = faker.sentence()
     transform = Transform(
-        options=(
-            Filename(value=filename),
-            ReturnAttachment(value=attachment),
-        ),
+        Filename(value=filename),
+        ReturnAttachment(value=attachment),
         format='png',
     )
 

@@ -51,14 +51,14 @@ class PathBuilder:
         >>> builder = PathBuilder()
         >>> source = 'https://example.com/photo.jpg'
         >>> thumbnail = Transform(
-        ...     options=(Resize(width=96, height=96, mode='fill'),),
+        ...     Resize(width=96, height=96, mode='fill'),
         ...     format='webp',
         ... )
         >>> local_path = builder(source, transform=thumbnail)
         >>> preset_path = builder(
         ...     source,
         ...     transform=Transform(
-        ...         options=(Preset(names=('thumbnail',)),),
+        ...         Preset(names=('thumbnail',)),
         ...         format='webp',
         ...     ),
         ... )

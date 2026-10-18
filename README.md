@@ -32,7 +32,7 @@
 ## Features
 
 - [x] Fully typed and checked with `mypy`, `pyright`, and `pyrefly`
-- [x] Immutable, reusable transforms built from Python dataclasses
+- [x] Reusable transforms built from typed processing options
 - [x] Automatic URL signing with your imgproxy key and salt
 - [x] Free imgproxy processing options
 - [x] Output format selection, including WebP and AVIF
@@ -66,14 +66,12 @@ from imgproxykit.options import (
 imgproxy = Client('https://imgproxy.your-app.com')
 
 card = Transform(
-    options=(
-        Resize(width=400, height=400, mode='fill'),
-        Gravity(position='sm'),
-        DPR(2),
-        Quality(80),
-        Sharpen(value=0.5),
-        StripMetadata(value=True),
-    ),
+    Resize(width=400, height=400, mode='fill'),
+    Gravity(position='sm'),
+    DPR(2),
+    Quality(80),
+    Sharpen(value=0.5),
+    StripMetadata(value=True),
     format='webp',
 )
 

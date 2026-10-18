@@ -78,7 +78,7 @@ def test_option_type(
     """Ensure that imgproxy recognizes every declared option name."""
     url = imgproxy_client.url(
         _SOURCE,
-        transform=Transform(options=(option,), format='png'),
+        transform=Transform(option, format='png'),
     )
 
     response = http_client.get(url)
@@ -94,7 +94,7 @@ def test_format_type(
 ) -> None:
     """Ensure that format names are recognized without requiring encoders."""
     transform = Transform(
-        options=(options.FormatQuality(qualities=((output_format, 1),)),),
+        options.FormatQuality(qualities=((output_format, 1),)),
         format='png',
     )
     url = imgproxy_client.url(_SOURCE, transform=transform)
@@ -112,14 +112,12 @@ def test_position(
 ) -> None:
     """Ensure that imgproxy accepts every declared crop gravity."""
     transform = Transform(
-        options=(
-            options.Crop(
-                width=_WIDTH,
-                height=_HEIGHT,
-                gravity=position,
-                offset_x=0.5 if position == 'fp' else EMPTY,
-                offset_y=0.5 if position == 'fp' else EMPTY,
-            ),
+        options.Crop(
+            width=_WIDTH,
+            height=_HEIGHT,
+            gravity=position,
+            offset_x=0.5 if position == 'fp' else EMPTY,
+            offset_y=0.5 if position == 'fp' else EMPTY,
         ),
         format='png',
     )
@@ -139,7 +137,7 @@ def test_resize_type(
 ) -> None:
     """Ensure that imgproxy accepts every declared resizing strategy."""
     transform = Transform(
-        options=(options.Resize(width=_WIDTH, height=_HEIGHT, mode=mode),),
+        options.Resize(width=_WIDTH, height=_HEIGHT, mode=mode),
         format='png',
     )
     url = imgproxy_client.url(_SOURCE, transform=transform)
@@ -158,7 +156,7 @@ def test_watermark_position(
 ) -> None:
     """Ensure that imgproxy accepts every declared watermark position."""
     transform = Transform(
-        options=(options.Watermark(opacity=1, position=position),),
+        options.Watermark(opacity=1, position=position),
         format='png',
     )
     url = imgproxy_client.url(_SOURCE, transform=transform)
@@ -175,7 +173,7 @@ def test_invalid_literal_value(
     """Ensure that the server rejects invalid literals in the test setup."""
     # Bypass typing for one negative control of the acceptance tests above.
     option = options.Resize(mode='invalid')  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
-    transform = Transform(options=(option,), format='png')
+    transform = Transform(option, format='png')
     url = imgproxy_client.url(_SOURCE, transform=transform)
 
     response = http_client.get(url)

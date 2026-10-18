@@ -39,7 +39,7 @@ def test_flip(
     colors: tuple[tuple[int, int, int], ...],
 ) -> None:
     """Ensure that flip axes affect the expected image quadrants."""
-    transform = Transform(options=(option,), format='png')
+    transform = Transform(option, format='png')
     url = imgproxy_client.url(_SOURCE, transform=transform)
 
     response = http_client.get(url)
@@ -55,7 +55,7 @@ def test_flip(
 def test_crop(imgproxy_client: Client, http_client: zapros.Client) -> None:
     """Ensure that crop gravity selects the bottom right source quadrant."""
     transform = Transform(
-        options=(Crop(width=_CROP_WIDTH, height=_CROP_HEIGHT, gravity='soea'),),
+        Crop(width=_CROP_WIDTH, height=_CROP_HEIGHT, gravity='soea'),
         format='png',
     )
     url = imgproxy_client.url(_SOURCE, transform=transform)
@@ -73,10 +73,8 @@ def test_crop(imgproxy_client: Client, http_client: zapros.Client) -> None:
 def test_padding(imgproxy_client: Client, http_client: zapros.Client) -> None:
     """Ensure that padding follows CSS side order and uses the background."""
     transform = Transform(
-        options=(
-            Padding(top=1, right=2, bottom=3, left=4),
-            Background(color='ffffff'),
-        ),
+        Padding(top=1, right=2, bottom=3, left=4),
+        Background(color='ffffff'),
         format='png',
     )
     url = imgproxy_client.url(_SOURCE, transform=transform)
@@ -106,7 +104,7 @@ def test_background(
     color: str | tuple[int, int, int],
 ) -> None:
     """Ensure that both background forms fill transparent source pixels."""
-    transform = Transform(options=(Background(color=color),), format='png')
+    transform = Transform(Background(color=color), format='png')
     url = imgproxy_client.url('local:///transparent.png', transform=transform)
 
     response = http_client.get(url)
