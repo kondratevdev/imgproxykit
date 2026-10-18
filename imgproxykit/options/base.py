@@ -24,13 +24,15 @@ class Option(ABC):
     __slots__ = ()
 
     # TODO: Validate server-independent option constraints at construction
-    # time (for example, rotation multiples of 90 and positive zoom factors).
+    # time (for example, rotation multiples of 90 and positive DPR/zoom).
+    # Raise ValueError with the option name and violated constraint.
     # Leave configuration-dependent restrictions to the imgproxy server.
     # TODO: Allow custom option names without type ignores; decide whether
     # Option.name should return str, keeping OptionType for built-in names.
     # TODO: Unify constructors: Quality and DPR allow positional values,
-    # while other single-value options require keywords. Choose one rule
-    # for scalar options and keep multi-argument options keyword-only.
+    # while other single-value options require keywords. Allow positional
+    # scalar values consistently (for example, Blur(2) and Rotate(90)),
+    # keeping multi-argument options keyword-only.
 
     # Private API:
     _name: ClassVar[OptionType]

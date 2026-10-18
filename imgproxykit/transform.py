@@ -48,9 +48,11 @@ class Transform:
 
     """
 
-    # TODO: Add immutable derivation with explicit append/replace semantics.
-    # Define conflicts between overlapping options (Resize, Size, Width),
-    # repeated options, format overrides, and clearing an inherited format.
+    # TODO: Add immutable derivation with explicit append/replace/remove
+    # semantics. Define conflicts between overlapping options (Resize, Size,
+    # Width, Height), repeated options, and server presets without expanding
+    # preset definitions locally. Support format overrides and clearing
+    # inherited options or format to restore server defaults.
     # TODO: Document with examples that option order controls serialization
     # and overrides, while imgproxy determines the processing pipeline.
     # TODO: Accept positional *options instead of options=(...), preserving

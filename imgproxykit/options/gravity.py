@@ -33,6 +33,11 @@ class Gravity(Option):
 
     """
 
+    # TODO: Add readable typed factories such as Gravity.smart(),
+    # Gravity.center(), and Gravity.focus(x=..., y=...) so common usage
+    # does not require protocol codes. Distinguish focus coordinates from
+    # anchor offsets; consider readable anchors for Crop and Watermark too.
+
     # Public API:
     position: Position
     offset_x: float | EMPTY = EMPTY
