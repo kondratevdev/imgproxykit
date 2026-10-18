@@ -70,8 +70,8 @@ card = Transform(
     Gravity(position='sm'),
     DPR(2),
     Quality(80),
-    Sharpen(value=0.5),
-    StripMetadata(value=True),
+    Sharpen(0.5),
+    StripMetadata(True),
     format='webp',
 )
 
