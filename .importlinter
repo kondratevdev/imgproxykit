@@ -17,8 +17,8 @@ layers =
   client
   # Independent client components:
   builder | signing
-  # Serialize processing options and assemble paths:
-  internal.paths | internal.serialization
+  # Serialize processing options:
+  internal.serialization
   # Reusable processing configuration:
   transform
   options
@@ -48,5 +48,4 @@ forbidden_modules =
   imgproxykit.builder
   imgproxykit.transform
   imgproxykit.options
-  imgproxykit.internal.paths
   imgproxykit.internal.serialization
