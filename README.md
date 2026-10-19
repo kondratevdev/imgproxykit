@@ -6,37 +6,17 @@
 
 <div align="center">
 
-[![Tests Result](https://github.com/kondratevdev/imgproxykit/actions/workflows/test.yml/badge.svg?event=push)](https://github.com/kondratevdev/imgproxykit/actions/workflows/test.yml)
-[![PyPI Version](https://img.shields.io/pypi/v/imgproxykit.svg)](https://pypi.org/project/imgproxykit/)
-[![Supported Python Version](https://img.shields.io/pypi/pyversions/imgproxykit.svg)](https://pypi.org/project/imgproxykit/)
-[![Typing](https://img.shields.io/badge/typing-typed-35544A.svg)](https://github.com/kondratevdev/imgproxykit/blob/master/imgproxykit/py.typed)
-[![License](https://img.shields.io/badge/license-MIT-35544A.svg)](LICENSE)
+[![Tests Result](https://img.shields.io/github/actions/workflow/status/kondratevdev/imgproxykit/test.yml?branch=master&label=tests&labelColor=black&color=blue)](https://github.com/kondratevdev/imgproxykit/actions/workflows/test.yml)
+[![PyPI Version](https://img.shields.io/pypi/v/imgproxykit.svg?labelColor=black&color=blue)](https://pypi.org/project/imgproxykit/)
+[![PyPI Downloads](https://static.pepy.tech/personalized-badge/imgproxykit?period=total&units=INTERNATIONAL_SYSTEM&left_color=BLACK&right_color=BLUE&left_text=downloads)](https://pepy.tech/projects/imgproxykit)
+[![Supported Python Version](https://img.shields.io/pypi/pyversions/imgproxykit.svg?labelColor=black&color=blue)](https://pypi.org/project/imgproxykit/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg?labelColor=black)](LICENSE)
 
 </div>
 
-<p align="center">
-  <a href="#features">Features</a> ·
-  <a href="#installation">Installation</a> ·
-  <a href="#example">Example</a> ·
-  <a href="https://github.com/kondratevdev/imgproxykit/issues">Issues</a> ·
-  <a href="CONTRIBUTING.md">Contributing</a>
-</p>
-
-<p align="center">
-  Define image transformations in Python. Build reusable, signed URLs.<br>
-  Let your imgproxy server fetch and process the images.
-</p>
-
----------
-
 ## Features
 
-- [x] Fully typed and checked with `mypy`, `pyright`, and `pyrefly`
-- [x] Reusable transforms built from typed processing options
-- [x] Automatic URL signing with your imgproxy key and salt
-- [x] Free imgproxy processing options
-- [x] Output format selection, including WebP and AVIF
-- [x] Support for named presets configured on your imgproxy server
+- [x] TODO
 
 ---------
 
@@ -50,37 +30,26 @@ pip install imgproxykit
 
 ## Example
 
-Create a Retina-ready product card with smart cropping and WebP output:
+Build a URL for a WebP thumbnail served by your imgproxy server:
 
 ```python
 from imgproxykit import Client, Transform
-from imgproxykit.options import (
-    DPR,
-    Format,
-    Gravity,
-    Quality,
-    Resize,
-    Sharpen,
-    StripMetadata,
+from imgproxykit.options import Resize
+
+client = Client('https://imgproxy.you-app.com')  # Your imgproxy server.
+
+thumbnail = Transform(
+    Resize(width=300, height=300, mode='fill'),  # Pass option objects.
+    quality=80,  # Or scalar keywords, equivalent to Quality(80).
+    format='webp',
 )
-
-imgproxy = Client('https://imgproxy.your-app.com')
-
-card = Transform(
-    Resize(width=400, height=400, mode='fill'),
-    Gravity(position='sm'),
-    DPR(2),
-    Quality(80),
-    Sharpen(0.5),
-    StripMetadata(True),
-    Format('webp'),
-)
-
-url = imgproxy.url(
-    'https://storage.your-app.com/sneakers.jpg',
-    transform=card,
+thumbnail_url = client.url(
+    'https://example.com/photo.jpg',
+    transform=thumbnail,
 )
 ```
+
+Use `thumbnail_url` in an image's `src`; imgproxy handles the image processing.
 
 ## Contributing
 
