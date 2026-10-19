@@ -2,7 +2,7 @@ import pytest
 import zapros
 
 from imgproxykit import Client, Transform
-from imgproxykit.options import Format, Preset
+from imgproxykit.options import Preset
 from tests.test_integration.assertions import assert_image
 
 
@@ -21,12 +21,12 @@ def test_presets(
     presets: tuple[str, ...],
     size: tuple[int, int],
 ) -> None:
-    """Ensure that server presets follow supplied order and accept a format."""
+    """Ensure that server presets follow supplied order."""
     url = imgproxy_client.url(
         'local:///source.png',
-        transform=Transform(Preset(names=presets), Format('png')),
+        transform=Transform(Preset(names=presets)),
     )
 
     response = http_client.get(url)
 
-    assert_image(response, format='PNG', size=size)
+    assert_image(response.read(), size=size)

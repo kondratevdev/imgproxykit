@@ -1,13 +1,7 @@
-from typing import Final
-
 import pytest
 
 from imgproxykit.internal.serialization import serialize_option
 from imgproxykit.options import Crop
-
-_HEIGHT: Final = 0.75
-_OFFSET_X: Final = 0.25
-_OFFSET_Y: Final = 0.125
 
 
 @pytest.mark.parametrize(
@@ -17,10 +11,10 @@ _OFFSET_Y: Final = 0.125
         (
             Crop(
                 width=0.5,
-                height=_HEIGHT,
+                height=0.75,
                 gravity='fp',
-                offset_x=_OFFSET_X,
-                offset_y=_OFFSET_Y,
+                offset_x=0.25,
+                offset_y=0.125,
             ),
             'crop:0.5:0.75:fp:0.25:0.125',
         ),

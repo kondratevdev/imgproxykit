@@ -1,12 +1,7 @@
-from typing import Final
-
 import pytest
 
 from imgproxykit.internal.serialization import serialize_option
 from imgproxykit.options import Resize
-
-_WIDTH: Final = 300
-_HEIGHT: Final = 200
 
 
 @pytest.mark.parametrize(
@@ -15,15 +10,15 @@ _HEIGHT: Final = 200
         (Resize(), 'resize'),
         (
             Resize(
-                width=_WIDTH,
-                height=_HEIGHT,
+                width=300,
+                height=200,
                 mode='fill',
                 enlarge=False,
                 extend=True,
             ),
             'resize:fill:300:200:0:1',
         ),
-        (Resize(height=_HEIGHT), 'resize:::200'),
+        (Resize(height=200), 'resize:::200'),
         (Resize(extend=False), 'resize:::::0'),
     ],
 )

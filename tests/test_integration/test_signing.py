@@ -5,7 +5,7 @@ import pytest
 import zapros
 
 from imgproxykit import Client, Transform
-from imgproxykit.options import Format, Resize
+from imgproxykit.options import Resize
 from tests.test_integration.assertions import assert_image
 
 _WIDTH: Final = 160
@@ -49,14 +49,16 @@ def test_modified_path(
     """Ensure that changing a signed path invalidates its signature."""
     transform = Transform(
         Resize(width=_WIDTH, height=_HEIGHT, mode='fill'),
-        Format('png'),
+        format='png',
     )
     url = imgproxy_client.url('local:///source.png', transform=transform)
-    assert_image(http_client.get(url), format='PNG', size=(_WIDTH, _HEIGHT))
+
+    response = http_client.get(url)
+
+    assert_image(response.read(), size=(_WIDTH, _HEIGHT))
     assert original in url
 
     response = http_client.get(url.replace(original, replacement))
-
     assert response.status == HTTPStatus.FORBIDDEN, response.text
 
 

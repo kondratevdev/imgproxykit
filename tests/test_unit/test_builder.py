@@ -69,23 +69,22 @@ def test_empty_presets_path() -> None:
     )
 
 
-def test_presets_path() -> None:
-    """Ensure that presets retain their order and accept an output format."""
-    assert PathBuilder()(
-        _SOURCE,
-        transform=Transform(Preset(names=('thumbnail', 'watermarked'))),
-    ) == snapshot(
-        '/preset:thumbnail:watermarked/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
-    )
-    assert PathBuilder()(
-        _SOURCE,
-        transform=Transform(
-            Preset(names=('thumbnail',)),
-            Format('avif'),
+@pytest.mark.parametrize(
+    ('transform', 'expected'),
+    [
+        (
+            Transform(Preset(names=('thumbnail', 'watermarked'))),
+            '/preset:thumbnail:watermarked/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
         ),
-    ) == snapshot(
-        '/preset:thumbnail/format:avif/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc'
-    )
+        (
+            Transform(Preset(names=('thumbnail',)), format='avif'),
+            '/preset:thumbnail/format:avif/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
+        ),
+    ],
+)
+def test_presets_path(*, transform: Transform, expected: str) -> None:
+    """Ensure that presets retain their order and accept an output format."""
+    assert PathBuilder()(_SOURCE, transform=transform) == expected
 
 
 def test_interleaved_presets() -> None:

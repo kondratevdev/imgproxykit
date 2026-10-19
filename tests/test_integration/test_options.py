@@ -4,7 +4,7 @@ import pytest
 import zapros
 
 from imgproxykit import Client, Transform
-from imgproxykit.options import Background, Crop, Flip, Format, Padding
+from imgproxykit.options import Background, Crop, Flip, Padding
 from tests.test_integration.assertions import assert_image
 
 _SOURCE: Final = 'local:///pattern.png'
@@ -39,14 +39,13 @@ def test_flip(
     colors: tuple[tuple[int, int, int], ...],
 ) -> None:
     """Ensure that flip axes affect the expected image quadrants."""
-    transform = Transform(option, Format('png'))
+    transform = Transform(option, format='png')
     url = imgproxy_client.url(_SOURCE, transform=transform)
 
     response = http_client.get(url)
 
     assert_image(
-        response,
-        format='PNG',
+        response.read(),
         size=(80, 60),
         pixels=dict(zip(_POSITIONS, colors, strict=True)),
     )
@@ -56,15 +55,14 @@ def test_crop(imgproxy_client: Client, http_client: zapros.Client) -> None:
     """Ensure that crop gravity selects the bottom right source quadrant."""
     transform = Transform(
         Crop(width=_CROP_WIDTH, height=_CROP_HEIGHT, gravity='soea'),
-        Format('png'),
+        format='png',
     )
     url = imgproxy_client.url(_SOURCE, transform=transform)
 
     response = http_client.get(url)
 
     assert_image(
-        response,
-        format='PNG',
+        response.read(),
         size=(_CROP_WIDTH, _CROP_HEIGHT),
         pixels={(10, 10): _YELLOW, (30, 20): _YELLOW},
     )
@@ -75,15 +73,14 @@ def test_padding(imgproxy_client: Client, http_client: zapros.Client) -> None:
     transform = Transform(
         Padding(top=1, right=2, bottom=3, left=4),
         Background(color='ffffff'),
-        Format('png'),
+        format='png',
     )
     url = imgproxy_client.url(_SOURCE, transform=transform)
 
     response = http_client.get(url)
 
     assert_image(
-        response,
-        format='PNG',
+        response.read(),
         size=(86, 64),
         pixels={
             (0, 0): (255, 255, 255),
@@ -104,14 +101,13 @@ def test_background(
     color: str | tuple[int, int, int],
 ) -> None:
     """Ensure that both background forms fill transparent source pixels."""
-    transform = Transform(Background(color=color), Format('png'))
+    transform = Transform(Background(color=color), format='png')
     url = imgproxy_client.url('local:///transparent.png', transform=transform)
 
     response = http_client.get(url)
 
     assert_image(
-        response,
-        format='PNG',
+        response.read(),
         size=(80, 60),
         pixels={(0, 0): _BLUE, (40, 30): _RED},
     )

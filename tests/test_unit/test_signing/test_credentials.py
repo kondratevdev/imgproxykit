@@ -1,16 +1,15 @@
 import pytest
-from faker import Faker
 
 from imgproxykit.signing import UrlSigner
 from imgproxykit.types import EMPTY
 
 
 @pytest.fixture
-def credentials(faker: Faker) -> dict[str, str]:
+def credentials() -> dict[str, str]:
     """Provide valid hexadecimal signing credentials."""
     return {
-        'key': faker.binary(length=32).hex(),  # noqa: WPS432
-        'salt': faker.binary(length=16).hex(),  # noqa: WPS432
+        'key': '736563726574',
+        'salt': '73616c74',
     }
 
 

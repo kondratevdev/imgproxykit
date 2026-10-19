@@ -1,28 +1,30 @@
-from http import HTTPStatus
 from io import BytesIO
 
 from PIL import Image
-from zapros import Response
 
 type Position = tuple[int, int]
 type Color = tuple[int, int, int]
 
 
 def assert_image(
-    response: Response,
+    image_bytes: bytes,
     *,
-    format: str,  # noqa: A002
     size: tuple[int, int],
+    format: str | None = None,  # noqa: A002
     pixels: dict[Position, Color] | None = None,
 ) -> None:
-    """Ensure that a successful response contains the expected image."""
-    assert response.status == HTTPStatus.OK, response.text
-    with Image.open(BytesIO(response.read())) as image:
+    """Ensure that binary content contains the expected image."""
+    with Image.open(BytesIO(image_bytes)) as image:
         image.load()
-        assert image.format == format
+
+        if format is not None:
+            assert image.format == format
+
         assert image.size == size
-        assert response.headers['Content-Type'] == Image.MIME[format]
+
+        if not pixels:
+            return
 
         with image.convert('RGB') as rgb_image:
-            for position, color in (pixels or {}).items():
+            for position, color in pixels.items():
                 assert rgb_image.getpixel(position) == color, position

@@ -1,12 +1,7 @@
-from typing import Final
-
 import pytest
 
 from imgproxykit.internal.serialization import serialize_option
 from imgproxykit.options import Gravity
-
-_OFFSET_X: Final = 0.25
-_OFFSET_Y: Final = 0.75
 
 
 @pytest.mark.parametrize(
@@ -16,8 +11,8 @@ _OFFSET_Y: Final = 0.75
         (
             Gravity(
                 position='fp',
-                offset_x=_OFFSET_X,
-                offset_y=_OFFSET_Y,
+                offset_x=0.25,
+                offset_y=0.75,
             ),
             'gravity:fp:0.25:0.75',
         ),

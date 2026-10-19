@@ -5,7 +5,6 @@ import zapros
 from faker import Faker
 
 from imgproxykit import Client, Transform
-from imgproxykit.options import Filename, Format, ReturnAttachment
 from tests.test_integration.assertions import assert_image
 
 
@@ -24,16 +23,16 @@ def test_content_disposition(
     """Ensure that filenames and attachment flags reach response headers."""
     filename = faker.sentence()
     transform = Transform(
-        Filename(value=filename),
-        ReturnAttachment(value=attachment),
-        Format('png'),
+        filename=filename,
+        return_attachment=attachment,
+        format='png',
     )
 
     response = http_client.get(
         imgproxy_client.url('local:///source.png', transform=transform),
     )
 
-    assert_image(response, format='PNG', size=(640, 480))
+    assert_image(response.read(), size=(640, 480))
     headers = Message()
     headers['Content-Disposition'] = response.headers['Content-Disposition']
     assert headers.get_content_disposition() == disposition

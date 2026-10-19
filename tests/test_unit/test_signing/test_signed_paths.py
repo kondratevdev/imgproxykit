@@ -1,7 +1,6 @@
 from typing import Final
 
 import pytest
-from faker import Faker
 
 from imgproxykit.signing import UrlSigner
 
@@ -9,9 +8,9 @@ _KEY: Final = '736563726574'
 _SALT: Final = '73616c74'
 
 
-def test_unsigned_path(faker: Faker) -> None:
+def test_unsigned_path() -> None:
     """Ensure that omitted credentials select the unsafe marker."""
-    assert UrlSigner()(faker.file_path()) == 'unsafe'
+    assert UrlSigner()('/first') == 'unsafe'
 
 
 @pytest.mark.parametrize(
@@ -37,12 +36,12 @@ def test_signed_path(*, path: str, expected: str) -> None:
     assert signer(path) == expected
 
 
-def test_signer_reuse(faker: Faker) -> None:
+def test_signer_reuse() -> None:
     """Ensure that signing another path does not change previous signatures."""
     signer = UrlSigner(key=_KEY, salt=_SALT)
 
-    path = faker.file_path()
+    path = '/first'
     signature = signer(path)
-    signer(f'{path}/other')
+    signer('/second')
 
     assert signer(path) == signature

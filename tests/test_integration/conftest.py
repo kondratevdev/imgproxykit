@@ -34,7 +34,6 @@ def imgproxy_image() -> str:
 @pytest.fixture
 def http_client() -> Iterator[zapros.Client]:
     """Provide an HTTP client with a timeout and automatic cleanup."""
-    # Each test gets its own connection pool, closed when the fixture exits.
     with zapros.Client(zapros.StdNetworkHandler(total_timeout=10)) as client:
         yield client
 
@@ -45,7 +44,6 @@ def imgproxy_url(
     image_fixtures: Path,
 ) -> Iterator[str]:
     """Provide the base URL of a ready imgproxy container."""
-    # One server per session; Docker chooses an available host port.
     # Copying the directory preserves its name: /data/fixtures/*.png.
     # local:/// URLs read these files without an external image server.
     container = (
@@ -68,7 +66,6 @@ def imgproxy_url(
         image_fixtures / 'source.png',
         '/data/fixtures/café photo.png',
     )
-    # Wait for HTTP readiness before yielding; the context removes the server.
     container.waiting_for(HttpWaitStrategy(_PORT, '/health'))
     with container:
         host = container.get_container_host_ip()
@@ -79,5 +76,4 @@ def imgproxy_url(
 @pytest.fixture
 def imgproxy_client(imgproxy_url: str) -> Client:
     """Provide a signed client connected to imgproxy."""
-    # Keep URL construction separate from HTTP requests and response assertions.
     return Client(imgproxy_url, key=_KEY, salt=_SALT)

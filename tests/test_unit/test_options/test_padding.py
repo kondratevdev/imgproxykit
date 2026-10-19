@@ -1,13 +1,7 @@
-from typing import Final
-
 import pytest
 
 from imgproxykit.internal.serialization import serialize_option
 from imgproxykit.options import Padding
-
-_RIGHT: Final = 20
-_BOTTOM: Final = 30
-_LEFT: Final = 40
 
 
 @pytest.mark.parametrize(
@@ -17,9 +11,9 @@ _LEFT: Final = 40
         (
             Padding(
                 top=10,
-                right=_RIGHT,
-                bottom=_BOTTOM,
-                left=_LEFT,
+                right=20,
+                bottom=30,
+                left=40,
             ),
             'padding:10:20:30:40',
         ),

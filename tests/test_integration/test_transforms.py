@@ -4,7 +4,7 @@ import pytest
 import zapros
 
 from imgproxykit import Client, Transform
-from imgproxykit.options import Format, Resize
+from imgproxykit.options import Resize
 from imgproxykit.types import FormatType
 from tests.test_integration.assertions import assert_image
 
@@ -13,8 +13,12 @@ _HEIGHT: Final = 120
 
 
 @pytest.mark.parametrize(
-    ('output_format', 'expected_format'),
-    [('webp', 'WEBP'), ('png', 'PNG'), ('jpg', 'JPEG')],
+    ('output_format', 'expected_format', 'content_type'),
+    [
+        ('webp', 'WEBP', 'image/webp'),
+        ('png', 'PNG', 'image/png'),
+        ('jpg', 'JPEG', 'image/jpeg'),
+    ],
 )
 def test_signed_resize(
     imgproxy_client: Client,
@@ -22,17 +26,23 @@ def test_signed_resize(
     *,
     output_format: FormatType,
     expected_format: str,
+    content_type: str,
 ) -> None:
     """Ensure that signed transforms select the expected size and format."""
     transform = Transform(
         Resize(width=_WIDTH, height=_HEIGHT, mode='fill'),
-        Format(output_format),
+        format=output_format,
     )
     url = imgproxy_client.url('local:///source.png', transform=transform)
 
     response = http_client.get(url)
 
-    assert_image(response, format=expected_format, size=(_WIDTH, _HEIGHT))
+    assert response.headers['Content-Type'] == content_type
+    assert_image(
+        response.read(),
+        format=expected_format,
+        size=(_WIDTH, _HEIGHT),
+    )
 
 
 def test_resize_height(
@@ -40,9 +50,9 @@ def test_resize_height(
     http_client: zapros.Client,
 ) -> None:
     """Ensure that omitted resize arguments preserve source proportions."""
-    transform = Transform(Resize(height=_HEIGHT), Format('png'))
+    transform = Transform(Resize(height=_HEIGHT))
     url = imgproxy_client.url('local:///source.png', transform=transform)
 
     response = http_client.get(url)
 
-    assert_image(response, format='PNG', size=(_WIDTH, _HEIGHT))
+    assert_image(response.read(), size=(_WIDTH, _HEIGHT))
