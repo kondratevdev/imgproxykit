@@ -5,7 +5,7 @@ import zapros
 from faker import Faker
 
 from imgproxykit import Client, Transform
-from imgproxykit.options import Filename, ReturnAttachment
+from imgproxykit.options import Filename, Format, ReturnAttachment
 from tests.test_integration.assertions import assert_image
 
 
@@ -26,7 +26,7 @@ def test_content_disposition(
     transform = Transform(
         Filename(value=filename),
         ReturnAttachment(value=attachment),
-        format='png',
+        Format('png'),
     )
 
     response = http_client.get(

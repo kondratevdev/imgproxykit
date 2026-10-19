@@ -1,6 +1,7 @@
 import zapros
 
 from imgproxykit import Client, Transform
+from imgproxykit.options import Format
 from tests.test_integration.assertions import assert_image
 
 
@@ -11,7 +12,7 @@ def test_unicode_source(
     """Ensure that source names retain Unicode and spaces through encoding."""
     url = imgproxy_client.url(
         'local:///café photo.png',
-        transform=Transform(format='png'),
+        transform=Transform(Format('png')),
     )
 
     response = http_client.get(url)

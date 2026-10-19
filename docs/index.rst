@@ -23,6 +23,7 @@ Create a Retina-ready product card with smart cropping and WebP output:
     from imgproxykit import Client, Transform
     from imgproxykit.options import (
         DPR,
+        Format,
         Gravity,
         Quality,
         Resize,
@@ -39,7 +40,7 @@ Create a Retina-ready product card with smart cropping and WebP output:
         Quality(80),
         Sharpen(value=0.5),
         StripMetadata(value=True),
-        format='webp',
+        Format('webp'),
     )
 
     url = imgproxy.url(

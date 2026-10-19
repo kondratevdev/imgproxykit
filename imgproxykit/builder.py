@@ -9,8 +9,8 @@ class PathBuilder:
     Resolve processing options and build an unsigned imgproxy path.
 
     Used by :class:`~imgproxykit.Client` before signing the resulting path.
-    Sources are Base64-encoded without padding; processing options and an
-    optional output extension are included in the same path.
+    Sources are Base64-encoded without padding; processing options are
+    included before the source in the same path.
 
     Transforms can combine processing options and server preset references.
 
@@ -47,19 +47,19 @@ class PathBuilder:
 
         >>> from imgproxykit import Transform
         >>> from imgproxykit.builder import PathBuilder
-        >>> from imgproxykit.options import Preset, Resize
+        >>> from imgproxykit.options import Format, Preset, Resize
         >>> builder = PathBuilder()
         >>> source = 'https://example.com/photo.jpg'
         >>> thumbnail = Transform(
         ...     Resize(width=96, height=96, mode='fill'),
-        ...     format='webp',
+        ...     Format('webp'),
         ... )
         >>> local_path = builder(source, transform=thumbnail)
         >>> preset_path = builder(
         ...     source,
         ...     transform=Transform(
         ...         Preset(names=('thumbnail',)),
-        ...         format='webp',
+        ...         Format('webp'),
         ...     ),
         ... )
 
@@ -73,11 +73,11 @@ class PathBuilder:
         transform: Transform | EMPTY = EMPTY,
     ) -> str:
         """
-        Assemble processing options, an encoded source, and an extension.
+        Assemble processing options and an encoded source.
 
         The leading ``/`` is part of the path supplied to the signer.
         The source is encoded as URL-safe Base64 without padding. An omitted
-        output format adds no extension, leaving format selection to imgproxy.
+        output format leaves format selection to imgproxy.
 
         """
         options = (
@@ -85,9 +85,4 @@ class PathBuilder:
             if transform is EMPTY
             else tuple(serialize_option(option) for option in transform.options)
         )
-        path = '/'.join(('', *options, encode_base64(source)))
-
-        if transform is EMPTY or transform.format is EMPTY:
-            return path
-
-        return f'{path}.{transform.format}'
+        return '/'.join(('', *options, encode_base64(source)))

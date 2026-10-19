@@ -123,8 +123,8 @@ class Client:
 
         Pass options, including Preset instances, through ``transform``.
         Preset definitions remain on the server and are not expanded here.
-        Set the output format on the transform. Omitted processing parameters
-        and formats are left to the server.
+        Set the output format with the ``Format`` option. Omitted processing
+        parameters and formats are left to the server.
 
         Args:
             source: Complete source URI understood by the imgproxy server.
@@ -139,11 +139,11 @@ class Client:
         Usage:
 
         >>> from imgproxykit import Client, Transform
-        >>> from imgproxykit.options import Resize
+        >>> from imgproxykit.options import Format, Resize
         >>> client = Client('https://images.example.com')
         >>> thumbnail = Transform(
         ...     Resize(width=300, height=300, mode='fill'),
-        ...     format='webp',
+        ...     Format('webp'),
         ... )
         >>> source = 'https://example.com/photo.jpg'
         >>> local_options_url = client.url(source, transform=thumbnail)

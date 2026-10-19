@@ -96,6 +96,12 @@ Flip
 .. autoclass:: imgproxykit.options.Flip
    :members:
 
+Format
+~~~~~~
+
+.. autoclass:: imgproxykit.options.Format
+   :members:
+
 FormatQuality
 ~~~~~~~~~~~~~
 

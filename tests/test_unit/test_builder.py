@@ -5,7 +5,7 @@ from inline_snapshot import snapshot
 
 from imgproxykit import Transform
 from imgproxykit.builder import PathBuilder
-from imgproxykit.options import Preset, Quality, Resize
+from imgproxykit.options import Format, Preset, Quality, Resize
 
 _SOURCE: Final = 'https://example.com/photo.jpg'
 _WIDTH: Final = 300
@@ -33,11 +33,11 @@ def test_transform_path() -> None:
     transform = Transform(
         Quality(_QUALITY),
         Resize(width=_WIDTH, height=_HEIGHT, mode='fill'),
-        format='webp',
+        Format('webp'),
     )
 
     assert PathBuilder()(_SOURCE, transform=transform) == snapshot(
-        '/q:85/rs:fill:300:200/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc.webp',
+        '/q:85/rs:fill:300:200/f:webp/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
     )
 
 
@@ -46,8 +46,8 @@ def test_transform_path() -> None:
     [
         (Transform(), '/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc'),
         (
-            Transform(format='webp'),
-            '/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc.webp',
+            Transform(Format('webp')),
+            '/f:webp/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
         ),
         (
             Transform(Quality(_QUALITY)),
@@ -81,9 +81,11 @@ def test_presets_path() -> None:
         _SOURCE,
         transform=Transform(
             Preset(names=('thumbnail',)),
-            format='avif',
+            Format('avif'),
         ),
-    ) == snapshot('/pr:thumbnail/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc.avif')
+    ) == snapshot(
+        '/pr:thumbnail/f:avif/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc'
+    )
 
 
 def test_interleaved_presets() -> None:
@@ -96,4 +98,16 @@ def test_interleaved_presets() -> None:
     assert PathBuilder()(_SOURCE, transform=transform) == (
         '/pr:thumbnail/q:85/pr:watermarked/'
         'aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc'
+    )
+
+
+def test_interleaved_formats() -> None:
+    """Ensure that format options preserve their order around presets."""
+    transform = Transform(
+        Format('webp'),
+        Preset(names=('thumbnail',)),
+        Format('avif'),
+    )
+    assert PathBuilder()(_SOURCE, transform=transform) == (
+        '/f:webp/pr:thumbnail/f:avif/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc'
     )

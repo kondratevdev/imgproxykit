@@ -4,7 +4,7 @@ import pytest
 from inline_snapshot import snapshot
 
 from imgproxykit import Client, Transform
-from imgproxykit.options import Preset, Resize
+from imgproxykit.options import Format, Preset, Resize
 
 _SOURCE: Final = 'https://example.com/photo.jpg'
 _WIDTH: Final = 300
@@ -42,13 +42,13 @@ def test_signed_url() -> None:
             height=_HEIGHT,
             mode='fill',
         ),
-        format='webp',
+        Format('webp'),
     )
 
     assert client.url(_SOURCE, transform=transform) == snapshot(
         'https://images.example.com/'
-        'IFOHEnjwIOnwbBU8WexRy_3nv99lVipxJG_F6tiWiKY/'
-        'rs:fill:300:200/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc.webp',
+        '8C7PPyCrkFfZJZTngz6C3HAGqj93Nx-9jcOoznWKHaI/'
+        'rs:fill:300:200/f:webp/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
     )
 
 
@@ -60,9 +60,9 @@ def test_presets_url() -> None:
         _SOURCE,
         transform=Transform(
             Preset(names=('thumbnail', 'watermarked')),
-            format='avif',
+            Format('avif'),
         ),
     ) == snapshot(
-        'https://images.example.com/unsafe/pr:thumbnail:watermarked/'
-        'aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc.avif',
+        'https://images.example.com/unsafe/pr:thumbnail:watermarked/f:avif/'
+        'aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
     )

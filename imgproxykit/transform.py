@@ -1,5 +1,4 @@
 from imgproxykit.options import Option
-from imgproxykit.types import EMPTY, FormatType
 
 
 class Transform:
@@ -13,18 +12,15 @@ class Transform:
     Attributes:
         options: Tuple of processing options. Defaults to an empty tuple,
             which adds no processing option segments to the URL.
-        format: Output image format, such as ``webp`` or ``avif``.
-            Defaults to :data:`~imgproxykit.types.EMPTY`, leaving format
-            selection to imgproxy.
 
     Usage:
 
     >>> from imgproxykit import Client, Transform
-    >>> from imgproxykit.options import Quality, Resize
+    >>> from imgproxykit.options import Format, Quality, Resize
     >>> thumbnail = Transform(
     ...     Resize(width=300, height=300, mode='fill'),
     ...     Quality(85),
-    ...     format='webp',
+    ...     Format('webp'),
     ... )
     >>> client = Client('https://images.example.com')
     >>> url = client.url(
@@ -37,20 +33,12 @@ class Transform:
     # TODO: Add immutable derivation with explicit append/replace/remove
     # semantics. Define conflicts between overlapping options (Resize, Size,
     # Width, Height), repeated options, and server presets without expanding
-    # preset definitions locally. Support format overrides and clearing
-    # inherited options or format to restore server defaults.
+    # preset definitions locally. Support clearing inherited options to
+    # restore server defaults.
     # TODO: Document with examples that option order controls serialization
     # and overrides, while imgproxy determines the processing pipeline.
-    __slots__ = ('format', 'options')
+    __slots__ = ('options',)
 
-    # TODO: Move format into a typed Format option alongside other components
-    # and serialize it as an f segment. Remove this separate field and use
-    # the common option composition and replacement rules for formats.
-    def __init__(
-        self,
-        *options: Option,
-        format: FormatType | EMPTY = EMPTY,  # noqa: A002
-    ) -> None:
-        """Collect processing options in order and set the output format."""
+    def __init__(self, *options: Option) -> None:
+        """Collect processing options in order."""
         self.options = options
-        self.format = format

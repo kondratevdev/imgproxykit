@@ -16,6 +16,7 @@ from imgproxykit.options.extend_aspect_ratio import (
 )
 from imgproxykit.options.filename import Filename as Filename
 from imgproxykit.options.flip import Flip as Flip
+from imgproxykit.options.format import Format as Format
 from imgproxykit.options.format_quality import FormatQuality as FormatQuality
 from imgproxykit.options.gravity import Gravity as Gravity
 from imgproxykit.options.height import Height as Height
