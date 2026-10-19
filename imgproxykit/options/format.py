@@ -1,12 +1,12 @@
 from dataclasses import dataclass
-from typing import ClassVar, override
+from typing import ClassVar
 
-from imgproxykit.options.base import Option
-from imgproxykit.types import Argument, FormatType, OptionType
+from imgproxykit.options.base import ScalarOption
+from imgproxykit.types import FormatType, OptionType
 
 
 @dataclass(frozen=True, slots=True)
-class Format(Option):
+class Format(ScalarOption[FormatType]):
     """
     Set the output image format.
 
@@ -25,13 +25,6 @@ class Format(Option):
     """
 
     # Public API:
-    value: FormatType
 
     # Public API:
     name: ClassVar[OptionType] = 'format'
-
-    @property
-    @override
-    def arguments(self) -> tuple[Argument, ...]:
-        """Positional arguments in imgproxy protocol order."""
-        return (self.value,)

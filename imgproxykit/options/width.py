@@ -1,12 +1,12 @@
 from dataclasses import dataclass
-from typing import ClassVar, override
+from typing import ClassVar
 
-from imgproxykit.options.base import Option
-from imgproxykit.types import Argument, OptionType
+from imgproxykit.options.base import ScalarOption
+from imgproxykit.types import OptionType
 
 
 @dataclass(frozen=True, slots=True)
-class Width(Option):
+class Width(ScalarOption[int]):
     """
     Set the target width in pixels.
 
@@ -27,12 +27,4 @@ class Width(Option):
 
     """
 
-    value: int
-
     name: ClassVar[OptionType] = 'width'
-
-    @property
-    @override
-    def arguments(self) -> tuple[Argument, ...]:
-        """Positional arguments in imgproxy protocol order."""
-        return (self.value,)

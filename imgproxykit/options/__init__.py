@@ -1,6 +1,7 @@
 from imgproxykit.options.auto_rotate import AutoRotate as AutoRotate
 from imgproxykit.options.background import Background as Background
 from imgproxykit.options.base import Option as Option
+from imgproxykit.options.base import ScalarOption as ScalarOption
 from imgproxykit.options.blur import Blur as Blur
 from imgproxykit.options.cache_buster import CacheBuster as CacheBuster
 from imgproxykit.options.crop import Crop as Crop

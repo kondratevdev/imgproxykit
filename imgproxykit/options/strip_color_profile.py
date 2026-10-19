@@ -1,12 +1,12 @@
 from dataclasses import dataclass
-from typing import ClassVar, override
+from typing import ClassVar
 
-from imgproxykit.options.base import Option
-from imgproxykit.types import Argument, OptionType
+from imgproxykit.options.base import ScalarOption
+from imgproxykit.types import OptionType
 
 
 @dataclass(frozen=True, slots=True)
-class StripColorProfile(Option):
+class StripColorProfile(ScalarOption[bool]):
     """
     Convert the embedded profile to sRGB and remove it.
 
@@ -27,12 +27,4 @@ class StripColorProfile(Option):
 
     """
 
-    value: bool
-
     name: ClassVar[OptionType] = 'strip_color_profile'
-
-    @property
-    @override
-    def arguments(self) -> tuple[Argument, ...]:
-        """Positional arguments in imgproxy protocol order."""
-        return (self.value,)

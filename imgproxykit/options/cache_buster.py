@@ -2,12 +2,12 @@ from dataclasses import dataclass
 from typing import ClassVar, override
 from urllib.parse import quote
 
-from imgproxykit.options.base import Option
+from imgproxykit.options.base import ScalarOption
 from imgproxykit.types import Argument, OptionType
 
 
 @dataclass(frozen=True, slots=True)
-class CacheBuster(Option):
+class CacheBuster(ScalarOption[str]):
     """
     Add an escaped version string to the signed URL to bypass caches.
 
@@ -27,8 +27,6 @@ class CacheBuster(Option):
     <https://docs.imgproxy.net/usage/processing#cache-buster>`_.
 
     """
-
-    value: str
 
     name: ClassVar[OptionType] = 'cachebuster'
 

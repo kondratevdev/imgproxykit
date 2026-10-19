@@ -1,12 +1,12 @@
 from dataclasses import dataclass
-from typing import ClassVar, override
+from typing import ClassVar
 
-from imgproxykit.options.base import Option
-from imgproxykit.types import Argument, OptionType
+from imgproxykit.options.base import ScalarOption
+from imgproxykit.types import OptionType
 
 
 @dataclass(frozen=True, slots=True)
-class ReturnAttachment(Option):
+class ReturnAttachment(ScalarOption[bool]):
     """
     Request attachment disposition for downloading.
 
@@ -27,12 +27,4 @@ class ReturnAttachment(Option):
 
     """
 
-    value: bool
-
     name: ClassVar[OptionType] = 'return_attachment'
-
-    @property
-    @override
-    def arguments(self) -> tuple[Argument, ...]:
-        """Positional arguments in imgproxy protocol order."""
-        return (self.value,)

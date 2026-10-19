@@ -1,12 +1,12 @@
 from dataclasses import dataclass
-from typing import ClassVar, override
+from typing import ClassVar
 
-from imgproxykit.options.base import Option
-from imgproxykit.types import Argument, OptionType
+from imgproxykit.options.base import ScalarOption
+from imgproxykit.types import OptionType
 
 
 @dataclass(frozen=True, slots=True)
-class MaxAnimationFrames(Option):
+class MaxAnimationFrames(ScalarOption[int]):
     """
     Override animation frame limit; requires ALLOW_SECURITY_OPTIONS.
 
@@ -27,12 +27,4 @@ class MaxAnimationFrames(Option):
 
     """
 
-    value: int
-
     name: ClassVar[OptionType] = 'max_animation_frames'
-
-    @property
-    @override
-    def arguments(self) -> tuple[Argument, ...]:
-        """Positional arguments in imgproxy protocol order."""
-        return (self.value,)

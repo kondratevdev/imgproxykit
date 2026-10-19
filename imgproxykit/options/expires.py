@@ -1,12 +1,12 @@
 from dataclasses import dataclass
-from typing import ClassVar, override
+from typing import ClassVar
 
-from imgproxykit.options.base import Option
-from imgproxykit.types import Argument, OptionType
+from imgproxykit.options.base import ScalarOption
+from imgproxykit.types import OptionType
 
 
 @dataclass(frozen=True, slots=True)
-class Expires(Option):
+class Expires(ScalarOption[int]):
     """
     Reject the URL after the given Unix timestamp.
 
@@ -26,12 +26,4 @@ class Expires(Option):
 
     """
 
-    value: int
-
     name: ClassVar[OptionType] = 'expires'
-
-    @property
-    @override
-    def arguments(self) -> tuple[Argument, ...]:
-        """Positional arguments in imgproxy protocol order."""
-        return (self.value,)

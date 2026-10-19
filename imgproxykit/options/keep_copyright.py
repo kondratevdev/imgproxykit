@@ -1,12 +1,12 @@
 from dataclasses import dataclass
-from typing import ClassVar, override
+from typing import ClassVar
 
-from imgproxykit.options.base import Option
-from imgproxykit.types import Argument, OptionType
+from imgproxykit.options.base import ScalarOption
+from imgproxykit.types import OptionType
 
 
 @dataclass(frozen=True, slots=True)
-class KeepCopyright(Option):
+class KeepCopyright(ScalarOption[bool]):
     """
     Preserve copyright information when stripping metadata.
 
@@ -26,12 +26,4 @@ class KeepCopyright(Option):
 
     """
 
-    value: bool
-
     name: ClassVar[OptionType] = 'keep_copyright'
-
-    @property
-    @override
-    def arguments(self) -> tuple[Argument, ...]:
-        """Positional arguments in imgproxy protocol order."""
-        return (self.value,)

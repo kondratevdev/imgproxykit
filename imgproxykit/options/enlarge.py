@@ -1,12 +1,12 @@
 from dataclasses import dataclass
-from typing import ClassVar, override
+from typing import ClassVar
 
-from imgproxykit.options.base import Option
-from imgproxykit.types import Argument, OptionType
+from imgproxykit.options.base import ScalarOption
+from imgproxykit.types import OptionType
 
 
 @dataclass(frozen=True, slots=True)
-class Enlarge(Option):
+class Enlarge(ScalarOption[bool]):
     """
     Allow upscaling smaller source images.
 
@@ -26,12 +26,4 @@ class Enlarge(Option):
 
     """
 
-    value: bool
-
     name: ClassVar[OptionType] = 'enlarge'
-
-    @property
-    @override
-    def arguments(self) -> tuple[Argument, ...]:
-        """Positional arguments in imgproxy protocol order."""
-        return (self.value,)

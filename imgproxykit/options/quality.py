@@ -1,12 +1,12 @@
 from dataclasses import dataclass
-from typing import ClassVar, override
+from typing import ClassVar
 
-from imgproxykit.options.base import Option
-from imgproxykit.types import Argument, OptionType
+from imgproxykit.options.base import ScalarOption
+from imgproxykit.types import OptionType
 
 
 @dataclass(frozen=True, slots=True)
-class Quality(Option):
+class Quality(ScalarOption[int]):
     """
     Set output image quality.
 
@@ -25,13 +25,6 @@ class Quality(Option):
     """
 
     # Public API:
-    value: int
 
     # Public API:
     name: ClassVar[OptionType] = 'quality'
-
-    @property
-    @override
-    def arguments(self) -> tuple[Argument, ...]:
-        """Positional arguments in imgproxy protocol order."""
-        return (self.value,)

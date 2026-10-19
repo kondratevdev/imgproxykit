@@ -1,12 +1,12 @@
 from dataclasses import dataclass
-from typing import ClassVar, override
+from typing import ClassVar
 
-from imgproxykit.options.base import Option
-from imgproxykit.types import Argument, OptionType
+from imgproxykit.options.base import ScalarOption
+from imgproxykit.types import OptionType
 
 
 @dataclass(frozen=True, slots=True)
-class PreserveHDR(Option):
+class PreserveHDR(ScalarOption[bool]):
     """
     Preserve high bit depth instead of converting to 8 bit.
 
@@ -26,12 +26,4 @@ class PreserveHDR(Option):
 
     """
 
-    value: bool
-
     name: ClassVar[OptionType] = 'preserve_hdr'
-
-    @property
-    @override
-    def arguments(self) -> tuple[Argument, ...]:
-        """Positional arguments in imgproxy protocol order."""
-        return (self.value,)

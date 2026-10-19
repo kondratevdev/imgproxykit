@@ -1,12 +1,12 @@
 from dataclasses import dataclass
-from typing import ClassVar, override
+from typing import ClassVar
 
-from imgproxykit.options.base import Option
-from imgproxykit.types import Argument, OptionType, ResizeType
+from imgproxykit.options.base import ScalarOption
+from imgproxykit.types import OptionType, ResizeType
 
 
 @dataclass(frozen=True, slots=True)
-class ResizingType(Option):
+class ResizingType(ScalarOption[ResizeType]):
     """
     Choose the resizing strategy.
 
@@ -27,12 +27,4 @@ class ResizingType(Option):
 
     """
 
-    value: ResizeType
-
     name: ClassVar[OptionType] = 'resizing_type'
-
-    @property
-    @override
-    def arguments(self) -> tuple[Argument, ...]:
-        """Positional arguments in imgproxy protocol order."""
-        return (self.value,)

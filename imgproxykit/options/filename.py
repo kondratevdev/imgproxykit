@@ -2,12 +2,12 @@ from dataclasses import dataclass
 from typing import ClassVar, override
 
 from imgproxykit.internal.encoding import encode_base64
-from imgproxykit.options.base import Option
+from imgproxykit.options.base import ScalarOption
 from imgproxykit.types import Argument, OptionType
 
 
 @dataclass(frozen=True, slots=True)
-class Filename(Option):
+class Filename(ScalarOption[str]):
     """
     Set the response filename using URL-safe Base64 encoding.
 
@@ -28,8 +28,6 @@ class Filename(Option):
     <https://docs.imgproxy.net/usage/processing#filename>`_.
 
     """
-
-    value: str
 
     name: ClassVar[OptionType] = 'filename'
 
