@@ -1,11 +1,10 @@
 from dataclasses import dataclass
-from typing import ClassVar, final, override
+from typing import ClassVar, override
 
 from imgproxykit.options.base import Option
 from imgproxykit.types import Argument, OptionType
 
 
-@final
 @dataclass(frozen=True, slots=True)
 class DPR(Option):
     """
@@ -30,8 +29,8 @@ class DPR(Option):
     # Public API:
     value: float
 
-    # Private API:
-    _name: ClassVar[OptionType] = 'dpr'
+    # Public API:
+    name: ClassVar[OptionType] = 'dpr'
 
     @property
     @override

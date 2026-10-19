@@ -7,9 +7,9 @@ from imgproxykit.options import SkipProcessing
 @pytest.mark.parametrize(
     ('option', 'expected'),
     [
-        (SkipProcessing(formats=()), 'skp'),
-        (SkipProcessing(formats=('svg',)), 'skp:svg'),
-        (SkipProcessing(formats=('svg', 'gif')), 'skp:svg:gif'),
+        (SkipProcessing(formats=()), 'skip_processing'),
+        (SkipProcessing(formats=('svg',)), 'skip_processing:svg'),
+        (SkipProcessing(formats=('svg', 'gif')), 'skip_processing:svg:gif'),
     ],
 )
 def test_skip_processing(*, option: SkipProcessing, expected: str) -> None:

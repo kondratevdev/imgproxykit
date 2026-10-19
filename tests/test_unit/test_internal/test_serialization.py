@@ -12,21 +12,21 @@ _HEIGHT: Final = 200
 @pytest.mark.parametrize(
     ('arguments', 'expected'),
     [
-        ((), 'rs'),
-        ((EMPTY,), 'rs'),
-        ((EMPTY, EMPTY), 'rs'),
-        (('fill', EMPTY, EMPTY), 'rs:fill'),
-        ((EMPTY, _WIDTH, EMPTY), 'rs::300'),
-        ((_WIDTH, EMPTY, _HEIGHT), 'rs:300::200'),
-        (('fill', EMPTY, EMPTY, True), 'rs:fill:::1'),
-        ((True, False), 'rs:1:0'),
-        ((0,), 'rs:0'),
-        ((0.0, 1.5), 'rs:0.0:1.5'),  # noqa: WPS358
-        (('',), 'rs:'),
-        (('', EMPTY), 'rs:'),
-        ((False, EMPTY), 'rs:0'),
-        ((0, EMPTY), 'rs:0'),
-        (('café',), 'rs:café'),
+        ((), 'resize'),
+        ((EMPTY,), 'resize'),
+        ((EMPTY, EMPTY), 'resize'),
+        (('fill', EMPTY, EMPTY), 'resize:fill'),
+        ((EMPTY, _WIDTH, EMPTY), 'resize::300'),
+        ((_WIDTH, EMPTY, _HEIGHT), 'resize:300::200'),
+        (('fill', EMPTY, EMPTY, True), 'resize:fill:::1'),
+        ((True, False), 'resize:1:0'),
+        ((0,), 'resize:0'),
+        ((0.0, 1.5), 'resize:0.0:1.5'),  # noqa: WPS358
+        (('',), 'resize:'),
+        (('', EMPTY), 'resize:'),
+        ((False, EMPTY), 'resize:0'),
+        ((0, EMPTY), 'resize:0'),
+        (('café',), 'resize:café'),
     ],
 )
 def test_serialize_segment(
@@ -35,4 +35,4 @@ def test_serialize_segment(
     expected: str,
 ) -> None:
     """Ensure that arguments retain their positions and explicit values."""
-    assert serialize_segment('rs', arguments) == expected
+    assert serialize_segment('resize', arguments) == expected

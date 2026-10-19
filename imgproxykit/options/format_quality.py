@@ -1,11 +1,10 @@
 from dataclasses import dataclass
-from typing import ClassVar, final, override
+from typing import ClassVar, override
 
 from imgproxykit.options.base import Option
 from imgproxykit.types import Argument, FormatType, OptionType
 
 
-@final
 @dataclass(frozen=True, slots=True, kw_only=True)
 class FormatQuality(Option):
     """
@@ -29,7 +28,7 @@ class FormatQuality(Option):
 
     qualities: tuple[tuple[FormatType, int], ...]
 
-    _name: ClassVar[OptionType] = 'fq'
+    name: ClassVar[OptionType] = 'format_quality'
 
     @property
     @override

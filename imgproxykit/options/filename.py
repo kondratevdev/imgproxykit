@@ -1,12 +1,11 @@
 from dataclasses import dataclass
-from typing import ClassVar, final, override
+from typing import ClassVar, override
 
 from imgproxykit.internal.encoding import encode_base64
 from imgproxykit.options.base import Option
 from imgproxykit.types import Argument, OptionType
 
 
-@final
 @dataclass(frozen=True, slots=True)
 class Filename(Option):
     """
@@ -32,7 +31,7 @@ class Filename(Option):
 
     value: str
 
-    _name: ClassVar[OptionType] = 'fn'
+    name: ClassVar[OptionType] = 'filename'
 
     @property
     @override

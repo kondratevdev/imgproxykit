@@ -12,7 +12,7 @@ _HEIGHT: Final = 200
 @pytest.mark.parametrize(
     ('option', 'expected'),
     [
-        (Resize(), 'rs'),
+        (Resize(), 'resize'),
         (
             Resize(
                 width=_WIDTH,
@@ -21,10 +21,10 @@ _HEIGHT: Final = 200
                 enlarge=False,
                 extend=True,
             ),
-            'rs:fill:300:200:0:1',
+            'resize:fill:300:200:0:1',
         ),
-        (Resize(height=_HEIGHT), 'rs:::200'),
-        (Resize(extend=False), 'rs:::::0'),
+        (Resize(height=_HEIGHT), 'resize:::200'),
+        (Resize(extend=False), 'resize:::::0'),
     ],
 )
 def test_resize(*, option: Resize, expected: str) -> None:

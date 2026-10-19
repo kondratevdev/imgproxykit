@@ -47,8 +47,8 @@ def test_signed_url() -> None:
 
     assert client.url(_SOURCE, transform=transform) == snapshot(
         'https://images.example.com/'
-        '8C7PPyCrkFfZJZTngz6C3HAGqj93Nx-9jcOoznWKHaI/'
-        'rs:fill:300:200/f:webp/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
+        '9TG79qV8tG6YeCbuGRKt1eLM9SySuCJAldwf3zcrlJU/'
+        'resize:fill:300:200/format:webp/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
     )
 
 
@@ -63,6 +63,6 @@ def test_presets_url() -> None:
             Format('avif'),
         ),
     ) == snapshot(
-        'https://images.example.com/unsafe/pr:thumbnail:watermarked/f:avif/'
+        'https://images.example.com/unsafe/preset:thumbnail:watermarked/format:avif/'
         'aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
     )

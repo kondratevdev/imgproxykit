@@ -12,8 +12,8 @@ _FACTOR_Y: Final = 2.5
 @pytest.mark.parametrize(
     ('option', 'expected'),
     [
-        (Zoom(factor_x=_FACTOR), 'z:1.5'),
-        (Zoom(factor_x=_FACTOR, factor_y=_FACTOR_Y), 'z:1.5:2.5'),
+        (Zoom(factor_x=_FACTOR), 'zoom:1.5'),
+        (Zoom(factor_x=_FACTOR, factor_y=_FACTOR_Y), 'zoom:1.5:2.5'),
     ],
 )
 def test_zoom(*, option: Zoom, expected: str) -> None:

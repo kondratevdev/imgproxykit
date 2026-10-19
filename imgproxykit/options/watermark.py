@@ -1,11 +1,10 @@
 from dataclasses import dataclass
-from typing import ClassVar, final, override
+from typing import ClassVar, override
 
 from imgproxykit.options.base import Option
 from imgproxykit.types import EMPTY, Argument, OptionType, WatermarkPosition
 
 
-@final
 @dataclass(frozen=True, slots=True, kw_only=True)
 class Watermark(Option):
     """
@@ -44,8 +43,8 @@ class Watermark(Option):
     offset_y: float | EMPTY = EMPTY
     scale: float | EMPTY = EMPTY
 
-    # Private API:
-    _name: ClassVar[OptionType] = 'wm'
+    # Public API:
+    name: ClassVar[OptionType] = 'watermark'
 
     @property
     @override

@@ -7,9 +7,9 @@ from imgproxykit.options import Background
 @pytest.mark.parametrize(
     ('option', 'expected'),
     [
-        (Background(), 'bg'),
-        (Background(color='ff0080'), 'bg:ff0080'),
-        (Background(color=(0, 128, 255)), 'bg:0:128:255'),
+        (Background(), 'background'),
+        (Background(color='ff0080'), 'background:ff0080'),
+        (Background(color=(0, 128, 255)), 'background:0:128:255'),
     ],
 )
 def test_background(*, option: Background, expected: str) -> None:

@@ -1,6 +1,9 @@
+from dataclasses import dataclass
+
 from imgproxykit.options import Option
 
 
+@dataclass(frozen=True, slots=True)
 class Transform:
     """
     Define reusable image processing options.
@@ -37,8 +40,10 @@ class Transform:
     # restore server defaults.
     # TODO: Document with examples that option order controls serialization
     # and overrides, while imgproxy determines the processing pipeline.
-    __slots__ = ('options',)
+    options: tuple[Option, ...]
 
     def __init__(self, *options: Option) -> None:
         """Collect processing options in order."""
-        self.options = options
+        # Keep variadic options while initializing a frozen dataclass.
+        # Bypassing __setattr__ is safe until initialization is finished.
+        object.__setattr__(self, 'options', options)

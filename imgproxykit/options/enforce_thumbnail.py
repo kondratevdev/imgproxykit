@@ -1,11 +1,10 @@
 from dataclasses import dataclass
-from typing import ClassVar, final, override
+from typing import ClassVar, override
 
 from imgproxykit.options.base import Option
 from imgproxykit.types import Argument, OptionType
 
 
-@final
 @dataclass(frozen=True, slots=True)
 class EnforceThumbnail(Option):
     """
@@ -30,7 +29,7 @@ class EnforceThumbnail(Option):
 
     value: bool
 
-    _name: ClassVar[OptionType] = 'eth'
+    name: ClassVar[OptionType] = 'enforce_thumbnail'
 
     @property
     @override

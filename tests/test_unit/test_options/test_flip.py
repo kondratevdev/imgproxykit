@@ -7,9 +7,9 @@ from imgproxykit.options import Flip
 @pytest.mark.parametrize(
     ('option', 'expected'),
     [
-        (Flip(), 'fl'),
-        (Flip(horizontal=True, vertical=False), 'fl:1:0'),
-        (Flip(vertical=False), 'fl::0'),
+        (Flip(), 'flip'),
+        (Flip(horizontal=True, vertical=False), 'flip:1:0'),
+        (Flip(vertical=False), 'flip::0'),
     ],
 )
 def test_flip(*, option: Flip, expected: str) -> None:

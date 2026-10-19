@@ -1,12 +1,11 @@
 from dataclasses import dataclass
-from typing import ClassVar, final, override
+from typing import ClassVar, override
 from urllib.parse import quote
 
 from imgproxykit.options.base import Option
 from imgproxykit.types import Argument, OptionType
 
 
-@final
 @dataclass(frozen=True, slots=True)
 class CacheBuster(Option):
     """
@@ -31,7 +30,7 @@ class CacheBuster(Option):
 
     value: str
 
-    _name: ClassVar[OptionType] = 'cb'
+    name: ClassVar[OptionType] = 'cachebuster'
 
     @property
     @override

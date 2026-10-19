@@ -8,15 +8,15 @@ from tests.protocols import OptionFactory
 @pytest.mark.parametrize(
     ('option_type', 'prefix'),
     [
-        (options.AutoRotate, 'ar'),
-        (options.EnforceThumbnail, 'eth'),
-        (options.Enlarge, 'el'),
-        (options.KeepCopyright, 'kcr'),
-        (options.PreserveHDR, 'ph'),
+        (options.AutoRotate, 'auto_rotate'),
+        (options.EnforceThumbnail, 'enforce_thumbnail'),
+        (options.Enlarge, 'enlarge'),
+        (options.KeepCopyright, 'keep_copyright'),
+        (options.PreserveHDR, 'preserve_hdr'),
         (options.Raw, 'raw'),
-        (options.ReturnAttachment, 'att'),
-        (options.StripColorProfile, 'scp'),
-        (options.StripMetadata, 'sm'),
+        (options.ReturnAttachment, 'return_attachment'),
+        (options.StripColorProfile, 'strip_color_profile'),
+        (options.StripMetadata, 'strip_metadata'),
     ],
 )
 @pytest.mark.parametrize('value', [True, False])

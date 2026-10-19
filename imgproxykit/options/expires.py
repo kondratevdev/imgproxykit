@@ -1,11 +1,10 @@
 from dataclasses import dataclass
-from typing import ClassVar, final, override
+from typing import ClassVar, override
 
 from imgproxykit.options.base import Option
 from imgproxykit.types import Argument, OptionType
 
 
-@final
 @dataclass(frozen=True, slots=True)
 class Expires(Option):
     """
@@ -29,7 +28,7 @@ class Expires(Option):
 
     value: int
 
-    _name: ClassVar[OptionType] = 'exp'
+    name: ClassVar[OptionType] = 'expires'
 
     @property
     @override

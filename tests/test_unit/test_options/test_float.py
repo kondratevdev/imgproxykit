@@ -10,10 +10,10 @@ from tests.protocols import OptionFactory
     ('option_type', 'prefix'),
     [
         (options.DPR, 'dpr'),
-        (options.Blur, 'bl'),
-        (options.Sharpen, 'sh'),
-        (options.MaxSrcResolution, 'msr'),
-        (options.MaxAnimationFrameResolution, 'mafr'),
+        (options.Blur, 'blur'),
+        (options.Sharpen, 'sharpen'),
+        (options.MaxSrcResolution, 'max_src_resolution'),
+        (options.MaxAnimationFrameResolution, 'max_animation_frame_resolution'),
     ],
 )
 def test_float_options(

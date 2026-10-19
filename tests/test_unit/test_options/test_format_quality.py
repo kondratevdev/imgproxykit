@@ -7,11 +7,11 @@ from imgproxykit.options import FormatQuality
 @pytest.mark.parametrize(
     ('option', 'expected'),
     [
-        (FormatQuality(qualities=()), 'fq'),
-        (FormatQuality(qualities=(('webp', 0),)), 'fq:webp:0'),
+        (FormatQuality(qualities=()), 'format_quality'),
+        (FormatQuality(qualities=(('webp', 0),)), 'format_quality:webp:0'),
         (
             FormatQuality(qualities=(('webp', 80), ('jpg', 90))),
-            'fq:webp:80:jpg:90',
+            'format_quality:webp:80:jpg:90',
         ),
     ],
 )

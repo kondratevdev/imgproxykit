@@ -1,11 +1,10 @@
 from dataclasses import dataclass
-from typing import ClassVar, final, override
+from typing import ClassVar, override
 
 from imgproxykit.options.base import Option
 from imgproxykit.types import Argument, OptionType
 
 
-@final
 @dataclass(frozen=True, slots=True)
 class MaxAnimationFrames(Option):
     """
@@ -30,7 +29,7 @@ class MaxAnimationFrames(Option):
 
     value: int
 
-    _name: ClassVar[OptionType] = 'maf'
+    name: ClassVar[OptionType] = 'max_animation_frames'
 
     @property
     @override

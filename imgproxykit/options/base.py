@@ -23,20 +23,30 @@ class Option(ABC):
 
     __slots__ = ()
 
-    # TODO: Validate server-independent option constraints at construction
-    # time (for example, rotation multiples of 90 and positive DPR/zoom).
-    # Raise ValueError with the option name and violated constraint.
-    # Leave configuration-dependent restrictions to the imgproxy server.
-    # TODO: Allow custom option names without type ignores; decide whether
-    # Option.name should return str, keeping OptionType for built-in names.
+    # Public API:
+    name: ClassVar[OptionType]
+    """
+    All subtypes must provide a supported imgproxy processing option name.
 
-    # Private API:
-    _name: ClassVar[OptionType]
+    The name is shared by all instances and is not a dataclass field
+    or a constructor argument.
+    """
 
-    @property
-    def name(self) -> OptionType:
-        """The fixed imgproxy processing option name."""
-        return self._name
+    def __post_init__(self) -> None:
+        """Validate option arguments at construction time."""
+        self.validate()
+
+    def validate(self) -> None:  # noqa: B027
+        """
+        Validate option arguments.
+
+        Override this method to enforce server-independent constraints.
+        The default implementation does nothing.
+
+        Raises:
+            ValueError: If option arguments are invalid.
+
+        """
 
     @property
     @abstractmethod

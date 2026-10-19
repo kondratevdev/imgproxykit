@@ -1,11 +1,10 @@
 from dataclasses import dataclass
-from typing import ClassVar, final, override
+from typing import ClassVar, override
 
 from imgproxykit.options.base import Option
 from imgproxykit.types import Argument, FormatType, OptionType
 
 
-@final
 @dataclass(frozen=True, slots=True)
 class Format(Option):
     """
@@ -28,8 +27,8 @@ class Format(Option):
     # Public API:
     value: FormatType
 
-    # Private API:
-    _name: ClassVar[OptionType] = 'f'
+    # Public API:
+    name: ClassVar[OptionType] = 'format'
 
     @property
     @override

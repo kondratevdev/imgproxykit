@@ -1,11 +1,10 @@
 from dataclasses import dataclass
-from typing import ClassVar, final, override
+from typing import ClassVar, override
 
 from imgproxykit.options.base import Option
 from imgproxykit.types import Argument, OptionType, ResizeType
 
 
-@final
 @dataclass(frozen=True, slots=True)
 class ResizingType(Option):
     """
@@ -30,7 +29,7 @@ class ResizingType(Option):
 
     value: ResizeType
 
-    _name: ClassVar[OptionType] = 'rt'
+    name: ClassVar[OptionType] = 'resizing_type'
 
     @property
     @override

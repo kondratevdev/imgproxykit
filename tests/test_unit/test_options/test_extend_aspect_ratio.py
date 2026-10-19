@@ -12,7 +12,7 @@ _OFFSET_Y: Final = 0.75
 @pytest.mark.parametrize(
     ('option', 'expected'),
     [
-        (ExtendAspectRatio(value=False), 'exar:0'),
+        (ExtendAspectRatio(value=False), 'extend_aspect_ratio:0'),
         (
             ExtendAspectRatio(
                 value=True,
@@ -20,9 +20,12 @@ _OFFSET_Y: Final = 0.75
                 offset_x=_OFFSET_X,
                 offset_y=_OFFSET_Y,
             ),
-            'exar:1:fp:0.25:0.75',
+            'extend_aspect_ratio:1:fp:0.25:0.75',
         ),
-        (ExtendAspectRatio(value=True, offset_y=0), 'exar:1:::0'),
+        (
+            ExtendAspectRatio(value=True, offset_y=0),
+            'extend_aspect_ratio:1:::0',
+        ),
     ],
 )
 def test_extend_aspect_ratio(

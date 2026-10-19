@@ -12,13 +12,13 @@ _HEIGHT: Final = 200
 @pytest.mark.parametrize(
     ('option', 'expected'),
     [
-        (Size(), 's'),
+        (Size(), 'size'),
         (
             Size(width=_WIDTH, height=_HEIGHT, enlarge=False, extend=True),
-            's:300:200:0:1',
+            'size:300:200:0:1',
         ),
-        (Size(height=_HEIGHT), 's::200'),
-        (Size(extend=False), 's::::0'),
+        (Size(height=_HEIGHT), 'size::200'),
+        (Size(extend=False), 'size::::0'),
     ],
 )
 def test_size(*, option: Size, expected: str) -> None:

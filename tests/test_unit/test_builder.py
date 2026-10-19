@@ -37,7 +37,7 @@ def test_transform_path() -> None:
     )
 
     assert PathBuilder()(_SOURCE, transform=transform) == snapshot(
-        '/q:85/rs:fill:300:200/f:webp/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
+        '/quality:85/resize:fill:300:200/format:webp/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
     )
 
 
@@ -47,11 +47,11 @@ def test_transform_path() -> None:
         (Transform(), '/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc'),
         (
             Transform(Format('webp')),
-            '/f:webp/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
+            '/format:webp/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
         ),
         (
             Transform(Quality(_QUALITY)),
-            '/q:85/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
+            '/quality:85/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
         ),
     ],
 )
@@ -65,7 +65,7 @@ def test_empty_presets_path() -> None:
     assert PathBuilder()(
         _SOURCE, transform=Transform(Preset(names=()))
     ) == snapshot(
-        '/pr/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
+        '/preset/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
     )
 
 
@@ -75,7 +75,7 @@ def test_presets_path() -> None:
         _SOURCE,
         transform=Transform(Preset(names=('thumbnail', 'watermarked'))),
     ) == snapshot(
-        '/pr:thumbnail:watermarked/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
+        '/preset:thumbnail:watermarked/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
     )
     assert PathBuilder()(
         _SOURCE,
@@ -84,7 +84,7 @@ def test_presets_path() -> None:
             Format('avif'),
         ),
     ) == snapshot(
-        '/pr:thumbnail/f:avif/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc'
+        '/preset:thumbnail/format:avif/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc'
     )
 
 
@@ -96,7 +96,7 @@ def test_interleaved_presets() -> None:
         Preset(names=('watermarked',)),
     )
     assert PathBuilder()(_SOURCE, transform=transform) == (
-        '/pr:thumbnail/q:85/pr:watermarked/'
+        '/preset:thumbnail/quality:85/preset:watermarked/'
         'aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc'
     )
 
@@ -109,5 +109,5 @@ def test_interleaved_formats() -> None:
         Format('avif'),
     )
     assert PathBuilder()(_SOURCE, transform=transform) == (
-        '/f:webp/pr:thumbnail/f:avif/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc'
+        '/format:webp/preset:thumbnail/format:avif/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc'
     )

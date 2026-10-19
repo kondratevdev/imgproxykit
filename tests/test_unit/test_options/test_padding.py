@@ -13,7 +13,7 @@ _LEFT: Final = 40
 @pytest.mark.parametrize(
     ('option', 'expected'),
     [
-        (Padding(), 'pd'),
+        (Padding(), 'padding'),
         (
             Padding(
                 top=10,
@@ -21,9 +21,9 @@ _LEFT: Final = 40
                 bottom=_BOTTOM,
                 left=_LEFT,
             ),
-            'pd:10:20:30:40',
+            'padding:10:20:30:40',
         ),
-        (Padding(left=0), 'pd::::0'),
+        (Padding(left=0), 'padding::::0'),
     ],
 )
 def test_padding(*, option: Padding, expected: str) -> None:

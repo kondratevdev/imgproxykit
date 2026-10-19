@@ -7,7 +7,7 @@ from imgproxykit.options import Trim
 @pytest.mark.parametrize(
     ('option', 'expected'),
     [
-        (Trim(threshold=0), 't:0'),
+        (Trim(threshold=0), 'trim:0'),
         (
             Trim(
                 threshold=10,
@@ -15,9 +15,9 @@ from imgproxykit.options import Trim
                 equal_hor=True,
                 equal_ver=False,
             ),
-            't:10:ffffff:1:0',
+            'trim:10:ffffff:1:0',
         ),
-        (Trim(threshold=10, equal_ver=False), 't:10:::0'),
+        (Trim(threshold=10, equal_ver=False), 'trim:10:::0'),
     ],
 )
 def test_trim(*, option: Trim, expected: str) -> None:

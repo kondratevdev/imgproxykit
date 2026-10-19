@@ -1,11 +1,10 @@
 from dataclasses import dataclass
-from typing import ClassVar, final, override
+from typing import ClassVar, override
 
 from imgproxykit.options.base import Option
 from imgproxykit.types import EMPTY, Argument, OptionType, Position
 
 
-@final
 @dataclass(frozen=True, slots=True, kw_only=True)
 class Gravity(Option):
     """
@@ -43,8 +42,8 @@ class Gravity(Option):
     offset_x: float | EMPTY = EMPTY
     offset_y: float | EMPTY = EMPTY
 
-    # Private API:
-    _name: ClassVar[OptionType] = 'g'
+    # Public API:
+    name: ClassVar[OptionType] = 'gravity'
 
     @property
     @override

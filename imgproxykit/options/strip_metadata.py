@@ -1,11 +1,10 @@
 from dataclasses import dataclass
-from typing import ClassVar, final, override
+from typing import ClassVar, override
 
 from imgproxykit.options.base import Option
 from imgproxykit.types import Argument, OptionType
 
 
-@final
 @dataclass(frozen=True, slots=True)
 class StripMetadata(Option):
     """
@@ -29,7 +28,7 @@ class StripMetadata(Option):
 
     value: bool
 
-    _name: ClassVar[OptionType] = 'sm'
+    name: ClassVar[OptionType] = 'strip_metadata'
 
     @property
     @override

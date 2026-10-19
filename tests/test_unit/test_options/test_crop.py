@@ -13,7 +13,7 @@ _OFFSET_Y: Final = 0.125
 @pytest.mark.parametrize(
     ('option', 'expected'),
     [
-        (Crop(), 'c'),
+        (Crop(), 'crop'),
         (
             Crop(
                 width=0.5,
@@ -22,9 +22,9 @@ _OFFSET_Y: Final = 0.125
                 offset_x=_OFFSET_X,
                 offset_y=_OFFSET_Y,
             ),
-            'c:0.5:0.75:fp:0.25:0.125',
+            'crop:0.5:0.75:fp:0.25:0.125',
         ),
-        (Crop(offset_y=0), 'c:::::0'),
+        (Crop(offset_y=0), 'crop:::::0'),
     ],
 )
 def test_crop(*, option: Crop, expected: str) -> None:

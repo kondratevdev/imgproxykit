@@ -1,11 +1,10 @@
 from dataclasses import dataclass
-from typing import ClassVar, final, override
+from typing import ClassVar, override
 
 from imgproxykit.options.base import Option
 from imgproxykit.types import Argument, OptionType
 
 
-@final
 @dataclass(frozen=True, slots=True)
 class MinWidth(Option):
     """
@@ -29,7 +28,7 @@ class MinWidth(Option):
 
     value: int
 
-    _name: ClassVar[OptionType] = 'mw'
+    name: ClassVar[OptionType] = 'min-width'
 
     @property
     @override

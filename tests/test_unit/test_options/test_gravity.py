@@ -12,16 +12,16 @@ _OFFSET_Y: Final = 0.75
 @pytest.mark.parametrize(
     ('option', 'expected'),
     [
-        (Gravity(position='ce'), 'g:ce'),
+        (Gravity(position='ce'), 'gravity:ce'),
         (
             Gravity(
                 position='fp',
                 offset_x=_OFFSET_X,
                 offset_y=_OFFSET_Y,
             ),
-            'g:fp:0.25:0.75',
+            'gravity:fp:0.25:0.75',
         ),
-        (Gravity(position='no', offset_y=0), 'g:no::0'),
+        (Gravity(position='no', offset_y=0), 'gravity:no::0'),
     ],
 )
 def test_gravity(*, option: Gravity, expected: str) -> None:

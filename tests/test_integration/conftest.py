@@ -61,7 +61,7 @@ def imgproxy_url(
     # Different sizes make preset ordering observable in the resulting image.
     container.with_env(
         'IMGPROXY_PRESETS',
-        'thumbnail=rs:fill:160:120,small=rs:fill:80:60',
+        'thumbnail=resize:fill:160:120,small=resize:fill:80:60',
     )
     # Reuse the same image under a name that exercises UTF-8 and spaces.
     container.with_copy_into_container(
