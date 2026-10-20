@@ -78,6 +78,10 @@ thumbnail_url = client.url(
 )
 ```
 
+See the [full documentation](https://imgproxykit.readthedocs.io/en/latest/)
+for client configuration, transformations, and processing options.
+Find published releases on [PyPI](https://pypi.org/project/imgproxykit/).
+
 ## Contributing
 
 See the [contributing guide](CONTRIBUTING.md) for development setup and checks.
