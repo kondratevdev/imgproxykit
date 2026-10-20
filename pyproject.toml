@@ -51,6 +51,8 @@ inline-snapshot = ">=0.35,<1"
 mypy = "^2.4"
 pyrefly = ">=1,<2"
 pyright = ">=1.1,<2"
+# TODO: relax the pin after a stable `ty` release:
+ty = "==0.0.86"
 pytest = "^9.1"
 pytest-cov = "^7.1"
 pytest-randomly = "^5.0"
@@ -240,6 +242,17 @@ root = "tests"
 extraPaths = [ "." ]
 # Allow tests to inspect private members.
 reportPrivateUsage = false
+
+
+[tool.ty.src]
+# Docs: https://docs.astral.sh/ty/reference/configuration
+include = [ "imgproxykit", "tests" ]
+
+[tool.ty.analysis]
+strict-literal-narrowing = true
+strict-generic-narrowing = true
+# `ty` has its own error codes for `# type: ignore`
+respect-type-ignore-comments = false
 
 
 [tool.pytest.ini_options]

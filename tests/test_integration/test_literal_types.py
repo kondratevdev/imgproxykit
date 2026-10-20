@@ -168,7 +168,9 @@ def test_invalid_literal_value(
 ) -> None:
     """Ensure that the server rejects invalid literals in the test setup."""
     # Bypass typing for one negative control of the acceptance tests above.
-    option = options.Resize(mode='invalid')  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]
+    option = options.Resize(
+        mode='invalid',  # type: ignore[arg-type]  # pyright: ignore[reportArgumentType]  # ty: ignore[invalid-argument-type]
+    )
     transform = Transform(option)
     url = imgproxy_client.url(_SOURCE, transform=transform)
 

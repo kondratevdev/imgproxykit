@@ -56,6 +56,7 @@ but with a deprecation period.
 - Added `Option.validate` hook, called when an option is constructed,
   for custom argument validation
 - Processing option classes can now be subclassed
+- Added `ty` type checking to local checks and CI
 
 ### Bugfixes
 

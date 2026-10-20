@@ -16,7 +16,7 @@
 
 ## Features
 
-- [x] Fully typed and checked with `mypy`, `pyright`, and `pyrefly` in strict modes
+- [x] Fully typed and checked with `mypy`, `pyright`, `ty` and `pyrefly` in strict modes
 
 ---------
 
