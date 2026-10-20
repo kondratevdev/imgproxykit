@@ -71,7 +71,10 @@ but with a deprecation period.
   covering processing options, presets, signing, and source URLs
 - Expanded unit tests and enabled doctests for docstrings,
   documentation, and `README.md`, #7
-
+- Reworked documentation with the Sphinx Material theme, a new home page,
+  Getting started, and user guides for clients, transformations, and
+  processing options. Added linted, type-checked Python examples with
+  pytest doctests, #23
 
 ## Version 0.1.0
 
