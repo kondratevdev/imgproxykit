@@ -32,7 +32,7 @@ format, and sign URLs.
     a running imgproxy server to serve images.
 
 What you can do
---------------
+---------------
 
 * **Reuse transformations.** Define a ``Transform`` once and use it for
   different source images.
