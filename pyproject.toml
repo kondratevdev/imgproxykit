@@ -71,7 +71,7 @@ optional = true
 myst-parser = "^5.1"
 sphinx = "^9.0"
 sphinx-autodoc-typehints = "^3.13"
-shibuya = "^2026.7"
+sphinx-material = "^0.0.36"
 
 
 [tool.ruff]
@@ -217,7 +217,7 @@ strict = true
 
 
 [tool.pyrefly]
-project-includes = [ "imgproxykit", "tests" ]
+project-includes = [ "imgproxykit", "tests", "docs/examples" ]
 min-severity = "warn"
 preset = "strict"
 
@@ -233,7 +233,7 @@ pythonVersion = "3.12"
 venv = ".venv"
 venvPath = "."
 typeCheckingMode = "strict"
-include = [ "imgproxykit", "tests" ]
+include = [ "imgproxykit", "tests", "docs/examples" ]
 enableTypeIgnoreComments = false
 reportUnnecessaryTypeIgnoreComment = "error"
 
@@ -246,7 +246,7 @@ reportPrivateUsage = false
 
 [tool.ty.src]
 # Docs: https://docs.astral.sh/ty/reference/configuration
-include = [ "imgproxykit", "tests" ]
+include = [ "imgproxykit", "tests", "docs/examples" ]
 
 [tool.ty.analysis]
 strict-literal-narrowing = true
@@ -269,6 +269,7 @@ addopts = [
   # Coverage:
   "--cov=imgproxykit",
   "--cov=tests",
+  "--cov=docs/examples",
   "--cov-report=term-missing:skip-covered",
   "--cov-report=html",
   "--cov-report=xml",

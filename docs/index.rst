@@ -2,13 +2,13 @@ imgproxykit
 ===========
 
 A typed Python toolkit for building imgproxy URLs.
-Define reusable image transformations and generate signed URLs or reference
-presets configured on your imgproxy server.
 
-.. _quick-start:
+Describe image transformations in Python and generate signed URLs for your
+imgproxy server. Reuse the same settings across product cards, avatars,
+and image previews.
 
-Quick start
------------
+Build your first URL
+--------------------
 
 Install imgproxykit with Python 3.12 or newer:
 
@@ -16,56 +16,49 @@ Install imgproxykit with Python 3.12 or newer:
 
     pip install imgproxykit
 
-Create a Retina-ready product card with smart cropping and WebP output:
+Create a client pointing to your imgproxy server and pass a source image URI:
 
-.. code-block:: python
+.. literalinclude:: /examples/getting_started/first_url.py
+   :language: python
+   :start-at: from imgproxykit
 
-    from imgproxykit import Client, Transform
-    from imgproxykit.options import (
-        DPR,
-        Format,
-        Gravity,
-        Quality,
-        Resize,
-        Sharpen,
-        StripMetadata,
-    )
+Continue with :doc:`pages/getting-started` to resize images, choose an output
+format, and sign URLs.
 
-    imgproxy = Client('https://imgproxy.your-app.com')
+.. tip::
 
-    card = Transform(
-        Resize(width=400, height=400, mode='fill'),
-        Gravity(position='sm'),
-        DPR(2),
-        Quality(80),
-        Sharpen(value=0.5),
-        StripMetadata(value=True),
-        Format('webp'),
-    )
+    URL generation makes no network requests. Your imgproxy server fetches
+    and processes the image when the generated URL is requested. You need
+    a running imgproxy server to serve images.
 
-    url = imgproxy.url(
-        'https://storage.your-app.com/sneakers.jpg',
-        transform=card,
-    )
+What you can do
+--------------
 
-Reuse ``card`` for other source images. URL generation makes no network
-requests: imgproxy fetches and processes the image when the URL is requested.
+* **Reuse transformations.** Define a ``Transform`` once and use it for
+  different source images.
+* **Configure processing in Python.** Combine typed option classes and scalar
+  keyword arguments for dimensions, formats, quality, and other settings.
+* **Sign URLs.** Use your server's key and salt, or generate unsigned URLs
+  when your server accepts them.
+* **Reference server presets.** Combine named imgproxy presets with explicit
+  processing options.
 
-.. note::
+Find your way
+-------------
 
-    Without signing credentials, URLs use the ``unsafe`` marker.
-    For a server with signature checking enabled, pass both ``key`` and
-    ``salt`` to ``Client``. See :doc:`pages/usage`.
+* :doc:`pages/getting-started` walks through installation and your first
+  image URLs.
+* :doc:`pages/user-guide/index` explains client configuration, transformations,
+  and choosing processing options.
+* :doc:`pages/api-reference/index` lists classes, arguments, types,
+  and extension points.
+* :doc:`pages/changelog` tracks releases and compatibility changes.
 
 .. toctree::
     :maxdepth: 2
-    :caption: Documentation
-
-    pages/usage
-    pages/changelog
-
-.. toctree::
-    :caption: API Reference
     :hidden:
 
+    pages/getting-started
+    pages/user-guide/index
     pages/api-reference/index
+    pages/changelog

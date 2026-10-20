@@ -103,11 +103,29 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'README.md']
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'shibuya'
+html_theme = 'sphinx_material'
+# The theme adds template helper classes to html_context, which Sphinx cannot
+# pickle. This only affects configuration caching, not the rendered pages.
+suppress_warnings = ['config.cache']
 html_title = 'imgproxykit'
 html_theme_options = {
-    'accent_color': 'yellow',
-    'github_url': 'https://github.com/kondratevdev/imgproxykit',
+    'localtoc_label_text': 'Contents',
+    'master_doc': False,
+    'nav_title': 'imgproxykit',
+    'color_primary': 'blue',
+    'color_accent': 'blue',
+    'repo_url': 'https://github.com/kondratevdev/imgproxykit',
+    'repo_name': 'imgproxykit',
+    'globaltoc_depth': 3,
+    'globaltoc_includehidden': True,
+}
+html_sidebars = {
+    '**': [
+        'logo-text.html',
+        'globaltoc.html',
+        'localtoc.html',
+        'searchbox.html',
+    ],
 }
 
 # Add any paths that contain custom static files (such as style sheets) here,
