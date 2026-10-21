@@ -23,6 +23,6 @@ from imgproxykit.serialization import PathSerializer
 def test_trim(*, option: Trim, expected: str) -> None:
     """Ensure that trim retains its threshold, color, and symmetry flags."""
     assert (
-        PathSerializer._serialize_segment(option.name, option.arguments)
+        PathSerializer()._serialize_segment(option.name, option.arguments)
         == expected
     )

@@ -18,6 +18,6 @@ from imgproxykit.serialization import PathSerializer
 def test_cache_buster(*, option: CacheBuster, expected: str) -> None:
     """Ensure that cache busters escape reserved characters and Unicode."""
     assert (
-        PathSerializer._serialize_segment(option.name, option.arguments)
+        PathSerializer()._serialize_segment(option.name, option.arguments)
         == expected
     )

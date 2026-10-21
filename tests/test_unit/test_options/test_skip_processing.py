@@ -15,6 +15,6 @@ from imgproxykit.serialization import PathSerializer
 def test_skip_processing(*, option: SkipProcessing, expected: str) -> None:
     """Ensure that skipped formats retain their order and allow omission."""
     assert (
-        PathSerializer._serialize_segment(option.name, option.arguments)
+        PathSerializer()._serialize_segment(option.name, option.arguments)
         == expected
     )

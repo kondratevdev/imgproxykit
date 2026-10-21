@@ -23,6 +23,6 @@ from imgproxykit.serialization import PathSerializer
 def test_padding(*, option: Padding, expected: str) -> None:
     """Ensure that padding uses CSS side order and retains omitted sides."""
     assert (
-        PathSerializer._serialize_segment(option.name, option.arguments)
+        PathSerializer()._serialize_segment(option.name, option.arguments)
         == expected
     )

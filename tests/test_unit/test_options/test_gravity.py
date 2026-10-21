@@ -22,6 +22,6 @@ from imgproxykit.serialization import PathSerializer
 def test_gravity(*, option: Gravity, expected: str) -> None:
     """Ensure that gravity retains its anchor and optional offset positions."""
     assert (
-        PathSerializer._serialize_segment(option.name, option.arguments)
+        PathSerializer()._serialize_segment(option.name, option.arguments)
         == expected
     )

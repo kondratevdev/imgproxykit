@@ -108,4 +108,13 @@ def test_serialize_segment(
     expected: str,
 ) -> None:
     """Ensure that arguments retain their positions and explicit values."""
-    assert PathSerializer._serialize_segment('resize', arguments) == expected
+    assert PathSerializer()._serialize_segment('resize', arguments) == expected
+
+
+def test_custom_arguments_separator() -> None:
+    """Ensure that custom separators preserve omitted argument positions."""
+    serializer = PathSerializer(arguments_separator=',')
+    transform = Transform(Resize(width=300), format='webp')
+    assert serializer(_SOURCE, transform=transform) == (
+        '/resize,,300/format,webp/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc'
+    )

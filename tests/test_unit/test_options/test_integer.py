@@ -35,6 +35,6 @@ def test_integer_options(
     option = option_type(value=value)
 
     assert (
-        PathSerializer._serialize_segment(option.name, option.arguments)
+        PathSerializer()._serialize_segment(option.name, option.arguments)
         == f'{prefix}:{value}'
     )

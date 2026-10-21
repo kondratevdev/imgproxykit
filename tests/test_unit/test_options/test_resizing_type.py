@@ -7,6 +7,6 @@ def test_resizing_type() -> None:
     option = ResizingType(value='fit')
 
     assert (
-        PathSerializer._serialize_segment(option.name, option.arguments)
+        PathSerializer()._serialize_segment(option.name, option.arguments)
         == 'resizing_type:fit'
     )

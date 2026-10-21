@@ -15,6 +15,6 @@ from imgproxykit.serialization import PathSerializer
 def test_flip(*, option: Flip, expected: str) -> None:
     """Ensure that flip axes retain positions and explicit false values."""
     assert (
-        PathSerializer._serialize_segment(option.name, option.arguments)
+        PathSerializer()._serialize_segment(option.name, option.arguments)
         == expected
     )

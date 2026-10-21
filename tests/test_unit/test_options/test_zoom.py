@@ -14,6 +14,6 @@ from imgproxykit.serialization import PathSerializer
 def test_zoom(*, option: Zoom, expected: str) -> None:
     """Ensure that zoom supports uniform and independent axis factors."""
     assert (
-        PathSerializer._serialize_segment(option.name, option.arguments)
+        PathSerializer()._serialize_segment(option.name, option.arguments)
         == expected
     )

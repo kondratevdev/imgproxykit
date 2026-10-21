@@ -25,6 +25,6 @@ from imgproxykit.serialization import PathSerializer
 def test_resize(*, option: Resize, expected: str) -> None:
     """Ensure that resize arguments follow protocol order and retain gaps."""
     assert (
-        PathSerializer._serialize_segment(option.name, option.arguments)
+        PathSerializer()._serialize_segment(option.name, option.arguments)
         == expected
     )

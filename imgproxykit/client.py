@@ -43,6 +43,7 @@ class Client:
         key: None = None,
         salt: None = None,
         unsigned_signature: str = 'unsafe',
+        arguments_separator: str = ':',
     ) -> None: ...
 
     @overload
@@ -54,9 +55,10 @@ class Client:
         key: str,
         salt: str,
         signature_size: int = 32,
+        arguments_separator: str = ':',
     ) -> None: ...
 
-    def __init__(
+    def __init__(  # noqa: WPS211
         self,
         base_url: str,
         /,
@@ -65,6 +67,7 @@ class Client:
         salt: str | None = None,
         signature_size: int = 32,
         unsigned_signature: str = 'unsafe',
+        arguments_separator: str = ':',
     ) -> None:
         """
         Configure the imgproxy address and create the client components.
@@ -87,6 +90,9 @@ class Client:
             unsigned_signature: URL marker used when key and salt are omitted.
                 Defaults to ``'unsafe'``. With server signing enabled,
                 configure this marker in ``IMGPROXY_TRUSTED_SIGNATURES``.
+            arguments_separator: Separator between processing option names
+                and their arguments. Must match the server's
+                ``IMGPROXY_ARGUMENTS_SEPARATOR``. Defaults to ``':'``.
 
         Raises:
             ValueError: With the default signer, if only one signing
@@ -109,7 +115,9 @@ class Client:
 
         """
         self._base_url = base_url
-        self._path_serializer = self.path_serializer_cls()
+        self._path_serializer = self.path_serializer_cls(
+            arguments_separator=arguments_separator,
+        )
         self._url_signer = self.url_signer_cls(
             key=key,
             salt=salt,

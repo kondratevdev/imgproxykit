@@ -28,6 +28,6 @@ def test_extend_aspect_ratio(
 ) -> None:
     """Ensure that aspect ratio extension retains its flag and gravity."""
     assert (
-        PathSerializer._serialize_segment(option.name, option.arguments)
+        PathSerializer()._serialize_segment(option.name, option.arguments)
         == expected
     )

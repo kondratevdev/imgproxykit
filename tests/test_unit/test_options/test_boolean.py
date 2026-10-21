@@ -30,6 +30,6 @@ def test_boolean_options(
     option = option_type(value=value)
 
     assert (
-        PathSerializer._serialize_segment(option.name, option.arguments)
+        PathSerializer()._serialize_segment(option.name, option.arguments)
         == f'{prefix}:{int(value)}'
     )

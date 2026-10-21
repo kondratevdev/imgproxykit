@@ -21,7 +21,19 @@ class PathSerializer:
 
     """
 
-    __slots__ = ()
+    __slots__ = ('_arguments_separator',)
+
+    def __init__(self, *, arguments_separator: str = ':') -> None:
+        """
+        Configure processing option serialization.
+
+        Args:
+            arguments_separator: Separator between processing option names
+                and their arguments. Must match the server's
+                ``IMGPROXY_ARGUMENTS_SEPARATOR``. Defaults to ``':'``.
+
+        """
+        self._arguments_separator = arguments_separator
 
     # TODO: Support source_url_encryption_key for source URL encryption (Pro).
     # TODO: Support the plain option for unencoded source URLs.
@@ -34,8 +46,8 @@ class PathSerializer:
         """
         Build an unsigned path using processing options and preset references.
 
-        Serialize each option as a colon-separated segment before the encoded
-        source. Output format options are included as processing segments.
+        Serialize each option using the configured arguments separator before
+        the encoded source. Output formats are included as processing segments.
         Omitted processing parameters are left to the server.
 
         Args:
@@ -74,9 +86,8 @@ class PathSerializer:
         )
         return '/'.join(('', *options, encode_base64(source)))
 
-    @classmethod
     def _serialize_segment(
-        cls,
+        self,
         name: str,
         arguments: tuple[Argument, ...],
     ) -> str:
@@ -93,8 +104,9 @@ class PathSerializer:
         end = len(arguments)
         while end and arguments[end - 1] is None:
             end -= 1
-        serialized = map(cls._serialize_argument, arguments[:end])
-        return ':'.join((name, *serialized))
+
+        serialized = map(self._serialize_argument, arguments[:end])
+        return self._arguments_separator.join((name, *serialized))
 
     @classmethod
     def _serialize_argument(cls, value: Argument) -> str:

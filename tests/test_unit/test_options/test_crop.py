@@ -24,6 +24,6 @@ from imgproxykit.serialization import PathSerializer
 def test_crop(*, option: Crop, expected: str) -> None:
     """Ensure that crop dimensions and focus offsets retain their positions."""
     assert (
-        PathSerializer._serialize_segment(option.name, option.arguments)
+        PathSerializer()._serialize_segment(option.name, option.arguments)
         == expected
     )
