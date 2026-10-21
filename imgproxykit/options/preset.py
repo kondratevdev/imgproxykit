@@ -5,7 +5,7 @@ from imgproxykit.options.base import Option
 from imgproxykit.types import Argument, OptionType
 
 
-@dataclass(frozen=True, slots=True, kw_only=True)
+@dataclass(frozen=True, slots=True, init=False)
 class Preset(Option):
     """
     Reference named presets configured on the imgproxy server.
@@ -19,7 +19,7 @@ class Preset(Option):
 
     Usage:
 
-    >>> option = Preset(names=('thumbnail', 'watermarked'))
+    >>> option = Preset('thumbnail', 'watermarked')
     >>> option.arguments
     ('thumbnail', 'watermarked')
 
@@ -31,6 +31,27 @@ class Preset(Option):
     names: tuple[str, ...]
 
     name: ClassVar[OptionType] = 'preset'
+
+    def __init__(self, *names: str) -> None:
+        """
+        Store preset names in their supplied order.
+
+        Args:
+            *names: Server preset names in imgproxy protocol order.
+
+        Examples:
+            Reference a single preset, then several in order:
+
+            >>> Preset('thumbnail').arguments
+            ('thumbnail',)
+            >>> Preset('thumbnail', 'watermarked').arguments
+            ('thumbnail', 'watermarked')
+
+        """
+        # Keep variadic names while initializing a frozen dataclass.
+        # Bypassing __setattr__ is safe until initialization is finished.
+        object.__setattr__(self, 'names', names)
+        self.validate()
 
     @property
     @override

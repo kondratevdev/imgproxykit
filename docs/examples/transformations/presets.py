@@ -10,7 +10,7 @@ from imgproxykit.options import Preset
 
 client = Client('https://images.example.com')
 thumbnail = Transform(
-    Preset(names=('thumbnail', 'watermarked')),
+    Preset('thumbnail', 'watermarked'),
     quality=85,
     format='webp',
 )

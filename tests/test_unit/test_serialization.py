@@ -41,15 +41,15 @@ def test_source_path(*, source: str, expected: str) -> None:
         ),
         # Names within a preset retain their order.
         (
-            Transform(Preset(names=('thumbnail', 'watermarked'))),
+            Transform(Preset('thumbnail', 'watermarked')),
             '/preset:thumbnail:watermarked/',
         ),
         # Presets retain their positions around overrides.
         (
             Transform(
-                Preset(names=('thumbnail',)),
+                Preset('thumbnail'),
                 Quality(85),
-                Preset(names=('watermarked',)),
+                Preset('watermarked'),
             ),
             '/preset:thumbnail/quality:85/preset:watermarked/',
         ),
@@ -57,7 +57,7 @@ def test_source_path(*, source: str, expected: str) -> None:
         (
             Transform(
                 Format('webp'),
-                Preset(names=('thumbnail',)),
+                Preset('thumbnail'),
                 Format('avif'),
             ),
             '/format:webp/preset:thumbnail/format:avif/',

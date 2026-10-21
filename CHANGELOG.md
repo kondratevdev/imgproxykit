@@ -12,6 +12,10 @@ but with a deprecation period.
 
 ### Breaking changes
 
+- `Preset` now takes preset names as positional arguments, so
+  `Preset('thumbnail', 'watermarked')` replaces
+  `Preset(names=('thumbnail', 'watermarked'))`. Supplied names keep their
+  order, #27
 - Added `arguments_separator` parameter to `Client` and `PathSerializer`
   to match `IMGPROXY_ARGUMENTS_SEPARATOR`, defaults to `:`.
   `Client` now passes it to `path_serializer_cls`, so custom path serializer

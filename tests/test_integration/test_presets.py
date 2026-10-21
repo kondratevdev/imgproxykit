@@ -24,7 +24,7 @@ def test_presets(
     """Ensure that server presets follow supplied order."""
     url = imgproxy_client.url(
         'local:///source.png',
-        transform=Transform(Preset(names=presets)),
+        transform=Transform(Preset(*presets)),
     )
 
     response = http_client.get(url)

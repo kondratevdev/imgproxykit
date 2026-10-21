@@ -69,7 +69,7 @@ client = Client(
 )
 
 thumbnail = Transform(
-    Preset(names=('product-card',)),
+    Preset('product-card'),
     format='webp',
 )
 thumbnail_url = client.url(
