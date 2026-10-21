@@ -43,7 +43,7 @@ class ScalarOptions(TypedDict, total=False, closed=True):
     width: int
 
 
-@dataclass(frozen=True, slots=True)
+@dataclass(frozen=True, slots=True, init=False)
 class Transform:
     """
     Define reusable image processing options.
