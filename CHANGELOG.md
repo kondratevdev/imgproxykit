@@ -8,6 +8,15 @@ After `Development Status :: 4 - Beta` we will still break things
 but with a deprecation period.
 
 
+## 0.3.0 WIP
+
+### Breaking changes
+
+- Added `arguments_separator` parameter to `Client` and `PathSerializer`
+  to match `IMGPROXY_ARGUMENTS_SEPARATOR`, defaults to `:`.
+  `Client` now passes it to `path_serializer_cls`, so custom path serializer
+  constructors must accept this keyword argument, #26
+
 ## 0.2.1
 
 ### Breaking changes

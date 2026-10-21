@@ -72,8 +72,11 @@ your imgproxy server. A single option can reference several names:
    :start-at: from imgproxykit
 
 This produces ``preset:thumbnail:watermarked/quality:85/format:webp`` before
-the encoded source. Configure both named presets on your server before using
-this example.
+the encoded source.
+
+.. important::
+
+    Configure both named presets on your server before using this example.
 
 Preset names retain their order. A ``Preset`` can appear among other option
 instances, and multiple ``Preset`` instances remain separate URL segments.
@@ -90,9 +93,12 @@ a URL without processing option segments:
    :language: python
    :start-at: from imgproxykit
 
-These calls produce the same URL. Imgproxy determines the resulting image
-using its server defaults; an empty transformation does not request an
-unchanged copy of the source.
+These calls produce the same URL.
+
+.. note::
+
+    Imgproxy determines the resulting image using its server defaults; an empty
+    transformation does not request an unchanged copy of the source.
 
 Next steps
 ----------

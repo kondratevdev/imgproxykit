@@ -86,12 +86,16 @@ Use per-request limits when different image sources need different bounds:
    :start-at: from imgproxykit
 
 This requests a source limit of 20 megapixels and 5,000,000 bytes.
-``MaxSrcResolution`` and ``MaxSrcFileSize`` require
-``IMGPROXY_ALLOW_SECURITY_OPTIONS=true`` on the server. Generating a URL does
-not enable this setting.
 
-``MaxAnimationFrames``, ``MaxAnimationFrameResolution`` and
-``MaxResultDimension`` also override server limits and require that setting.
+.. important::
+
+    ``MaxSrcResolution`` and ``MaxSrcFileSize`` require
+    ``IMGPROXY_ALLOW_SECURITY_OPTIONS=true`` on the server. Generating a URL does
+    not enable this setting.
+
+    ``MaxAnimationFrames``, ``MaxAnimationFrameResolution`` and
+    ``MaxResultDimension`` also override server limits and require that setting.
+
 Configure server-wide limits on imgproxy when per-request overrides are not
 needed.
 

@@ -2,8 +2,8 @@ Client and signed URLs
 ======================
 
 A :class:`~imgproxykit.Client` stores your imgproxy address and signing
-settings. Create it once and reuse it to build URLs for different images
-and transformations.
+settings and arguments separator. Create it once and reuse it to build URLs
+for different images and transformations.
 
 Server address and source
 -------------------------
@@ -42,9 +42,11 @@ To use another marker, set ``unsigned_signature``:
    :language: python
    :start-at: from imgproxykit
 
-When signature checking is enabled, the server must list this marker in
-``IMGPROXY_TRUSTED_SIGNATURES``. Such a marker bypasses signature checking;
-anyone who knows it can construct URLs with different processing options.
+.. warning::
+
+    When signature checking is enabled, the server must list this marker in
+    ``IMGPROXY_TRUSTED_SIGNATURES``. Such a marker bypasses signature checking;
+    anyone who knows it can construct URLs with different processing options.
 
 Signed URLs
 -----------
@@ -61,8 +63,10 @@ The client signs the serialized path, including processing options and the
 encoded source URI. The same source and options produce the same signature.
 Changing either produces a new signature.
 
-Keep the key and salt in your application on the server. Send the generated
-URLs to browsers or other clients that need to display images.
+.. warning::
+
+    Keep the key and salt in your application on the server. Send the generated
+    URLs to browsers or other clients that need to display images.
 
 Signature size
 --------------
@@ -75,13 +79,34 @@ as ``signature_size``:
    :language: python
    :start-at: from imgproxykit
 
-This example requires ``IMGPROXY_SIGNATURE_SIZE=16`` on the server.
+.. important::
+
+    This example requires ``IMGPROXY_SIGNATURE_SIZE=16`` on the server.
+
 The byte count applies before URL-safe Base64 encoding, so it is not the
 number of characters in the URL's signature segment.
 
 See the `imgproxy signature configuration
 <https://docs.imgproxy.net/latest/configuration/options#url-signature>`_
 for server settings.
+
+Arguments separator
+-------------------
+
+Processing option names and their arguments are separated by ``:`` by default,
+for example ``resize:fill:300:200``. If your server sets
+``IMGPROXY_ARGUMENTS_SEPARATOR`` to another string, pass the same value as
+``arguments_separator``:
+
+.. literalinclude:: /examples/client/arguments_separator.py
+   :language: python
+   :start-at: from imgproxykit
+
+.. important::
+
+    This example requires ``IMGPROXY_ARGUMENTS_SEPARATOR=,`` on the server.
+    Options remain separated by ``/``. The separator applies to all processing
+    options, including preset references and the output format.
 
 Configuration errors
 --------------------
@@ -95,7 +120,7 @@ With the default signer, client construction raises :class:`ValueError` when:
 A valid hex key or salt that differs from the server's configuration does not
 cause a local error. The server rejects the signature when the URL is requested.
 Likewise, the client does not check whether the server accepts an unsigned
-marker or uses a matching signature size.
+marker or uses a matching signature size or arguments separator.
 
 Next steps
 ----------

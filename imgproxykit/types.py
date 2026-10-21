@@ -1,5 +1,6 @@
 from typing import Literal
 
+# Add docstrings
 type Argument = str | int | float | bool | None
 type FormatType = Literal[
     'png',
