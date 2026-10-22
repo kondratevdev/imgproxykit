@@ -23,6 +23,8 @@ but with a deprecation period.
 
 ### Misc
 
+- Added issue and pull request templates, an AI policy,
+  and updated contribution guidelines, #56
 - Clarified source and imgproxy URLs with consistent naming across
   documentation examples. Expanded type documentation and added links
   to the API reference and imgproxy settings, #54
