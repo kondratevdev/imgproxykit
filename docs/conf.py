@@ -13,7 +13,7 @@
 import sys
 import tomllib
 from pathlib import Path
-from typing import cast
+from typing import Final, cast
 
 # We need `imgproxykit` to be importable from here:
 _ROOT = Path(__file__).resolve(strict=True).parent.parent
@@ -60,7 +60,7 @@ extensions = [
     # 3rd party, order matters:
     # https://github.com/wemake-services/wemake-django-template/issues/159
     'sphinx_autodoc_typehints',
-    'sphinx_tabs.tabs',
+    'sphinx_immaterial',
     'sphinx_iconify',
 ]
 
@@ -72,6 +72,22 @@ nitpicky = True
 # Sphinx also treats overload defaults as references to ``Ellipsis``.
 nitpick_ignore = [
     ('py:data', 'Ellipsis'),
+    # Type parameter inherited by concrete scalar options.
+    ('py:class', 'ValueT'),
+    ('py:param', 'ValueT'),
+]
+
+autodoc_typehints = 'both'
+autoclass_content = 'both'
+typehints_use_signature = True
+typehints_use_signature_return = True
+
+# Keep API navigation focused on classes, methods, and properties.
+object_description_options = [
+    ('py:.*', {'toc_icon_text': None}),
+    ('py:parameter', {'include_in_toc': False}),
+    ('py:typeParameter', {'include_in_toc': False}),
+    ('py:attribute', {'include_in_toc': False}),
 ]
 
 # Set `typing.TYPE_CHECKING` to `True`:
@@ -105,28 +121,41 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store', 'README.md']
 
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
-html_theme = 'sphinx_material'
-# The theme adds template helper classes to html_context, which Sphinx cannot
-# pickle. This only affects configuration caching, not the rendered pages.
-suppress_warnings = ['config.cache']
+_BLUE: Final = 'blue'
+
+html_theme = 'sphinx_immaterial'
 html_title = 'imgproxykit'
 html_theme_options = {
-    'localtoc_label_text': 'Contents',
-    'master_doc': False,
-    'nav_title': 'imgproxykit',
-    'color_primary': 'blue',
-    'color_accent': 'blue',
+    'toc_title': 'Contents',
+    'palette': [
+        {
+            'scheme': 'default',
+            'primary': _BLUE,
+            'accent': _BLUE,
+            'toggle': {
+                'icon': 'material/brightness-7',
+                'name': 'Switch to dark mode',
+            },
+        },
+        {
+            'scheme': 'slate',
+            'primary': _BLUE,
+            'accent': _BLUE,
+            'toggle': {
+                'icon': 'material/brightness-4',
+                'name': 'Switch to light mode',
+            },
+        },
+    ],
     'repo_url': 'https://github.com/kondratevdev/imgproxykit',
     'repo_name': 'imgproxykit',
-    'globaltoc_depth': 3,
-    'globaltoc_includehidden': True,
-}
-html_sidebars = {
-    '**': [
-        'logo-text.html',
-        'globaltoc.html',
-        'localtoc.html',
-        'searchbox.html',
+    'features': [
+        'navigation.sections',
+        'navigation.top',
+        'search.highlight',
+        'search.suggest',
+        'content.code.copy',
+        'content.tabs.link',
     ],
 }
 
@@ -134,4 +163,3 @@ html_sidebars = {
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
-html_css_files = ['css/tabs.css']

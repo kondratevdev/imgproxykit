@@ -9,21 +9,21 @@ Installation
 
 imgproxykit requires Python 3.12 or newer:
 
-.. tabs::
+.. md-tab-set::
 
-  .. tab:: :iconify:`material-icon-theme:uv` uv
+  .. md-tab-item:: :iconify:`material-icon-theme:uv` uv
 
     .. code-block:: bash
 
       uv add imgproxykit
 
-  .. tab:: :iconify:`devicon:poetry` poetry
+  .. md-tab-item:: :iconify:`devicon:poetry` poetry
 
     .. code-block:: bash
 
       poetry add imgproxykit
 
-  .. tab:: :iconify:`devicon:pypi` pip
+  .. md-tab-item:: :iconify:`devicon:pypi` pip
 
     .. code-block:: bash
 

@@ -12,21 +12,21 @@ Build your first URL
 
 Install imgproxykit with Python 3.12 or newer:
 
-.. tabs::
+.. md-tab-set::
 
-  .. tab:: :iconify:`material-icon-theme:uv` uv
+  .. md-tab-item:: :iconify:`material-icon-theme:uv` uv
 
     .. code-block:: bash
 
       uv add imgproxykit
 
-  .. tab:: :iconify:`devicon:poetry` poetry
+  .. md-tab-item:: :iconify:`devicon:poetry` poetry
 
     .. code-block:: bash
 
       poetry add imgproxykit
 
-  .. tab:: :iconify:`devicon:pypi` pip
+  .. md-tab-item:: :iconify:`devicon:pypi` pip
 
     .. code-block:: bash
 
@@ -71,8 +71,9 @@ Find your way
 
 * :doc:`pages/getting-started` walks through installation and your first
   image URLs.
-* :doc:`pages/user-guide/index` explains client configuration, transformations,
-  and choosing processing options.
+* The user guide covers :doc:`client configuration <pages/user-guide/client>`,
+  :doc:`transformations <pages/user-guide/transformations>`, and
+  :doc:`processing options <pages/user-guide/options>`.
 * :doc:`pages/api-reference/index` lists classes, arguments, types,
   and extension points.
 * :doc:`pages/changelog` tracks releases and compatibility changes.
@@ -82,6 +83,19 @@ Find your way
     :hidden:
 
     pages/getting-started
-    pages/user-guide/index
+
+.. toctree::
+    :caption: User guide
+    :maxdepth: 2
+    :hidden:
+
+    pages/user-guide/client
+    pages/user-guide/transformations
+    pages/user-guide/options
+
+.. toctree::
+    :maxdepth: 2
+    :hidden:
+
     pages/api-reference/index
     pages/changelog

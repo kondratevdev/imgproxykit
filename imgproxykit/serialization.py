@@ -23,7 +23,6 @@ class PathSerializer:
 
     __slots__ = ('_arguments_separator',)
 
-    # TODO: Support source_url_encryption_key for source URL encryption (Pro).
     # TODO: Support the plain option for unencoded source URLs.
     def __init__(self, *, arguments_separator: str) -> None:
         """

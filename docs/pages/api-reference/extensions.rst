@@ -14,11 +14,11 @@ Path serializer
 
 .. autoclass:: imgproxykit.serialization.PathSerializer
    :members:
-   :special-members: __init__, __call__
+   :special-members: __call__
 
 URL signer
 ----------
 
 .. autoclass:: imgproxykit.signing.UrlSigner
    :members:
-   :special-members: __init__, __call__
+   :special-members: __call__
