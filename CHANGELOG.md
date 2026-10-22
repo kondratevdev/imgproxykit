@@ -8,6 +8,20 @@ After `Development Status :: 4 - Beta` we will still break things
 but with a deprecation period.
 
 
+## 0.4.0 (WIP)
+
+### Features
+
+- Added `Client.variants` to build named URLs for one source from a mapping
+  of complete transformations. The returned dictionary preserves variant
+  names, their order, and their key type, including literal string unions, #59
+
+### Misc
+
+- Added a Variants user guide with reusable transformation sets and typed
+  variant names, plus transformation composition examples. Reworked the
+  README and Getting started around local sources and named variants, #59
+
 ## 0.3.0
 
 ### Breaking changes
