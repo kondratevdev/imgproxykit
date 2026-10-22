@@ -3,14 +3,14 @@ Build a reusable set of product variants.
 
 >>> list(product_urls)
 ['small', 'medium', 'large']
->>> small_url == client.url(source_url, transform=products['small'])
+>>> product_urls['small'] == client.url(source_url, transform=products['small'])
 True
 """
 
 from imgproxykit import Client, Transform
 
-client = Client('https://imgproxy.example.com')
-source_url = 'https://originals.example.com/photo.jpg'
+client = Client('http://localhost:8080')
+source_url = 'https://picsum.photos/id/237/1600/1200'
 # Share quality and output format across all variants.
 base = Transform(quality=85, format='webp')
 
@@ -21,4 +21,8 @@ products = {
     'large': Transform(*base.options, width=1280),
 }
 product_urls = client.variants(source=source_url, variants=products)
-small_url = product_urls['small']  # Access a URL by its variant name.
+
+# Access a URL by its variant name.
+print('Small:', product_urls['small'])
+print('Medium:', product_urls['medium'])
+print('Large:', product_urls['large'])

@@ -29,28 +29,38 @@ imgproxykit requires Python 3.12 or newer:
 
       pip install imgproxykit
 
+.. tip::
+
+    To try the examples locally, start a test imgproxy container with Docker:
+
+    .. code-block:: bash
+
+        docker run -d --rm \
+          --name imgproxy-test \
+          -p 127.0.0.1:8080:8080 \
+          ghcr.io/imgproxy/imgproxy:latest
+
+    The examples below connect to this container at ``http://localhost:8080``.
+    It accepts unsigned URLs without additional configuration.
+
+    See the `imgproxy installation guide
+    <https://docs.imgproxy.net/latest/installation>`__ for other setup options.
+
 .. _quick-start:
 
 Build a thumbnail
 -----------------
 
-Create a :class:`~imgproxykit.Client` with your imgproxy server's public
-address and describe a thumbnail with :class:`~imgproxykit.Transform`. Replace the example server
-and source addresses with your own, then run this code:
+Connect :class:`~imgproxykit.Client` to the local container and describe a
+thumbnail with :class:`~imgproxykit.Transform`. The source is a public sample
+image; you can replace it with another image URL accessible to imgproxy:
 
-.. tip::
-
-    This example uses unsigned URLs. If your server requires signatures,
-    supply ``key`` and ``salt`` when creating :class:`~imgproxykit.Client`.
-    See :doc:`user-guide/client` for configuration.
-
-.. literalinclude:: /examples/getting_started/transformations.py
+.. literalinclude:: /examples/getting_started/local_thumbnail.py
    :language: python
    :start-at: from imgproxykit
 
-``thumbnail_url`` contains the URL for the WebP thumbnail, built by
-:meth:`~imgproxykit.Client.url`. Reuse ``thumbnail`` with other source images
-to apply the same processing settings.
+The example prints a URL pointing to your local imgproxy server. Open it in
+your browser to view the 300×300 WebP thumbnail.
 
 Build variants
 --------------
@@ -62,19 +72,22 @@ base transformation, then unpack
 
 .. literalinclude:: /examples/getting_started/variants.py
    :language: python
-   :start-at: # Share quality
+   :start-at: from imgproxykit
 
-.. example:: Full example
-   :collapsible:
+The example prints three URLs for widths of 320, 640, and 1280 pixels.
+Open them to compare the sizes; each image keeps the source proportions
+and uses the shared WebP format and quality setting.
 
-   .. literalinclude:: /examples/getting_started/variants.py
-      :language: python
-      :start-at: from imgproxykit
+.. tip::
 
-``product_urls`` contains a URL for each size, all using the shared quality
-and WebP format. Reuse ``products`` with other source images to keep the
-same variants across your catalog. Each transformation is immutable, so
-building URLs leaves your settings unchanged.
+    When finished, stop the test container:
+
+    .. code-block:: bash
+
+        docker stop imgproxy-test
+
+You've learned how to build image URLs and variants. Next, explore client
+configuration and more ways to compose transformations.
 
 Next steps
 ----------
