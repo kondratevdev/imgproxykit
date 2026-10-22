@@ -28,6 +28,8 @@ but with a deprecation period.
 
 ### Misc
 
+- Switched documentation to Sphinx-Immaterial with built-in tabs,
+  highlighted API signatures, and streamlined navigation, #58
 - Added issue and pull request templates, an AI policy,
   and updated contribution guidelines, #56
 - Clarified source and imgproxy URLs with consistent naming across
