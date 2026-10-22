@@ -21,6 +21,12 @@ but with a deprecation period.
   `Client` now passes it to `path_serializer_cls`, so custom path serializer
   constructors must accept this keyword argument, #26
 
+### Misc
+
+- Clarified source and imgproxy URLs with consistent naming across
+  documentation examples. Expanded type documentation and added links
+  to the API reference and imgproxy settings, #54
+
 ## 0.2.1
 
 ### Breaking changes
