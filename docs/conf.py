@@ -75,6 +75,10 @@ nitpick_ignore = [
     # Type parameter inherited by concrete scalar options.
     ('py:class', 'ValueT'),
     ('py:param', 'ValueT'),
+    # Method type parameters are not resolved by the type-hint extension.
+    ('py:param', 'Key'),
+    # Standard-library type without a local documentation target.
+    ('py:class', 'collections.abc.Mapping'),
 ]
 
 autodoc_typehints = 'both'
@@ -126,7 +130,7 @@ _BLUE: Final = 'blue'
 html_theme = 'sphinx_immaterial'
 html_title = 'imgproxykit'
 html_theme_options = {
-    'toc_title': 'Contents',
+    'toc_title': 'Table of contents',
     'palette': [
         {
             'scheme': 'default',

@@ -32,7 +32,8 @@ Install imgproxykit with Python 3.12 or newer:
 
       pip install imgproxykit
 
-Create a client pointing to your imgproxy server and pass a source image URI:
+Create a client pointing to your imgproxy server and define a thumbnail
+transformation:
 
 .. note::
 
@@ -40,12 +41,13 @@ Create a client pointing to your imgproxy server and pass a source image URI:
     ``originals.example.com`` for the original images. Replace these example
     addresses with your own.
 
-.. literalinclude:: /examples/getting_started/first_url.py
+.. literalinclude:: /examples/getting_started/transformations.py
    :language: python
    :start-at: from imgproxykit
 
-Continue with :doc:`pages/getting-started` to resize images, choose an output
-format, and sign URLs.
+``thumbnail_url`` is ready to use in an image's ``src`` attribute or an API
+response. Reuse ``thumbnail`` with other source images to apply the same
+300×300 crop and WebP format across your application.
 
 .. tip::
 
@@ -53,27 +55,13 @@ format, and sign URLs.
     and processes the image when the generated URL is requested. You need
     a running imgproxy server to serve images.
 
-What you can do
----------------
-
-* **Reuse transformations.** Define a :class:`~imgproxykit.Transform` once and
-  use it for
-  different source images.
-* **Configure processing in Python.** Combine typed option classes and scalar
-  keyword arguments for dimensions, formats, quality, and other settings.
-* **Sign URLs.** Use your server's key and salt, or generate unsigned URLs
-  when your server accepts them.
-* **Reference server presets.** Combine named imgproxy presets with explicit
-  processing options.
-
 Find your way
 -------------
 
 * :doc:`pages/getting-started` walks through installation and your first
   image URLs.
-* The user guide covers :doc:`client configuration <pages/user-guide/client>`,
-  :doc:`transformations <pages/user-guide/transformations>`, and
-  :doc:`processing options <pages/user-guide/options>`.
+* :doc:`User guide <pages/user-guide/client>` covers client configuration,
+  transformations, variants, and processing options.
 * :doc:`pages/api-reference/index` lists classes, arguments, types,
   and extension points.
 * :doc:`pages/changelog` tracks releases and compatibility changes.
@@ -91,6 +79,7 @@ Find your way
 
     pages/user-guide/client
     pages/user-guide/transformations
+    pages/user-guide/variants
     pages/user-guide/options
 
 .. toctree::

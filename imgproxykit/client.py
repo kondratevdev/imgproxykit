@@ -1,3 +1,4 @@
+from collections.abc import Mapping
 from typing import ClassVar, overload
 
 from imgproxykit.serialization import PathSerializer
@@ -164,3 +165,29 @@ class Client:
         path = self._path_serializer(source, transform=transform)
         signature = self._url_signer(path)
         return f'{self._base_url}/{signature}{path}'
+
+    def variants[Key: str](
+        self,
+        source: str,
+        *,
+        variants: Mapping[Key, Transform],
+    ) -> dict[Key, str]:
+        """
+        Build named URLs for one source using complete transformations.
+
+        Args:
+            source: Complete source URI understood by the imgproxy server.
+            variants: Names mapped to the transformation for each variant.
+                Each transformation is passed unchanged to :meth:`url`.
+
+        Returns:
+            A new dictionary preserving the input keys and iteration order.
+            The key type is preserved, including literal string unions.
+            An empty mapping produces an empty dictionary.
+            No network request is made.
+
+        """
+        return {
+            name: self.url(source, transform=transform)
+            for name, transform in variants.items()
+        }

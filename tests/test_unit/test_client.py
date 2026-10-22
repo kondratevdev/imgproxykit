@@ -47,3 +47,30 @@ def test_signed_url(credentials: Credentials) -> None:
         '9TG79qV8tG6YeCbuGRKt1eLM9SySuCJAldwf3zcrlJU/'
         'resize:fill:300:200/format:webp/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
     )
+
+
+def test_variants() -> None:
+    """Ensure that each variant name maps to its transformed URL."""
+    client = Client('https://example.com')
+
+    urls = client.variants(
+        _SOURCE,
+        variants={
+            'small': Transform(width=320),
+            'large': Transform(width=1280),
+        },
+    )
+
+    assert urls == snapshot({
+        'small': 'https://example.com/unsafe/width:320/'
+        'aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
+        'large': 'https://example.com/unsafe/width:1280/'
+        'aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
+    })
+
+
+def test_empty_variants() -> None:
+    """Ensure that an empty variant mapping produces no URLs."""
+    client = Client('https://example.com')
+
+    assert client.variants(_SOURCE, variants={}) == {}

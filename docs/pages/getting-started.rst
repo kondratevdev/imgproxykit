@@ -1,8 +1,8 @@
 Getting started
 ===============
 
-Build your first imgproxy URL, add image transformations, and configure
-signing. You will need an imgproxy server to serve the resulting URLs.
+Build a transformed image URL, then define reusable variants for your
+application. You will need an imgproxy server to serve the resulting URLs.
 
 Installation
 ------------
@@ -31,80 +31,54 @@ imgproxykit requires Python 3.12 or newer:
 
 .. _quick-start:
 
-Your first URL
---------------
+Build a thumbnail
+-----------------
 
-Create a client with your imgproxy server's public address, then pass a source
-image URL to :meth:`~imgproxykit.Client.url`:
-
-.. literalinclude:: /examples/getting_started/first_url.py
-   :language: python
-   :start-at: from imgproxykit
-
-.. note::
-
-    The examples use ``imgproxy.example.com`` for your imgproxy server and
-    ``originals.example.com`` for the original images. Replace these example
-    addresses with your own.
+Create a :class:`~imgproxykit.Client` with your imgproxy server's public
+address and describe a thumbnail with :class:`~imgproxykit.Transform`. Replace the example server
+and source addresses with your own, then run this code:
 
 .. tip::
 
-    The result is a URL string. Building it makes no network requests: imgproxy
-    fetches and processes the source image when someone requests that URL.
-    The source must be accessible to your imgproxy server.
-
-Without signing credentials, the client uses the ``unsafe`` marker.
-Your server must accept unsigned URLs for this example to work.
-
-Add transformations
--------------------
-
-Use :class:`~imgproxykit.Transform` to specify processing options. This example
-creates a 300 by 300 crop with WebP output:
+    This example uses unsigned URLs. If your server requires signatures,
+    supply ``key`` and ``salt`` when creating :class:`~imgproxykit.Client`.
+    See :doc:`user-guide/client` for configuration.
 
 .. literalinclude:: /examples/getting_started/transformations.py
    :language: python
    :start-at: from imgproxykit
 
-Options such as :class:`~imgproxykit.options.Resize` accept several arguments.
-Scalar options such as ``format`` can be passed directly as keyword arguments
-to :class:`~imgproxykit.Transform`.
-Imgproxy applies the processing options when serving the image.
+``thumbnail_url`` contains the URL for the WebP thumbnail, built by
+:meth:`~imgproxykit.Client.url`. Reuse ``thumbnail`` with other source images
+to apply the same processing settings.
 
-Sign URLs
----------
+Build variants
+--------------
 
-For a server with signature checking enabled, supply both ``key`` and ``salt``
-when creating the client. Use the same hex-encoded values configured in the
-server's `IMGPROXY_KEY
-<https://docs.imgproxy.net/latest/configuration/options#url-signature>`__ and
-`IMGPROXY_SALT
-<https://docs.imgproxy.net/latest/configuration/options#url-signature>`__
-settings.
+To generate several sizes of the same image, define a set of transformations.
+Reuse ``client`` and ``source_url`` from above, keep quality and format in a
+base transformation, then unpack
+``base.options`` into a complete transformation for each width:
 
-.. literalinclude:: /examples/getting_started/signing.py
+.. literalinclude:: /examples/getting_started/variants.py
    :language: python
-   :start-at: from imgproxykit
+   :start-at: # Share quality
 
-The client replaces the ``unsafe`` marker with a signature generated from the
-URL path. Keep signing credentials in your application on the server.
+.. example:: Full example
+   :collapsible:
 
-Reuse a transformation
-----------------------
+   .. literalinclude:: /examples/getting_started/variants.py
+      :language: python
+      :start-at: from imgproxykit
 
-A :class:`~imgproxykit.Transform` is immutable and can be reused for different
-source images. Keep a transformation for each image size your application needs:
-
-.. literalinclude:: /examples/getting_started/reuse.py
-   :language: python
-   :start-at: from imgproxykit
-
-Both URLs use the same resize and format options for different source images.
+``product_urls`` contains a URL for each size, all using the shared quality
+and WebP format. Reuse ``products`` with other source images to keep the
+same variants across your catalog. Each transformation is immutable, so
+building URLs leaves your settings unchanged.
 
 Next steps
 ----------
 
 * :doc:`user-guide/client` — client configuration and signed URLs.
-* :doc:`user-guide/transformations` — working with transformations.
-* :doc:`user-guide/options` — processing options and server presets.
-* :doc:`api-reference/index` — complete signatures and available options.
+* :doc:`user-guide/transformations` — compose and reuse processing settings.
+* :doc:`user-guide/variants` — reusable sets and typed variant names.

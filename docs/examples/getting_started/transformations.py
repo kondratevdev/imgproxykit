@@ -11,9 +11,11 @@ from imgproxykit.options import Resize
 # Public URL of your imgproxy server.
 client = Client('https://imgproxy.example.com')
 source_url = 'https://originals.example.com/photo.jpg'
+
 thumbnail = Transform(
     Resize(width=300, height=300, mode='fill'),
     format='webp',
 )
 
+# Build the URL; imgproxy processes the image when the URL is requested.
 thumbnail_url = client.url(source=source_url, transform=thumbnail)

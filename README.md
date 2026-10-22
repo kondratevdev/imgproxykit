@@ -17,23 +17,25 @@
 ## Features
 
 - [x] Fully typed and checked with `mypy`, `pyright`, `ty` and `pyrefly` in strict modes
-- [x] Expressive transforms: combine option objects with concise scalar arguments
-- [x] Immutable, reusable transforms for consistent image settings across your app
+- [x] Immutable, reusable transforms combining typed options and scalar arguments
+- [x] Variants: generate multiple image URLs from a reusable set of transforms
 - [x] Support for named presets configured on your imgproxy server
 
 ---------
 
 ## Installation
 
-Requires **Python 3.12+** and a running imgproxy server.
+Requires **Python 3.12+** and a running [imgproxy](https://github.com/imgproxy/imgproxy) server.
 
 ```bash
 pip install imgproxykit
 ```
 
-## Example
+## Examples
 
-Define a WebP thumbnail once and reuse it across a product catalog:
+### Single URL
+
+Build a URL for a cropped WebP thumbnail:
 
 ```python
 from imgproxykit import Client, Transform
@@ -44,50 +46,49 @@ client = Client('https://imgproxy.example.com')
 
 thumbnail = Transform(
     Resize(width=300, height=300, mode='fill'),  # Pass typed option objects.
-    Gravity(position='sm'),  # Let imgproxy choose the crop's focus.
     quality=80,  # Or scalar keywords, equivalent to Quality(80).
     format='webp',
 )
-source_urls = [
-    'https://originals.example.com/products/backpack.jpg',
-    'https://originals.example.com/products/sneakers.jpg',
-]
-# Reuse one immutable transformation across your catalog.
-thumbnail_urls = [
-    client.url(source=source_url, transform=thumbnail)
-    for source_url in source_urls
-]
-```
 
-Use these URLs in your images' `src` attributes. Building a URL makes no
-network requests: when a browser requests it, imgproxy fetches the original
-image from `originals.example.com` and processes it.
-
-Sign URLs and reuse presets configured on your imgproxy server:
-
-```python
-from imgproxykit import Client, Transform
-from imgproxykit.options import Preset
-
-client = Client(
-    'https://imgproxy.example.com',
-    # Replace with your imgproxy server's hex-encoded key and salt.
-    key='736563726574',
-    salt='73616c74',
-)
-
-thumbnail = Transform(
-    Preset('product-card'),  # Reuse a preset from your imgproxy server.
-    format='webp',  # Combine server presets with explicit processing options.
-)
 source_url = 'https://originals.example.com/products/backpack.jpg'
-# The client signs the URL using your server's key and salt.
 thumbnail_url = client.url(source=source_url, transform=thumbnail)
 ```
 
-See the [full documentation](https://imgproxykit.readthedocs.io/en/latest/)
-for client configuration, transformations, and processing options.
-Find published releases on [PyPI](https://pypi.org/project/imgproxykit/).
+`thumbnail_url` points to a 300×300 WebP thumbnail with smart cropping.
+Imgproxy fetches and processes the original image when this URL is requested.
+
+### Variants
+
+Build variants by combining shared settings with different sizes:
+
+```python
+from imgproxykit import Client, Transform
+
+client = Client('https://imgproxy.example.com')
+# Share quality and output format across all variants.
+base = Transform(quality=85, format='webp')
+
+products = {
+    'small': Transform(*base.options, width=320),
+    'medium': Transform(*base.options, width=640),
+    'large': Transform(*base.options, width=1280),
+}
+source_url = 'https://originals.example.com/products/backpack.jpg'
+
+# Build one URL per variant for the same source image.
+product_urls = client.variants(source=source_url, variants=products)
+small_url = product_urls['small']  # Access a URL by its variant name.
+```
+
+`product_urls` contains a URL for each size, all using the shared quality
+and WebP format. Reuse `products` with other source images to keep the same
+variants across your catalog.
+
+## Next steps
+
+- Read the [documentation](https://imgproxykit.readthedocs.io/en/latest/)
+  for client configuration, transformations, variants, and processing options.
+- Find published releases on [PyPI](https://pypi.org/project/imgproxykit/).
 
 ## Contributing
 

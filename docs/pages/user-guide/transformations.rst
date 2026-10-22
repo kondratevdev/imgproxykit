@@ -15,7 +15,8 @@ and output format, can also be supplied as keyword arguments:
    :language: python
    :start-at: from imgproxykit
 
-Both forms create the same transformation. Use option
+``thumbnail`` and ``explicit`` contain the same resize, quality, and format
+options. Use option
 instances for structured settings such as :class:`~imgproxykit.options.Resize`;
 choose either form
 for scalar options such as :class:`~imgproxykit.options.Quality` and
@@ -38,9 +39,36 @@ tuple and cannot
 be reassigned. Built-in option instances are immutable too. Building a URL
 does not change the transformation.
 
+Both URLs use the same 300 by 300 crop and WebP output for different source
+images.
+
 To use different settings, create another :class:`~imgproxykit.Transform`. There
 is currently
 no API for replacing or removing options from an existing transformation.
+
+Compose transformations
+-----------------------
+
+Group shared settings in a transformation, then unpack its ``options`` into
+new transformations. For example, product thumbnails and avatars can share
+quality and output format while using different dimensions:
+
+.. literalinclude:: /examples/transformations/composition.py
+   :language: python
+   :start-at: from imgproxykit
+
+Each new transformation contains the shared options followed by its own
+options. ``base`` remains unchanged. You can unpack more than one
+transformation when combining reusable groups of options.
+
+Unpacking appends options; it does not merge or replace them. For example,
+``Transform(*product_thumbnail.options, width=640)`` retains both width
+options. When sharing settings across sizes, keep the shared transformation
+focused on settings such as quality and format, and specify dimensions in
+each complete transformation.
+
+Use :doc:`variants` to group complete transformations under names and build
+their URLs together.
 
 Option order
 ------------
@@ -112,5 +140,6 @@ Next steps
 ----------
 
 * :doc:`options` — choose processing options for your images.
+* :doc:`variants` — organize transformations into reusable sets.
 * :doc:`../api-reference/transform` — transformation API and scalar arguments.
 * :doc:`../api-reference/options` — built-in processing options.
