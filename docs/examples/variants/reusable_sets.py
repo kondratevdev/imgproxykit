@@ -14,7 +14,6 @@ from imgproxykit.options import Resize
 
 # Share quality and output format across both sets.
 base = Transform(quality=85, format='webp')
-
 products = {
     # Add dimensions to the shared options for each variant.
     'small': Transform(*base.options, width=320),

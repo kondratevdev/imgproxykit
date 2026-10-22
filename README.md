@@ -65,16 +65,16 @@ Build variants by combining shared settings with different sizes:
 from imgproxykit import Client, Transform
 
 client = Client('https://imgproxy.example.com')
+
 # Share quality and output format across all variants.
 base = Transform(quality=85, format='webp')
-
 products = {
     'small': Transform(*base.options, width=320),
     'medium': Transform(*base.options, width=640),
     'large': Transform(*base.options, width=1280),
 }
-source_url = 'https://originals.example.com/products/backpack.jpg'
 
+source_url = 'https://originals.example.com/products/backpack.jpg'
 # Build one URL per variant for the same source image.
 product_urls = client.variants(source=source_url, variants=products)
 small_url = product_urls['small']  # Access a URL by its variant name.

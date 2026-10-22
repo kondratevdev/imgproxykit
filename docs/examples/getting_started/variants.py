@@ -11,9 +11,9 @@ from imgproxykit import Client, Transform
 
 client = Client('http://localhost:8080')
 source_url = 'https://picsum.photos/id/237/1600/1200'
+
 # Share quality and output format across all variants.
 base = Transform(quality=85, format='webp')
-
 products = {
     # Unpack shared options and add a width for each variant.
     'small': Transform(*base.options, width=320),
