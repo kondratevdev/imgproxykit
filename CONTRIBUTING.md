@@ -1,20 +1,25 @@
 # How to contribute
 
+Please read our [AI Policy](.github/AI_POLICY.md) before contributing.
+
 ## Dependencies
 
-We use [poetry](https://github.com/python-poetry/poetry) to manage the dependencies.
+The project requires Python 3.12 or newer (within Python 3).
+We use [Poetry](https://github.com/python-poetry/poetry) to manage dependencies.
 
-To install them you would need to run `install` command:
+To install them:
 
 ```bash
 poetry install
 ```
 
-To activate your `virtualenv` run `poetry shell` or `source .venv/bin/activate`.
+The commands below use `poetry run`, so you do not need to activate
+the virtual environment.
 
 ## One magic command
 
-Run `make check` to run everything we have!
+Run `make check` to run linting, type checks, package checks, and all tests!
+Docker is required for integration tests. Documentation is built separately.
 
 ## Tests
 
@@ -49,16 +54,26 @@ make type-check
 
 `make lint` also checks slots and import architecture. `make package` checks
 that `poetry.lock` matches `pyproject.toml` and installed dependencies agree.
-The project requires Python 3.12 or newer (within Python 3).
 
-These steps are mandatory during the CI.
+These checks also run in CI.
+
+## Documentation
+
+To install the documentation dependencies and build the HTML documentation:
+
+```bash
+poetry install --with docs
+make docs
+```
+
+The output is in `docs/_build/html`. The build treats warnings as errors.
 
 ## Submitting your code
 
 We use [trunk based](https://trunkbaseddevelopment.com/)
 development (we also sometimes call it `wemake-git-flow`).
 
-What the point of this method?
+What is the point of this method?
 
 1. We use protected `master` branch,
    so the only way to push your code is via pull request
@@ -71,7 +86,7 @@ What the point of this method?
 So, this way we achieve an easy and scalable development process
 which frees us from merging hell and long-living branches.
 
-In this method, the latest version of the app is always in the `master` branch.
+The latest development version of the library is always in the `master` branch.
 
 ### Before submitting
 
@@ -83,6 +98,8 @@ Before submitting your code please do the following steps:
 4. Edit documentation if you have changed something significant
 5. Update `CHANGELOG.md` with a quick summary of your changes
 6. Run `make check` again to make sure it is still working
+
+If you changed the documentation, run `make docs` as well.
 
 ## Other help
 

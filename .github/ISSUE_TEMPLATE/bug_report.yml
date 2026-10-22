@@ -1,0 +1,55 @@
+name: Bug report
+description: Report unexpected imgproxykit behavior
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        See [CONTRIBUTING.md](https://github.com/kondratevdev/imgproxykit/blob/master/CONTRIBUTING.md).
+        Use dummy signing keys, salt, and source URLs in reproductions. Do not share secrets or private URLs.
+  - type: input
+    id: imgproxykit-version
+    attributes:
+      label: imgproxykit version
+    validations:
+      required: true
+  - type: input
+    id: python-version
+    attributes:
+      label: Python version
+    validations:
+      required: true
+  - type: textarea
+    id: imgproxy-environment
+    attributes:
+      label: imgproxy version and server settings
+      description: Include relevant settings with secrets removed, or explain if no server is involved.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Minimal reproduction
+      description: Include code and steps that reproduce the problem.
+    validations:
+      required: true
+  - type: textarea
+    id: generated-url
+    attributes:
+      label: Generated URL
+      description: Use a URL generated with dummy credentials and a public example source.
+    validations:
+      required: true
+  - type: textarea
+    id: server-response
+    attributes:
+      label: What did the server return?
+      description: Include the HTTP status, response body or image behavior, and relevant logs. If no request was sent, say so.
+    validations:
+      required: true
+  - type: textarea
+    id: expected-behavior
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
