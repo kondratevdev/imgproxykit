@@ -20,7 +20,11 @@ def test_signature_size(
     expected: str,
 ) -> None:
     """Ensure that digest bytes are truncated before Base64 encoding."""
-    signer = UrlSigner(**credentials, signature_size=signature_size)
+    signer = UrlSigner(
+        **credentials,
+        signature_size=signature_size,
+        unsigned_signature='unsafe',
+    )
 
     assert signer('/b') == expected
 
@@ -29,4 +33,9 @@ def test_signature_size(
 def test_invalid_signature_size(*, signature_size: int) -> None:
     """Ensure that invalid sizes fail even in unsigned mode."""
     with pytest.raises(ValueError, match='signature_size must be positive'):
-        UrlSigner(signature_size=signature_size)
+        UrlSigner(
+            key=None,
+            salt=None,
+            signature_size=signature_size,
+            unsigned_signature='unsafe',
+        )

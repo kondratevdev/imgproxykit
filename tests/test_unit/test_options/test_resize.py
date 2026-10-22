@@ -22,9 +22,14 @@ from imgproxykit.serialization import PathSerializer
         (Resize(extend=False), 'resize:::::0'),
     ],
 )
-def test_resize(*, option: Resize, expected: str) -> None:
+def test_resize(
+    path_serializer: PathSerializer,
+    *,
+    option: Resize,
+    expected: str,
+) -> None:
     """Ensure that resize arguments follow protocol order and retain gaps."""
     assert (
-        PathSerializer()._serialize_segment(option.name, option.arguments)
+        path_serializer._serialize_segment(option.name, option.arguments)
         == expected
     )

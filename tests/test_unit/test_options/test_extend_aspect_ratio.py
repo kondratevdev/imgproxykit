@@ -24,10 +24,13 @@ from imgproxykit.serialization import PathSerializer
     ],
 )
 def test_extend_aspect_ratio(
-    *, option: ExtendAspectRatio, expected: str
+    path_serializer: PathSerializer,
+    *,
+    option: ExtendAspectRatio,
+    expected: str,
 ) -> None:
     """Ensure that aspect ratio extension retains its flag and gravity."""
     assert (
-        PathSerializer()._serialize_segment(option.name, option.arguments)
+        path_serializer._serialize_segment(option.name, option.arguments)
         == expected
     )

@@ -21,6 +21,7 @@ from tests.infra import OptionFactory
 )
 @pytest.mark.parametrize('value', [True, False])
 def test_boolean_options(
+    path_serializer: PathSerializer,
     *,
     option_type: OptionFactory[bool],
     prefix: str,
@@ -30,6 +31,6 @@ def test_boolean_options(
     option = option_type(value=value)
 
     assert (
-        PathSerializer()._serialize_segment(option.name, option.arguments)
+        path_serializer._serialize_segment(option.name, option.arguments)
         == f'{prefix}:{int(value)}'
     )

@@ -23,7 +23,9 @@ class PathSerializer:
 
     __slots__ = ('_arguments_separator',)
 
-    def __init__(self, *, arguments_separator: str = ':') -> None:
+    # TODO: Support source_url_encryption_key for source URL encryption (Pro).
+    # TODO: Support the plain option for unencoded source URLs.
+    def __init__(self, *, arguments_separator: str) -> None:
         """
         Configure processing option serialization.
 
@@ -32,13 +34,10 @@ class PathSerializer:
                 and their arguments. Must match the server's
                 `IMGPROXY_ARGUMENTS_SEPARATOR
                 <https://docs.imgproxy.net/latest/configuration/options#miscellaneous>`__.
-                Defaults to ``':'``.
 
         """
         self._arguments_separator = arguments_separator
 
-    # TODO: Support source_url_encryption_key for source URL encryption (Pro).
-    # TODO: Support the plain option for unencoded source URLs.
     def __call__(
         self,
         source: str,
@@ -69,7 +68,7 @@ class PathSerializer:
             >>> from imgproxykit import Transform
             >>> from imgproxykit.serialization import PathSerializer
             >>> from imgproxykit.options import Resize
-            >>> serializer = PathSerializer()
+            >>> serializer = PathSerializer(arguments_separator=':')
             >>> thumbnail = Transform(
             ...     Resize(width=96, height=96, mode='fill'),
             ...     format='webp',

@@ -19,9 +19,14 @@ from imgproxykit.serialization import PathSerializer
         (Gravity(position='no', offset_y=0), 'gravity:no::0'),
     ],
 )
-def test_gravity(*, option: Gravity, expected: str) -> None:
+def test_gravity(
+    path_serializer: PathSerializer,
+    *,
+    option: Gravity,
+    expected: str,
+) -> None:
     """Ensure that gravity retains its anchor and optional offset positions."""
     assert (
-        PathSerializer()._serialize_segment(option.name, option.arguments)
+        path_serializer._serialize_segment(option.name, option.arguments)
         == expected
     )

@@ -12,9 +12,14 @@ from imgproxykit.serialization import PathSerializer
         (SkipProcessing(formats=('svg', 'gif')), 'skip_processing:svg:gif'),
     ],
 )
-def test_skip_processing(*, option: SkipProcessing, expected: str) -> None:
+def test_skip_processing(
+    path_serializer: PathSerializer,
+    *,
+    option: SkipProcessing,
+    expected: str,
+) -> None:
     """Ensure that skipped formats retain their order and allow omission."""
     assert (
-        PathSerializer()._serialize_segment(option.name, option.arguments)
+        path_serializer._serialize_segment(option.name, option.arguments)
         == expected
     )

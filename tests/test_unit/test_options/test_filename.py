@@ -15,9 +15,14 @@ from imgproxykit.serialization import PathSerializer
         (Filename(value='café'), 'filename:Y2Fmw6k:1'),
     ],
 )
-def test_filename(*, option: Filename, expected: str) -> None:
+def test_filename(
+    path_serializer: PathSerializer,
+    *,
+    option: Filename,
+    expected: str,
+) -> None:
     """Ensure that filenames use Base64 encoding with the encoding flag."""
     assert (
-        PathSerializer()._serialize_segment(option.name, option.arguments)
+        path_serializer._serialize_segment(option.name, option.arguments)
         == expected
     )

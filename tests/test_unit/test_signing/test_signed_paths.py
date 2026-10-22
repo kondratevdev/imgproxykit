@@ -1,12 +1,11 @@
 import pytest
 
 from imgproxykit.signing import UrlSigner
-from tests.fixtures.credentials import Credentials
 
 
-def test_unsigned_path() -> None:
+def test_unsigned_path(unsigned_url_signer: UrlSigner) -> None:
     """Ensure that omitted credentials select the unsafe marker."""
-    assert UrlSigner()('/first') == 'unsafe'
+    assert unsigned_url_signer('/first') == 'unsafe'
 
 
 @pytest.mark.parametrize(
@@ -25,21 +24,21 @@ def test_unsigned_path() -> None:
     ],
 )
 def test_signed_path(
-    credentials: Credentials, *, path: str, expected: str
+    url_signer: UrlSigner,
+    *,
+    path: str,
+    expected: str,
 ) -> None:
     """Ensure that the exact UTF-8 path matches independent test vectors."""
     # Vectors use OpenSSL HMAC-SHA256 with key b'secret' and salt b'salt'.
-    signer = UrlSigner(**credentials)
 
-    assert signer(path) == expected
+    assert url_signer(path) == expected
 
 
-def test_signer_reuse(credentials: Credentials) -> None:
+def test_signer_reuse(url_signer: UrlSigner) -> None:
     """Ensure that signing another path does not change previous signatures."""
-    signer = UrlSigner(**credentials)
-
     path = '/first'
-    signature = signer(path)
-    signer('/second')
+    signature = url_signer(path)
+    url_signer('/second')
 
-    assert signer(path) == signature
+    assert url_signer(path) == signature

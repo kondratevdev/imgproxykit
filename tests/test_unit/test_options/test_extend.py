@@ -20,9 +20,14 @@ from imgproxykit.serialization import PathSerializer
         (Extend(value=True, offset_y=0), 'extend:1:::0'),
     ],
 )
-def test_extend(*, option: Extend, expected: str) -> None:
+def test_extend(
+    path_serializer: PathSerializer,
+    *,
+    option: Extend,
+    expected: str,
+) -> None:
     """Ensure that extension retains its flag, anchor, and offset positions."""
     assert (
-        PathSerializer()._serialize_segment(option.name, option.arguments)
+        path_serializer._serialize_segment(option.name, option.arguments)
         == expected
     )

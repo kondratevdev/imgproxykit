@@ -22,9 +22,14 @@ _SOURCE: Final = 'https://example.com/photo.jpg'
         ),
     ],
 )
-def test_source_path(*, source: str, expected: str) -> None:
+def test_source_path(
+    path_serializer: PathSerializer,
+    *,
+    source: str,
+    expected: str,
+) -> None:
     """Ensure that sources are encoded unchanged without Base64 padding."""
-    assert PathSerializer()(source) == expected
+    assert path_serializer(source) == expected
 
 
 @pytest.mark.parametrize(
@@ -66,9 +71,14 @@ def test_source_path(*, source: str, expected: str) -> None:
         (Transform(), '/'),
     ],
 )
-def test_transform_path(*, transform: Transform, expected: str) -> None:
+def test_transform_path(
+    path_serializer: PathSerializer,
+    *,
+    transform: Transform,
+    expected: str,
+) -> None:
     """Ensure that transform options retain their order before the source."""
-    assert PathSerializer()(_SOURCE, transform=transform) == (
+    assert path_serializer(_SOURCE, transform=transform) == (
         f'{expected}aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc'
     )
 
@@ -103,12 +113,13 @@ def test_transform_path(*, transform: Transform, expected: str) -> None:
     ],
 )
 def test_serialize_segment(
+    path_serializer: PathSerializer,
     *,
     arguments: tuple[Argument, ...],
     expected: str,
 ) -> None:
     """Ensure that arguments retain their positions and explicit values."""
-    assert PathSerializer()._serialize_segment('resize', arguments) == expected
+    assert path_serializer._serialize_segment('resize', arguments) == expected
 
 
 def test_custom_arguments_separator() -> None:

@@ -15,9 +15,14 @@ from imgproxykit.serialization import PathSerializer
         ),
     ],
 )
-def test_format_quality(*, option: FormatQuality, expected: str) -> None:
+def test_format_quality(
+    path_serializer: PathSerializer,
+    *,
+    option: FormatQuality,
+    expected: str,
+) -> None:
     """Ensure that format quality pairs retain their order when flattened."""
     assert (
-        PathSerializer()._serialize_segment(option.name, option.arguments)
+        path_serializer._serialize_segment(option.name, option.arguments)
         == expected
     )

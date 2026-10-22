@@ -119,7 +119,8 @@ class Client:
             ... )
 
         """
-        self._base_url = base_url
+        # Prepare `base_url` only once pre instance
+        self._base_url = base_url.rstrip('/')
         self._path_serializer = self.path_serializer_cls(
             arguments_separator=arguments_separator,
         )
@@ -162,5 +163,4 @@ class Client:
         """
         path = self._path_serializer(source, transform=transform)
         signature = self._url_signer(path)
-        base_url = self._base_url.rstrip('/')
-        return f'{base_url}/{signature}{path}'
+        return f'{self._base_url}/{signature}{path}'

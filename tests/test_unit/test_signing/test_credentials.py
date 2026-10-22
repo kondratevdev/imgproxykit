@@ -20,6 +20,8 @@ def test_incomplete_credentials(
         UrlSigner(
             key=None if credential == 'key' else credentials['key'],
             salt=None if credential == 'salt' else credentials['salt'],
+            signature_size=32,
+            unsigned_signature='unsafe',
         )
 
 
@@ -39,4 +41,8 @@ def test_invalid_credentials(
         ValueError,
         match='Signing credentials must be nonempty hex strings',
     ):
-        UrlSigner(**changed)
+        UrlSigner(
+            **changed,
+            signature_size=32,
+            unsigned_signature='unsafe',
+        )

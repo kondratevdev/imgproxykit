@@ -24,6 +24,7 @@ from tests.infra import OptionFactory
     ],
 )
 def test_integer_options(
+    path_serializer: PathSerializer,
     faker: Faker,
     *,
     option_type: OptionFactory[int],
@@ -35,6 +36,6 @@ def test_integer_options(
     option = option_type(value=value)
 
     assert (
-        PathSerializer()._serialize_segment(option.name, option.arguments)
+        path_serializer._serialize_segment(option.name, option.arguments)
         == f'{prefix}:{value}'
     )

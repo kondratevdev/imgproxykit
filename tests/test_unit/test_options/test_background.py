@@ -12,9 +12,14 @@ from imgproxykit.serialization import PathSerializer
         (Background(color=(0, 128, 255)), 'background:0:128:255'),
     ],
 )
-def test_background(*, option: Background, expected: str) -> None:
+def test_background(
+    path_serializer: PathSerializer,
+    *,
+    option: Background,
+    expected: str,
+) -> None:
     """Ensure that backgrounds accept hex colors, RGB tuples, and omission."""
     assert (
-        PathSerializer()._serialize_segment(option.name, option.arguments)
+        path_serializer._serialize_segment(option.name, option.arguments)
         == expected
     )

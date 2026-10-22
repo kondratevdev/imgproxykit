@@ -20,10 +20,15 @@ from imgproxykit.serialization import PathSerializer
         ),
     ],
 )
-def test_preset(*, option: Preset, expected: str) -> None:
+def test_preset(
+    path_serializer: PathSerializer,
+    *,
+    option: Preset,
+    expected: str,
+) -> None:
     """Ensure that preset names are positional and keep their order."""
     assert (
-        PathSerializer()._serialize_segment(option.name, option.arguments)
+        path_serializer._serialize_segment(option.name, option.arguments)
         == expected
     )
 

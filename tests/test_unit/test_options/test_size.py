@@ -21,9 +21,14 @@ from imgproxykit.serialization import PathSerializer
         (Size(extend=False), 'size::::0'),
     ],
 )
-def test_size(*, option: Size, expected: str) -> None:
+def test_size(
+    path_serializer: PathSerializer,
+    *,
+    option: Size,
+    expected: str,
+) -> None:
     """Ensure that size arguments retain dimension and boolean positions."""
     assert (
-        PathSerializer()._serialize_segment(option.name, option.arguments)
+        path_serializer._serialize_segment(option.name, option.arguments)
         == expected
     )

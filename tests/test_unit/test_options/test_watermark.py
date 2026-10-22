@@ -21,9 +21,14 @@ from imgproxykit.serialization import PathSerializer
         ),
     ],
 )
-def test_watermark(*, option: Watermark, expected: str) -> None:
+def test_watermark(
+    path_serializer: PathSerializer,
+    *,
+    option: Watermark,
+    expected: str,
+) -> None:
     """Ensure that watermark arguments retain their order and omitted slots."""
     assert (
-        PathSerializer()._serialize_segment(option.name, option.arguments)
+        path_serializer._serialize_segment(option.name, option.arguments)
         == expected
     )
