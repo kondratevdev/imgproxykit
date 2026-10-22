@@ -27,19 +27,30 @@ upscaling settings.
 
 Related options:
 
-* ``Width``, ``Height``, ``Size`` and ``ResizingType`` set individual sizing
+* :class:`~imgproxykit.options.Width`, :class:`~imgproxykit.options.Height`,
+  :class:`~imgproxykit.options.Size` and
+  :class:`~imgproxykit.options.ResizingType` set individual sizing
   parameters.
-* ``Enlarge`` controls upscaling; ``Extend`` and ``ExtendAspectRatio`` control
+* :class:`~imgproxykit.options.Enlarge` controls upscaling;
+  :class:`~imgproxykit.options.Extend` and
+  :class:`~imgproxykit.options.ExtendAspectRatio` control
   extending the canvas.
-* ``Crop``, ``Zoom`` and ``Trim`` adjust the source area.
-* ``MinWidth``, ``MinHeight`` and ``EnforceThumbnail`` add sizing constraints.
-* ``Padding`` adds space around the image; ``Background`` sets its color.
+* :class:`~imgproxykit.options.Crop`, :class:`~imgproxykit.options.Zoom` and
+  :class:`~imgproxykit.options.Trim` adjust the source area.
+* :class:`~imgproxykit.options.MinWidth` and
+  :class:`~imgproxykit.options.MinHeight` add sizing constraints.
+* :class:`~imgproxykit.options.EnforceThumbnail` selects an embedded HEIC or
+  AVIF thumbnail when available.
+* :class:`~imgproxykit.options.Padding` adds space around the image;
+  :class:`~imgproxykit.options.Background` sets its color.
 
 Format, quality, and metadata
 -----------------------------
 
-Use ``Format`` or the ``format`` keyword to choose an output format, and
-``Quality`` or ``quality`` to set encoding quality. A background color is useful
+Use :class:`~imgproxykit.options.Format` or the ``format`` keyword to choose an
+output format, and
+:class:`~imgproxykit.options.Quality` or ``quality`` to set encoding quality. A
+background color is useful
 when converting a transparent image to JPEG:
 
 .. literalinclude:: /examples/options/format.py
@@ -51,30 +62,38 @@ metadata stripping. Hex background colors omit the leading ``#``.
 
 Related options:
 
-* ``FormatQuality`` sets quality for a particular format.
-* ``MaxBytes`` sets a target maximum output file size.
-* ``StripMetadata``, ``KeepCopyright`` and ``StripColorProfile`` control
+* :class:`~imgproxykit.options.FormatQuality` sets quality for a particular
+  format.
+* :class:`~imgproxykit.options.MaxBytes` sets a target maximum output file size.
+* :class:`~imgproxykit.options.StripMetadata`,
+  :class:`~imgproxykit.options.KeepCopyright` and
+  :class:`~imgproxykit.options.StripColorProfile` control
   metadata and color profile retention.
-* ``PreserveHDR`` controls HDR preservation for supported outputs.
+* :class:`~imgproxykit.options.PreserveHDR` controls HDR preservation for
+  supported outputs.
 
 Effects and orientation
 -----------------------
 
-A small resize combined with ``Blur`` can produce a preview placeholder:
+A small resize combined with :class:`~imgproxykit.options.Blur` can produce a
+preview placeholder:
 
 .. literalinclude:: /examples/options/effects.py
    :language: python
    :start-at: from imgproxykit
 
-Other options include ``Sharpen``, ``Pixelate``, ``AutoRotate``, ``Rotate`` and
-``Flip``. ``Watermark`` applies an image configured on the imgproxy server;
+Other options include :class:`~imgproxykit.options.Sharpen`,
+:class:`~imgproxykit.options.Pixelate`,
+:class:`~imgproxykit.options.AutoRotate`, :class:`~imgproxykit.options.Rotate`
+and
+:class:`~imgproxykit.options.Flip`. :class:`~imgproxykit.options.Watermark`
+applies an image configured on the imgproxy server;
 it does not upload a watermark image from your application.
 
 .. note::
 
-    Examples verify the generated processing parameters. Actual image output
-    depends on your imgproxy version, configuration, source image, and supported
-    formats. The client does not check server capabilities.
+    Image output depends on your imgproxy version, configuration, source image,
+    and supported formats. The client does not check server capabilities.
 
 Source and animation limits
 ---------------------------
@@ -89,12 +108,17 @@ This requests a source limit of 20 megapixels and 5,000,000 bytes.
 
 .. important::
 
-    ``MaxSrcResolution`` and ``MaxSrcFileSize`` require
-    ``IMGPROXY_ALLOW_SECURITY_OPTIONS=true`` on the server. Generating a URL does
+    :class:`~imgproxykit.options.MaxSrcResolution` and
+    :class:`~imgproxykit.options.MaxSrcFileSize` require
+    `IMGPROXY_ALLOW_SECURITY_OPTIONS
+    <https://docs.imgproxy.net/latest/configuration/options#security>`__ set to
+    ``true`` on the server. Generating a URL does
     not enable this setting.
 
-    ``MaxAnimationFrames``, ``MaxAnimationFrameResolution`` and
-    ``MaxResultDimension`` also override server limits and require that setting.
+    :class:`~imgproxykit.options.MaxAnimationFrames`,
+    :class:`~imgproxykit.options.MaxAnimationFrameResolution` and
+    :class:`~imgproxykit.options.MaxResultDimension` also override server limits
+    and require that setting.
 
 Configure server-wide limits on imgproxy when per-request overrides are not
 needed.
@@ -104,12 +128,19 @@ URL behavior and presets
 
 These options control behavior beyond image dimensions and encoding:
 
-* ``Preset`` references named settings on the server. See
+* :class:`~imgproxykit.options.Preset` references named settings on the server.
+  See
   :ref:`server-presets` for an example combining presets with other options.
-* ``Expires`` sets an expiration time as a Unix timestamp in seconds.
-* ``CacheBuster`` changes the URL to distinguish cached variants.
-* ``Filename`` and ``ReturnAttachment`` control download-related behavior.
-* ``Raw`` and ``SkipProcessing`` control serving the source without the usual
+* :class:`~imgproxykit.options.Expires` sets an expiration time as a Unix
+  timestamp in seconds.
+* :class:`~imgproxykit.options.CacheBuster` changes the URL to distinguish
+  cached variants.
+* :class:`~imgproxykit.options.Filename` and
+  :class:`~imgproxykit.options.ReturnAttachment` control download-related
+  behavior.
+* :class:`~imgproxykit.options.Raw` and
+  :class:`~imgproxykit.options.SkipProcessing` control serving the source
+  without the usual
   processing; consult their API entries for the differences.
 
 Omitted and explicit values
@@ -127,5 +158,6 @@ Next steps
 ----------
 
 * :doc:`../api-reference/options` — all built-in options and their arguments.
-* :doc:`../api-reference/types` — supported formats, positions, and other values.
+* :doc:`../api-reference/types` — supported formats, positions, and other
+  values.
 * :doc:`transformations` — reuse options and combine them with presets.

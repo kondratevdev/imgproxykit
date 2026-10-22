@@ -15,15 +15,13 @@ class Expires(ScalarOption[int]):
     Attributes:
         value: Expiration time as a Unix timestamp in seconds.
 
-    Usage:
-
-    >>> option = Expires(300)
-    >>> option.arguments
-    (300,)
-
     See `imgproxy expires
     <https://docs.imgproxy.net/usage/processing#expires>`_.
 
     """
 
+    # TODO: Accept timezone-aware datetime objects and convert them to Unix
+    # timestamps. Consider timedelta for relative expiry, resolved once at
+    # construction so reusing a Transform produces a stable URL. Define how
+    # naive datetimes and subsecond precision are handled.
     name: ClassVar[OptionType] = 'expires'

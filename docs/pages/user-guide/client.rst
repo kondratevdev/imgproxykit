@@ -15,14 +15,16 @@ Include any deployment path prefix; trailing slashes are removed:
    :language: python
    :start-at: from imgproxykit
 
-The ``source`` argument is a complete source URI understood by your server.
+The ``source_url`` variable holds the original image address, passed through
+the ``source`` argument as a complete URI understood by your server.
 It is encoded into the generated URL, rather than resolved relative to the
 server address. The client does not validate either address or fetch the image.
 
 .. tip::
 
-    The server address is where your users request processed images.
-    The source URI is where imgproxy fetches the original image.
+    ``https://imgproxy.example.com`` is where users request images.
+    ``https://originals.example.com`` is where imgproxy fetches the originals.
+    ``imgproxy_url`` is the generated URL you send to the browser.
 
 Unsigned URLs
 -------------
@@ -45,14 +47,20 @@ To use another marker, set ``unsigned_signature``:
 .. warning::
 
     When signature checking is enabled, the server must list this marker in
-    ``IMGPROXY_TRUSTED_SIGNATURES``. Such a marker bypasses signature checking;
+    `IMGPROXY_TRUSTED_SIGNATURES
+    <https://docs.imgproxy.net/latest/configuration/options#url-signature>`__.
+    Such a marker bypasses signature checking;
     anyone who knows it can construct URLs with different processing options.
 
 Signed URLs
 -----------
 
 Supply both ``key`` and ``salt`` to generate signed URLs. Their values must
-match the hex-encoded ``IMGPROXY_KEY`` and ``IMGPROXY_SALT`` settings on your
+match the hex-encoded `IMGPROXY_KEY
+<https://docs.imgproxy.net/latest/configuration/options#url-signature>`__ and
+`IMGPROXY_SALT
+<https://docs.imgproxy.net/latest/configuration/options#url-signature>`__
+settings on your
 server. These fixed credentials are for examples only:
 
 .. literalinclude:: /examples/getting_started/signing.py
@@ -72,7 +80,9 @@ Signature size
 --------------
 
 The default signature uses the full 32-byte SHA-256 digest. If your server
-sets ``IMGPROXY_SIGNATURE_SIZE`` to a smaller value, pass the same byte count
+sets `IMGPROXY_SIGNATURE_SIZE
+<https://docs.imgproxy.net/latest/configuration/options#url-signature>`__ to a
+smaller value, pass the same byte count
 as ``signature_size``:
 
 .. literalinclude:: /examples/client/signature_size.py
@@ -81,7 +91,9 @@ as ``signature_size``:
 
 .. important::
 
-    This example requires ``IMGPROXY_SIGNATURE_SIZE=16`` on the server.
+    This example requires `IMGPROXY_SIGNATURE_SIZE
+    <https://docs.imgproxy.net/latest/configuration/options#url-signature>`__
+    set to ``16`` on the server.
 
 The byte count applies before URL-safe Base64 encoding, so it is not the
 number of characters in the URL's signature segment.
@@ -95,7 +107,9 @@ Arguments separator
 
 Processing option names and their arguments are separated by ``:`` by default,
 for example ``resize:fill:300:200``. If your server sets
-``IMGPROXY_ARGUMENTS_SEPARATOR`` to another string, pass the same value as
+`IMGPROXY_ARGUMENTS_SEPARATOR
+<https://docs.imgproxy.net/latest/configuration/options#miscellaneous>`__ to
+another string, pass the same value as
 ``arguments_separator``:
 
 .. literalinclude:: /examples/client/arguments_separator.py
@@ -104,7 +118,9 @@ for example ``resize:fill:300:200``. If your server sets
 
 .. important::
 
-    This example requires ``IMGPROXY_ARGUMENTS_SEPARATOR=,`` on the server.
+    This example requires `IMGPROXY_ARGUMENTS_SEPARATOR
+    <https://docs.imgproxy.net/latest/configuration/options#miscellaneous>`__
+    set to ``,`` on the server.
     Options remain separated by ``/``. The separator applies to all processing
     options, including preset references and the output format.
 

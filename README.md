@@ -39,22 +39,29 @@ Define a WebP thumbnail once and reuse it across a product catalog:
 from imgproxykit import Client, Transform
 from imgproxykit.options import Gravity, Resize
 
-client = Client('https://imgproxy.your-app.com')  # Your imgproxy server.
+# Public URL of your imgproxy server.
+client = Client('https://imgproxy.example.com')
 
 thumbnail = Transform(
-    Resize(width=300, height=300, mode='fill'),  # Pass option objects.
+    Resize(width=300, height=300, mode='fill'),  # Pass typed option objects.
     Gravity(position='sm'),  # Let imgproxy choose the crop's focus.
-    quality=80,  # Or scalar, equivalent to Quality(80).
+    quality=80,  # Or scalar keywords, equivalent to Quality(80).
     format='webp',
 )
-images = [
-    'https://example.com/products/backpack.jpg',
-    'https://example.com/products/sneakers.jpg',
+source_urls = [
+    'https://originals.example.com/products/backpack.jpg',
+    'https://originals.example.com/products/sneakers.jpg',
 ]
-thumbnail_urls = [client.url(image, transform=thumbnail) for image in images]
+# Reuse one immutable transformation across your catalog.
+thumbnail_urls = [
+    client.url(source=source_url, transform=thumbnail)
+    for source_url in source_urls
+]
 ```
 
-Use these URLs in your images' `src` attributes; imgproxy handles processing.
+Use these URLs in your images' `src` attributes. Building a URL makes no
+network requests: when a browser requests it, imgproxy fetches the original
+image from `originals.example.com` and processes it.
 
 Sign URLs and reuse presets configured on your imgproxy server:
 
@@ -63,19 +70,19 @@ from imgproxykit import Client, Transform
 from imgproxykit.options import Preset
 
 client = Client(
-    'https://imgproxy.your-app.com',
-    key='736563726574',  # Example hex credentials; use your server's values.
+    'https://imgproxy.example.com',
+    # Replace with your imgproxy server's hex-encoded key and salt.
+    key='736563726574',
     salt='73616c74',
 )
 
 thumbnail = Transform(
-    Preset('product-card'),
-    format='webp',
+    Preset('product-card'),  # Reuse a preset from your imgproxy server.
+    format='webp',  # Combine server presets with explicit processing options.
 )
-thumbnail_url = client.url(
-    'https://example.com/products/backpack.jpg',
-    transform=thumbnail,
-)
+source_url = 'https://originals.example.com/products/backpack.jpg'
+# The client signs the URL using your server's key and salt.
+thumbnail_url = client.url(source=source_url, transform=thumbnail)
 ```
 
 See the [full documentation](https://imgproxykit.readthedocs.io/en/latest/)

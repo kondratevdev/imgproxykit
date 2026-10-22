@@ -1,13 +1,14 @@
 """
 Build an unsigned URL.
 
->>> url
-'https://imgproxykit.url.com/unsafe/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc'
+>>> imgproxy_url
+'https://imgproxy.example.com/unsafe/aHR0cHM6Ly9vcmlnaW5hbHMuZXhhbXBsZS5jb20vcGhvdG8uanBn'
 """
 
 from imgproxykit import Client
 
-client = Client('https://imgproxykit.url.com')
-image = 'https://example.com/photo.jpg'
+# Public URL of your imgproxy server.
+client = Client('https://imgproxy.example.com')
+source_url = 'https://originals.example.com/photo.jpg'
 
-url = client.url(image)
+imgproxy_url = client.url(source=source_url)

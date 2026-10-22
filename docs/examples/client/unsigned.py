@@ -1,14 +1,16 @@
 """
 Customize the unsigned URL marker.
 
->>> url.split('/')[3]
+>>> imgproxy_url.split('/')[3]
 'public'
 """
 
 from imgproxykit import Client
 
 client = Client(
-    'https://imgproxykit.url.com',
+    'https://imgproxy.example.com',
     unsigned_signature='public',
 )
-url = client.url('https://example.com/photo.jpg')
+source_url = 'https://originals.example.com/photo.jpg'
+
+imgproxy_url = client.url(source=source_url)

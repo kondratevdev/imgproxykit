@@ -15,9 +15,11 @@ and output format, can also be supplied as keyword arguments:
    :language: python
    :start-at: from imgproxykit
 
-Here, ``thumbnail`` and ``explicit`` contain equal options. Use option
-instances for structured settings such as ``Resize``; choose either form
-for scalar options such as ``Quality`` and ``Format``.
+Both forms create the same transformation. Use option
+instances for structured settings such as :class:`~imgproxykit.options.Resize`;
+choose either form
+for scalar options such as :class:`~imgproxykit.options.Quality` and
+:class:`~imgproxykit.options.Format`.
 
 See :doc:`../api-reference/transform` for the supported scalar keyword
 arguments and :doc:`../api-reference/options` for option constructors.
@@ -31,11 +33,13 @@ Create a transformation once and reuse it for multiple source images:
    :language: python
    :start-at: from imgproxykit
 
-``Transform`` is immutable: its ``options`` attribute is a tuple and cannot
+:class:`~imgproxykit.Transform` is immutable: its ``options`` attribute is a
+tuple and cannot
 be reassigned. Built-in option instances are immutable too. Building a URL
 does not change the transformation.
 
-To use different settings, create another ``Transform``. There is currently
+To use different settings, create another :class:`~imgproxykit.Transform`. There
+is currently
 no API for replacing or removing options from an existing transformation.
 
 Option order
@@ -57,7 +61,8 @@ resolve conflicts locally.
     Option order controls serialization into the URL, including its signature.
     It does not define a sequence of image processing operations. Imgproxy
     determines the processing pipeline and interprets repeated or overlapping
-    settings, such as ``Resize`` together with ``Width``.
+    settings, such as :class:`~imgproxykit.options.Resize` together with
+    :class:`~imgproxykit.options.Width`.
 
 .. _server-presets:
 
@@ -78,15 +83,18 @@ the encoded source.
 
     Configure both named presets on your server before using this example.
 
-Preset names retain their order. A ``Preset`` can appear among other option
-instances, and multiple ``Preset`` instances remain separate URL segments.
+Preset names retain their order. A :class:`~imgproxykit.options.Preset` can
+appear among other option
+instances, and multiple :class:`~imgproxykit.options.Preset` instances remain
+separate URL segments.
 The library does not load preset definitions or expand them into options;
 the server resolves their settings together with the other processing options.
 
 No explicit processing options
 ------------------------------
 
-Omit ``transform``, pass ``None``, or supply an empty ``Transform`` to generate
+Omit ``transform``, pass ``None``, or supply an empty
+:class:`~imgproxykit.Transform` to generate
 a URL without processing option segments:
 
 .. literalinclude:: /examples/transformations/no_options.py

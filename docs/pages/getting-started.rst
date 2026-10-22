@@ -9,9 +9,25 @@ Installation
 
 imgproxykit requires Python 3.12 or newer:
 
-.. code-block:: bash
+.. tabs::
 
-    pip install imgproxykit
+  .. tab:: :iconify:`material-icon-theme:uv` uv
+
+    .. code-block:: bash
+
+      uv add imgproxykit
+
+  .. tab:: :iconify:`devicon:poetry` poetry
+
+    .. code-block:: bash
+
+      poetry add imgproxykit
+
+  .. tab:: :iconify:`devicon:pypi` pip
+
+    .. code-block:: bash
+
+      pip install imgproxykit
 
 .. _quick-start:
 
@@ -24,6 +40,12 @@ image URL to :meth:`~imgproxykit.Client.url`:
 .. literalinclude:: /examples/getting_started/first_url.py
    :language: python
    :start-at: from imgproxykit
+
+.. note::
+
+    The examples use ``imgproxy.example.com`` for your imgproxy server and
+    ``originals.example.com`` for the original images. Replace these example
+    addresses with your own.
 
 .. tip::
 
@@ -44,8 +66,9 @@ creates a 300 by 300 crop with WebP output:
    :language: python
    :start-at: from imgproxykit
 
-Options such as ``Resize`` accept several arguments. Scalar options such as
-``format`` can be passed directly as keyword arguments to ``Transform``.
+Options such as :class:`~imgproxykit.options.Resize` accept several arguments.
+Scalar options such as ``format`` can be passed directly as keyword arguments
+to :class:`~imgproxykit.Transform`.
 Imgproxy applies the processing options when serving the image.
 
 Sign URLs
@@ -53,10 +76,11 @@ Sign URLs
 
 For a server with signature checking enabled, supply both ``key`` and ``salt``
 when creating the client. Use the same hex-encoded values configured in the
-server's ``IMGPROXY_KEY`` and ``IMGPROXY_SALT`` settings.
-
-The following credentials are for this example only; replace them with your
-server's values:
+server's `IMGPROXY_KEY
+<https://docs.imgproxy.net/latest/configuration/options#url-signature>`__ and
+`IMGPROXY_SALT
+<https://docs.imgproxy.net/latest/configuration/options#url-signature>`__
+settings.
 
 .. literalinclude:: /examples/getting_started/signing.py
    :language: python
@@ -68,8 +92,8 @@ URL path. Keep signing credentials in your application on the server.
 Reuse a transformation
 ----------------------
 
-A ``Transform`` is immutable and can be reused for different source images.
-Keep a transformation for each image size your application needs:
+A :class:`~imgproxykit.Transform` is immutable and can be reused for different
+source images. Keep a transformation for each image size your application needs:
 
 .. literalinclude:: /examples/getting_started/reuse.py
    :language: python

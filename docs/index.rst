@@ -12,11 +12,33 @@ Build your first URL
 
 Install imgproxykit with Python 3.12 or newer:
 
-.. code-block:: bash
+.. tabs::
 
-    pip install imgproxykit
+  .. tab:: :iconify:`material-icon-theme:uv` uv
+
+    .. code-block:: bash
+
+      uv add imgproxykit
+
+  .. tab:: :iconify:`devicon:poetry` poetry
+
+    .. code-block:: bash
+
+      poetry add imgproxykit
+
+  .. tab:: :iconify:`devicon:pypi` pip
+
+    .. code-block:: bash
+
+      pip install imgproxykit
 
 Create a client pointing to your imgproxy server and pass a source image URI:
+
+.. note::
+
+    The examples use ``imgproxy.example.com`` for your imgproxy server and
+    ``originals.example.com`` for the original images. Replace these example
+    addresses with your own.
 
 .. literalinclude:: /examples/getting_started/first_url.py
    :language: python
@@ -34,7 +56,8 @@ format, and sign URLs.
 What you can do
 ---------------
 
-* **Reuse transformations.** Define a ``Transform`` once and use it for
+* **Reuse transformations.** Define a :class:`~imgproxykit.Transform` once and
+  use it for
   different source images.
 * **Configure processing in Python.** Combine typed option classes and scalar
   keyword arguments for dimensions, formats, quality, and other settings.

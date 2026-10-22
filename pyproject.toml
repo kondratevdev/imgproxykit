@@ -72,6 +72,8 @@ myst-parser = "^5.1"
 sphinx = "^9.0"
 sphinx-autodoc-typehints = "^3.13"
 sphinx-material = "^0.0.36"
+sphinx-iconify = "^0.3"
+sphinx-tabs = "^3.5"
 
 
 [tool.ruff]

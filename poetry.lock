@@ -2009,6 +2009,21 @@ files = [
 sphinx = ">=9.1"
 
 [[package]]
+name = "sphinx-iconify"
+version = "0.3.0"
+description = "A sphinx role allowing you to embed icons from over 200,000 open-source vector icons."
+optional = false
+python-versions = ">=3.9"
+groups = ["docs"]
+files = [
+    {file = "sphinx_iconify-0.3.0-py3-none-any.whl", hash = "sha256:b38ca4a66767c317bea31850a6f540ef79db4394eb4792961918c2d44b4a2c3a"},
+    {file = "sphinx_iconify-0.3.0.tar.gz", hash = "sha256:7824ca694472d6babbe811e72cdcaf52b6e0ff4240e8cfda721f84f867605611"},
+]
+
+[package.dependencies]
+sphinx = "*"
+
+[[package]]
 name = "sphinx-material"
 version = "0.0.36"
 description = "Material sphinx theme"
@@ -2029,6 +2044,27 @@ sphinx = ">=2.0"
 
 [package.extras]
 dev = ["black (==22.12.0)"]
+
+[[package]]
+name = "sphinx-tabs"
+version = "3.5.0"
+description = "Tabbed views for Sphinx"
+optional = false
+python-versions = ">=3.10"
+groups = ["docs"]
+files = [
+    {file = "sphinx_tabs-3.5.0-py3-none-any.whl", hash = "sha256:154be49de4d5c8249ea08c5d9bf88ca8f9c31e00a178305a93cbc33e000339e5"},
+    {file = "sphinx_tabs-3.5.0.tar.gz", hash = "sha256:91dba1187e4c35fd37380a56ac228bbd54c6c649b2351829f3bf033718277537"},
+]
+
+[package.dependencies]
+docutils = "*"
+pygments = "*"
+sphinx = ">=7"
+
+[package.extras]
+code-style = ["pre-commit (==2.13.0)"]
+testing = ["bs4", "coverage", "pygments", "pytest (>=7.1)", "pytest-cov", "pytest-regressions", "rinohtype"]
 
 [[package]]
 name = "sphinxcontrib-applehelp"
@@ -2444,4 +2480,4 @@ zstd = ["zstandard (>=0.18.0)"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<4"
-content-hash = "611ce4112251da42309d688db2dc9650a6216c5aa0648ec7ad156d219982343b"
+content-hash = "c09e2480e73f769e80103b6f4591d78de99f1449da17e5869fd0cbc82b6342db"

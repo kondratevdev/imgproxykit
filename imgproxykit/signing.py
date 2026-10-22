@@ -50,11 +50,14 @@ class UrlSigner:
             salt: Nonempty hex-encoded signing salt matching the server.
                 Supply together with ``key``; ``None`` selects unsigned mode.
             signature_size: Positive digest byte count to encode. Must match
-                the server's ``IMGPROXY_SIGNATURE_SIZE``. Defaults to ``32``.
+                the server's `IMGPROXY_SIGNATURE_SIZE
+                <https://docs.imgproxy.net/latest/configuration/options#url-signature>`__.
+                Defaults to ``32``.
                 Values of 32 or more use the full digest.
             unsigned_signature: URL marker used when key and salt are omitted.
                 Defaults to ``'unsafe'``. With server signing enabled,
-                configure this marker in ``IMGPROXY_TRUSTED_SIGNATURES``.
+                configure this marker in `IMGPROXY_TRUSTED_SIGNATURES
+                <https://docs.imgproxy.net/latest/configuration/options#url-signature>`__.
 
         Raises:
             ValueError: If only one signing credential is supplied, either

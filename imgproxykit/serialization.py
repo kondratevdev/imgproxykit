@@ -30,7 +30,9 @@ class PathSerializer:
         Args:
             arguments_separator: Separator between processing option names
                 and their arguments. Must match the server's
-                ``IMGPROXY_ARGUMENTS_SEPARATOR``. Defaults to ``':'``.
+                `IMGPROXY_ARGUMENTS_SEPARATOR
+                <https://docs.imgproxy.net/latest/configuration/options#miscellaneous>`__.
+                Defaults to ``':'``.
 
         """
         self._arguments_separator = arguments_separator

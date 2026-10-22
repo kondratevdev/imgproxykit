@@ -1,25 +1,32 @@
 """
-Reuse processing options for different images.
+Reuse processing options for different source images.
 
->>> len(thumbnails)
+>>> len(thumbnail_urls)
 2
->>> thumbnails[0] != thumbnails[1]
+>>> thumbnail_urls[0] != thumbnail_urls[1]
 True
->>> all('/resize:fill:300:300/format:webp/' in url for url in thumbnails)
+>>> all(
+...     '/resize:fill:300:300/format:webp/' in thumbnail_url
+...     for thumbnail_url in thumbnail_urls
+... )
 True
 """
 
 from imgproxykit import Client, Transform
 from imgproxykit.options import Resize
 
-client = Client('https://imgproxykit.url.com')
+client = Client('https://imgproxy.example.com')
+# Reuse the same transformation for multiple source images.
 thumbnail = Transform(
     Resize(width=300, height=300, mode='fill'),
     format='webp',
 )
 
-images = [
-    'https://example.com/sneakers.jpg',
-    'https://example.com/backpack.jpg',
+source_urls = [
+    'https://originals.example.com/sneakers.jpg',
+    'https://originals.example.com/backpack.jpg',
 ]
-thumbnails = [client.url(image, transform=thumbnail) for image in images]
+thumbnail_urls = [
+    client.url(source=source_url, transform=thumbnail)
+    for source_url in source_urls
+]

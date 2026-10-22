@@ -11,7 +11,9 @@ class MaxSrcResolution(ScalarOption[float]):
     Override source megapixel limit; requires ALLOW_SECURITY_OPTIONS.
 
     Overrides the corresponding server limit for this request. Requires
-    ``IMGPROXY_ALLOW_SECURITY_OPTIONS=true`` on the imgproxy server.
+    `IMGPROXY_ALLOW_SECURITY_OPTIONS
+    <https://docs.imgproxy.net/latest/configuration/options#security>`__
+    set to ``true`` on the imgproxy server.
 
     Attributes:
         value: Source resolution limit in megapixels.

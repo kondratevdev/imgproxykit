@@ -60,6 +60,8 @@ extensions = [
     # 3rd party, order matters:
     # https://github.com/wemake-services/wemake-django-template/issues/159
     'sphinx_autodoc_typehints',
+    'sphinx_tabs.tabs',
+    'sphinx_iconify',
 ]
 
 # If true, Sphinx will warn about all references
@@ -132,3 +134,4 @@ html_sidebars = {
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+html_css_files = ['css/tabs.css']

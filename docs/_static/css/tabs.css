@@ -1,0 +1,28 @@
+/* Keep all tab groups compact. */
+.sphinx-tabs .sphinx-tabs-tab {
+  padding: 0.35rem 0.7rem;
+  font-size: 0.7rem;
+  line-height: 1.4;
+}
+
+.sphinx-tabs .sphinx-tabs-tab iconify-icon {
+  font-size: 1em;
+  vertical-align: -0.1em;
+}
+
+.sphinx-tabs .sphinx-tabs-panel {
+  padding: 0.5rem;
+}
+
+.sphinx-tabs .sphinx-tabs-panel > div[class*="highlight-"] {
+  margin: 0;
+}
+
+.sphinx-tabs .sphinx-tabs-panel .highlight {
+  margin: 0;
+}
+
+.sphinx-tabs .sphinx-tabs-panel pre {
+  margin: 0;
+  padding: 0.5rem 0.65rem;
+}
