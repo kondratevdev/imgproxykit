@@ -54,7 +54,8 @@ class UrlSigner:
                 the server's `IMGPROXY_SIGNATURE_SIZE
                 <https://docs.imgproxy.net/latest/configuration/options#url-signature>`__.
                 Values of 32 or more use the full digest.
-            unsigned_signature: URL marker used when key and salt are omitted.
+            unsigned_signature: URL marker used when key and salt are both
+                ``None``.
                 With server signing enabled, configure this marker
                 in `IMGPROXY_TRUSTED_SIGNATURES
                 <https://docs.imgproxy.net/latest/configuration/options#url-signature>`__.
@@ -75,7 +76,7 @@ class UrlSigner:
         self._unsigned_signature = unsigned_signature
         self._signature_size = signature_size
 
-        # Omitting both credentials selects unsigned mode.
+        # Passing None for both credentials selects unsigned mode.
         if key is None or salt is None:
             self._credentials = None
             return
@@ -99,7 +100,7 @@ class UrlSigner:
 
         Returns:
             URL-safe Base64 signature without padding, or the unsigned
-            marker when signing credentials were omitted.
+            marker when both signing credentials are ``None``.
 
         """
         if self._credentials is None:

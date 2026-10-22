@@ -12,6 +12,11 @@ but with a deprecation period.
 
 ### Breaking changes
 
+- Configuration defaults now live only in `Client`. Direct construction of
+  `PathSerializer` requires `arguments_separator`; `UrlSigner` requires
+  `key`, `salt`, `signature_size`, and `unsigned_signature`.
+  Pass `key=None` and `salt=None` for unsigned signing. `Client` defaults
+  are unchanged, #57
 - `Preset` now takes preset names as positional arguments, so
   `Preset('thumbnail', 'watermarked')` replaces
   `Preset(names=('thumbnail', 'watermarked'))`. Supplied names keep their
