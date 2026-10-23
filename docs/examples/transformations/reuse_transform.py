@@ -15,7 +15,7 @@ True
 from imgproxykit import Client, Transform
 from imgproxykit.options import Resize
 
-client = Client('https://imgproxy.example.com')
+client = Client('http://localhost:8080')
 # Reuse the same transformation for multiple source images.
 thumbnail = Transform(
     Resize(width=300, height=300, mode='fill'),
@@ -23,10 +23,12 @@ thumbnail = Transform(
 )
 
 source_urls = [
-    'https://originals.example.com/sneakers.jpg',
-    'https://originals.example.com/backpack.jpg',
+    'https://picsum.photos/id/237/1600/1200',
+    'https://picsum.photos/id/1025/1600/1200',
 ]
 thumbnail_urls = [
     client.url(source=source_url, transform=thumbnail)
     for source_url in source_urls
 ]
+
+print(thumbnail_urls)

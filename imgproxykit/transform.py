@@ -63,13 +63,6 @@ class Transform:
 
     """
 
-    # TODO: Add immutable derivation with explicit append/replace/remove
-    # semantics. Define conflicts between overlapping options (Resize, Size,
-    # Width, Height), repeated options, and server presets without expanding
-    # preset definitions locally. Support clearing inherited options to
-    # restore server defaults.
-    # TODO: Document with examples that option order controls serialization
-    # and overrides, while imgproxy determines the processing pipeline.
     options: tuple[Option, ...]
 
     def __init__(

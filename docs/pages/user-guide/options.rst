@@ -1,163 +1,90 @@
-Processing options
-==================
+Options
+========
 
-Processing options describe the image you want imgproxy to produce. Import
-option classes from ``imgproxykit.options`` and collect them in a
-:class:`~imgproxykit.Transform`. Scalar options can also be supplied as keyword
-arguments; see :doc:`transformations` for both forms and their ordering.
+Options define individual processing settings, such as image dimensions,
+quality, and crop position. Import option classes from ``imgproxykit.options``
+and combine their instances in a :class:`~imgproxykit.Transform`. Simple
+settings can also be passed as keyword arguments.
 
-This page groups common options by task. For accepted arguments and links to
-imgproxy's processing documentation, see :doc:`../api-reference/options`.
+.. tip::
 
-Dimensions and cropping
------------------------
+    Use the :ref:`local Docker server <user-guide-docker>` on port 8080 for
+    the examples in this chapter.
 
-Use :class:`~imgproxykit.options.Resize` to set dimensions and resizing mode.
-``fit`` preserves the image within the requested bounds, while ``fill`` fills
-the requested dimensions by cropping. Use :class:`~imgproxykit.options.Gravity`
-to choose the retained area.
+Scalar options
+--------------
+
+Scalar options accept a single value. Pass an option instance to
+``Transform``, or use the equivalent keyword argument:
+
+.. literalinclude:: /examples/options/scalar_options.py
+   :language: python
+   :lines: 10-26
+
+``Quality(85)`` and ``quality=85`` create the same option, as do
+``Format('webp')`` and ``format='webp'``. Both forms can be used together
+in one transformation. Choose whichever fits how you organize your settings.
+
+Structured options
+------------------
+
+Structured options group related settings in named arguments. For example,
+:class:`~imgproxykit.options.Resize` combines dimensions and resizing mode,
+while :class:`~imgproxykit.options.Gravity` selects the crop position:
 
 .. literalinclude:: /examples/options/resize.py
    :language: python
-   :start-at: from imgproxykit
+   :lines: 8-25
 
-Here, ``ce`` selects center gravity and ``dpr=2`` requests twice the pixel
-density for the 300 by 300 target. Smaller sources are subject to imgproxy's
-upscaling settings.
+``Resize`` requests a 300×300 crop, ``Gravity(position='ce')`` keeps the
+center, and ``dpr=2`` requests twice the pixel density. Pass structured
+options as positional arguments to ``Transform``; scalar keywords can
+follow them.
 
-Related options:
+Omitted arguments use imgproxy's defaults. For example, leaving
+``Resize.enlarge`` unset lets the server decide whether to upscale a small
+source. Explicit ``False`` and zero values are preserved.
 
-* :class:`~imgproxykit.options.Width`, :class:`~imgproxykit.options.Height`,
-  :class:`~imgproxykit.options.Size` and
-  :class:`~imgproxykit.options.ResizingType` set individual sizing
-  parameters.
-* :class:`~imgproxykit.options.Enlarge` controls upscaling;
-  :class:`~imgproxykit.options.Extend` and
-  :class:`~imgproxykit.options.ExtendAspectRatio` control
-  extending the canvas.
-* :class:`~imgproxykit.options.Crop`, :class:`~imgproxykit.options.Zoom` and
-  :class:`~imgproxykit.options.Trim` adjust the source area.
-* :class:`~imgproxykit.options.MinWidth` and
-  :class:`~imgproxykit.options.MinHeight` add sizing constraints.
-* :class:`~imgproxykit.options.EnforceThumbnail` selects an embedded HEIC or
-  AVIF thumbnail when available.
-* :class:`~imgproxykit.options.Padding` adds space around the image;
-  :class:`~imgproxykit.options.Background` sets its color.
+.. _server-presets:
 
-Format, quality, and metadata
------------------------------
+Server presets
+--------------
 
-Use :class:`~imgproxykit.options.Format` or the ``format`` keyword to choose an
-output format, and
-:class:`~imgproxykit.options.Quality` or ``quality`` to set encoding quality. A
-background color is useful
-when converting a transparent image to JPEG:
+:class:`~imgproxykit.options.Preset` references processing settings defined
+on the imgproxy server. Pass preset names as positional arguments and
+combine them with other options:
 
-.. literalinclude:: /examples/options/format.py
+.. literalinclude:: /examples/transformations/presets.py
    :language: python
-   :start-at: from imgproxykit
+   :lines: 8-25
 
-The example requests JPEG output with a white background, quality 85, and
-metadata stripping. Hex background colors omit the leading ``#``.
+The guide's Docker server defines ``thumbnail`` as a 300×300 crop and
+``small`` as a 96×96 crop. This example references both presets in that
+order and requests quality 85 and WebP output. Imgproxy resolves their
+settings; the library sends the preset names without loading or expanding
+their definitions.
 
-Related options:
+Available options
+-----------------
 
-* :class:`~imgproxykit.options.FormatQuality` sets quality for a particular
-  format.
-* :class:`~imgproxykit.options.MaxBytes` sets a target maximum output file size.
-* :class:`~imgproxykit.options.StripMetadata`,
-  :class:`~imgproxykit.options.KeepCopyright` and
-  :class:`~imgproxykit.options.StripColorProfile` control
-  metadata and color profile retention.
-* :class:`~imgproxykit.options.PreserveHDR` controls HDR preservation for
-  supported outputs.
+Built-in options cover resizing and cropping, formats and quality, effects,
+metadata, source limits, and URL behavior. For example,
+:class:`~imgproxykit.options.Blur` adds blur,
+:class:`~imgproxykit.options.Background` sets a background color, and
+:class:`~imgproxykit.options.Filename` sets the download filename.
+See the :doc:`Options API reference <../api-reference/options>` for the full
+list and constructor arguments.
 
-Effects and orientation
------------------------
-
-A small resize combined with :class:`~imgproxykit.options.Blur` can produce a
-preview placeholder:
-
-.. literalinclude:: /examples/options/effects.py
-   :language: python
-   :start-at: from imgproxykit
-
-Other options include :class:`~imgproxykit.options.Sharpen`,
-:class:`~imgproxykit.options.Pixelate`,
-:class:`~imgproxykit.options.AutoRotate`, :class:`~imgproxykit.options.Rotate`
-and
-:class:`~imgproxykit.options.Flip`. :class:`~imgproxykit.options.Watermark`
-applies an image configured on the imgproxy server;
-it does not upload a watermark image from your application.
-
-.. note::
-
-    Image output depends on your imgproxy version, configuration, source image,
-    and supported formats. The client does not check server capabilities.
-
-Source and animation limits
----------------------------
-
-Use per-request limits when different image sources need different bounds:
-
-.. literalinclude:: /examples/options/limits.py
-   :language: python
-   :start-at: from imgproxykit
-
-This requests a source limit of 20 megapixels and 5,000,000 bytes.
-
-.. important::
-
-    :class:`~imgproxykit.options.MaxSrcResolution` and
-    :class:`~imgproxykit.options.MaxSrcFileSize` require
-    `IMGPROXY_ALLOW_SECURITY_OPTIONS
-    <https://docs.imgproxy.net/latest/configuration/options#security>`__ set to
-    ``true`` on the server. Generating a URL does
-    not enable this setting.
-
-    :class:`~imgproxykit.options.MaxAnimationFrames`,
-    :class:`~imgproxykit.options.MaxAnimationFrameResolution` and
-    :class:`~imgproxykit.options.MaxResultDimension` also override server limits
-    and require that setting.
-
-Configure server-wide limits on imgproxy when per-request overrides are not
-needed.
-
-URL behavior and presets
-------------------------
-
-These options control behavior beyond image dimensions and encoding:
-
-* :class:`~imgproxykit.options.Preset` references named settings on the server.
-  See
-  :ref:`server-presets` for an example combining presets with other options.
-* :class:`~imgproxykit.options.Expires` sets an expiration time as a Unix
-  timestamp in seconds.
-* :class:`~imgproxykit.options.CacheBuster` changes the URL to distinguish
-  cached variants.
-* :class:`~imgproxykit.options.Filename` and
-  :class:`~imgproxykit.options.ReturnAttachment` control download-related
-  behavior.
-* :class:`~imgproxykit.options.Raw` and
-  :class:`~imgproxykit.options.SkipProcessing` control serving the source
-  without the usual
-  processing; consult their API entries for the differences.
-
-Omitted and explicit values
----------------------------
-
-Omitted option arguments remain ``None`` and leave their values to imgproxy.
-Explicit ``False`` and zero values are preserved in the URL; they are not
-silently omitted. Booleans are serialized as ``1`` or ``0``.
-
-Type annotations describe accepted argument types. They do not imply that
-every value is validated at runtime or that the server supports every option.
-Refer to each option's documentation for its meaning and requirements.
+Some options require server configuration. For example, source limit
+options require ``IMGPROXY_ALLOW_SECURITY_OPTIONS=true``. Supported formats
+and processing features
+depend on your imgproxy installation; type annotations do not check server
+capabilities. See the `imgproxy configuration documentation
+<https://docs.imgproxy.net/latest/configuration/options>`__ for server settings.
 
 Next steps
 ----------
 
-* :doc:`../api-reference/options` — all built-in options and their arguments.
-* :doc:`../api-reference/types` — supported formats, positions, and other
-  values.
-* :doc:`transformations` — reuse options and combine them with presets.
+Continue with :doc:`variants` to generate named sets of image URLs.
+See the :doc:`Options API reference <../api-reference/options>` for all
+processing options and their arguments.

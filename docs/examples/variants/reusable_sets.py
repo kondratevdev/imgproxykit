@@ -1,47 +1,32 @@
 """
-Reuse shared settings across product and avatar collections.
+Reuse a set of transformations across source images.
 
->>> list(product_urls)
-['small', 'medium', 'large']
->>> list(avatar_urls)
-['thumbnail', 'profile']
->>> product_urls['small'] != another_product_urls['small']
+>>> list(dog_urls) == list(pug_urls)
 True
+>>> dog_urls['small'] != pug_urls['small']
+True
+>>> [option.name for option in sizes['small'].options]
+['quality', 'format', 'width']
 """
 
 from imgproxykit import Client, Transform
-from imgproxykit.options import Resize
 
-# Share quality and output format across both sets.
+# Public URL of your imgproxy server.
+client = Client('http://localhost:8080')
+dog_source = 'https://picsum.photos/id/237/1600/1200'
+pug_source = 'https://picsum.photos/id/1025/1600/1200'
+
+# Share quality and output format across all variants.
 base = Transform(quality=85, format='webp')
-products = {
-    # Add dimensions to the shared options for each variant.
+sizes = {
     'small': Transform(*base.options, width=320),
     'medium': Transform(*base.options, width=640),
     'large': Transform(*base.options, width=1280),
 }
 
-avatars = {
-    'thumbnail': Transform(
-        *base.options,
-        Resize(width=48, height=48, mode='fill'),
-    ),
-    'profile': Transform(
-        *base.options,
-        Resize(width=192, height=192, mode='fill'),
-    ),
-}
+# Reuse the same set for different source images.
+dog_urls = client.variants(source=dog_source, variants=sizes)
+pug_urls = client.variants(source=pug_source, variants=sizes)
 
-client = Client('https://imgproxy.example.com')
-product_urls = client.variants(
-    'https://originals.example.com/product.jpg',
-    variants=products,
-)
-another_product_urls = client.variants(
-    'https://originals.example.com/another-product.jpg',
-    variants=products,
-)
-avatar_urls = client.variants(
-    'https://originals.example.com/avatar.jpg',
-    variants=avatars,
-)
+print(dog_urls['small'])
+print(pug_urls['small'])

@@ -1,79 +1,61 @@
 Variants
 ========
 
-Define the image sizes your application uses as a dictionary of names and
-:class:`~imgproxykit.Transform` objects. Pass that dictionary to
-:meth:`~imgproxykit.Client.variants` to generate a URL for each name.
+Variants define a named group of image versions, each with its own
+transformation. Pass a mapping of names to :class:`~imgproxykit.Transform`
+objects to :meth:`~imgproxykit.Client.variants` to generate their URLs together.
 
-Build a set of URLs
--------------------
+.. tip::
 
-Start with a complete transformation for each variant:
+    Use the :ref:`local Docker server <user-guide-docker>` on port 8080 for
+    the examples in this chapter.
+
+Generate variants
+-----------------
+
+Define a complete transformation for each name, then generate URLs for a
+source image:
 
 .. literalinclude:: /examples/variants/basic.py
    :language: python
-   :start-at: from imgproxykit
+   :lines: 10-27
 
-``product_urls`` contains a URL for each of the three widths. Read an
-individual URL by its name, or pass the dictionary to your template or API
-response. The keys and their order match ``products``; an empty input
-mapping returns an empty dictionary.
+``product_urls`` contains a URL for each of the three widths. Access a URL
+by its name, or pass the dictionary to a template or API response.
+The names belong to your application; each URL uses its transformation and
+the client's signing settings.
 
-Each URL is built through :meth:`~imgproxykit.Client.url` using the client's
-signing configuration.
+Reuse a variant set
+-------------------
 
-Compose reusable sets
----------------------
-
-Keep common quality and format settings in a shared transformation. Unpack
-its options into complete transformations for each product size and avatar
-crop, as described in :doc:`transformations`:
+Define a set once and reuse it across source images. Shared settings can
+be composed into each transformation, as described in :doc:`transformations`:
 
 .. literalinclude:: /examples/variants/reusable_sets.py
    :language: python
-   :start-at: from imgproxykit
+   :lines: 12-32
 
-Define these sets once and reuse them for different source images.
-``product_urls`` and ``another_product_urls`` have the same names and
-processing settings, with URLs pointing to their respective sources.
-``avatar_urls`` uses the separate avatar set.
+Both dictionaries contain the same names and processing settings, with
+URLs pointing to their respective sources. The shared ``sizes`` mapping
+can be kept at module level and reused across requests.
 
-The names belong to your application: ``small`` and ``profile`` do not have
-special meaning to imgproxy. Each value supplies its full transformation;
-the client uses it unchanged.
+Type variant names
+------------------
 
-Type the variant names
-----------------------
-
-Plain dictionaries work without annotations. To check names when accessing
-the resulting URLs, define a ``Literal`` union for each set and annotate
-its dictionary:
-
-.. code-block:: python
-
-    from typing import Literal
-
-    type ProductKeys = Literal['small', 'medium', 'large']
-    type AvatarKeys = Literal['thumbnail', 'profile']
+Annotate the input mapping with a ``Literal`` union to check variant names
+when accessing the generated URLs:
 
 .. literalinclude:: /examples/variants/typed.py
    :language: python
-   :start-after: # start-typed-products
-   :end-before: # end-typed-products
+   :lines: 8-29
 
-Annotate ``avatars`` as ``dict[AvatarKeys, Transform]`` in the same way.
-The calls above then return ``dict[ProductKeys, str]`` and
-``dict[AvatarKeys, str]``, respectively. A type checker accepts
+``product_urls`` has type ``dict[ProductKeys, str]``. A type checker accepts
 ``product_urls['small']`` and reports ``product_urls['profile']`` as an
-invalid key.
-
-Without an explicit key annotation, a regular string-keyed dictionary
-typically produces ``dict[str, str]``. A literal union limits the allowed
-key names; it does not require every name in the union to be present.
+invalid key. Without an explicit key annotation, a regular string-keyed
+mapping typically produces ``dict[str, str]``.
 
 Next steps
 ----------
 
-* :doc:`transformations` — compose processing options.
-* :doc:`options` — choose dimensions, formats, and other settings.
-* :doc:`../api-reference/client` — complete client signatures.
+See the :doc:`Client API reference <../api-reference/client>` for the complete
+``variants()`` signature and return type.

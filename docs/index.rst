@@ -60,8 +60,8 @@ Find your way
 
 * :doc:`pages/getting-started` walks through installation and your first
   image URLs.
-* :doc:`User guide <pages/user-guide/client>` covers client configuration,
-  transformations, variants, and processing options.
+* :doc:`User guide <pages/user-guide/client>` introduces the client,
+  transformations, processing options, and named variants.
 * :doc:`pages/api-reference/index` lists classes, arguments, types,
   and extension points.
 * :doc:`pages/changelog` tracks releases and compatibility changes.
@@ -79,8 +79,8 @@ Find your way
 
     pages/user-guide/client
     pages/user-guide/transformations
-    pages/user-guide/variants
     pages/user-guide/options
+    pages/user-guide/variants
 
 .. toctree::
     :maxdepth: 2
