@@ -18,6 +18,7 @@ but with a deprecation period.
 
 ### Misc
 
+- Expanded the user guide and API reference with runnable examples, #62
 - Added a Variants user guide with reusable transformation sets and typed
   variant names, plus transformation composition examples. Reworked the
   README and Getting started around local sources and named variants, #59
