@@ -9,6 +9,7 @@ and examples, see the :doc:`User guide <../user-guide/client>`.
 * :doc:`Options <options>` — built-in option classes and their arguments.
 * :doc:`types` — supported values and type aliases.
 * :doc:`extensions` — custom path serialization and URL signing.
+* :doc:`fastapi` — optional FastAPI client registration and dependencies.
 
 .. toctree::
    :maxdepth: 1
@@ -19,3 +20,4 @@ and examples, see the :doc:`User guide <../user-guide/client>`.
    options
    types
    extensions
+   fastapi

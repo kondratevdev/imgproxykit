@@ -64,6 +64,8 @@ Find your way
   transformations, processing options, and named variants.
 * :doc:`pages/api-reference/index` lists classes, arguments, types,
   and extension points.
+* :doc:`FastAPI integration <pages/integrations/fastapi>` registers clients
+  as application dependencies.
 * :doc:`pages/changelog` tracks releases and compatibility changes.
 
 .. toctree::
@@ -81,6 +83,13 @@ Find your way
     pages/user-guide/transformations
     pages/user-guide/options
     pages/user-guide/variants
+
+.. toctree::
+    :caption: Integrations
+    :maxdepth: 2
+    :hidden:
+
+    pages/integrations/fastapi
 
 .. toctree::
     :maxdepth: 2

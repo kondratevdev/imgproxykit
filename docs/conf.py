@@ -77,8 +77,12 @@ nitpick_ignore = [
     ('py:param', 'ValueT'),
     # Method type parameters are not resolved by the type-hint extension.
     ('py:param', 'Key'),
-    # Standard-library type without a local documentation target.
+    # External types without local documentation targets.
     ('py:class', 'collections.abc.Mapping'),
+    ('py:class', 'collections.abc.Callable'),
+    ('py:class', 'collections.abc.Awaitable'),
+    ('py:class', 'fastapi.applications.FastAPI'),
+    ('py:class', 'starlette.requests.Request'),
 ]
 
 autodoc_typehints = 'both'
