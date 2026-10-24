@@ -6,9 +6,15 @@ Register a client and use it in a FastAPI route.
 >>> async def example():
 ...     client = await get_imgproxy(Request({'type': 'http', 'app': app}))
 ...     return await get_product(42, client)
->>> image_url = asyncio.run(example()).image_url
->>> image_url.startswith(
+>>> product = asyncio.run(example())
+>>> product.id
+42
+>>> product.images.thumbnail.startswith(
 ...     'https://imgproxy.example.com/unsafe/width:320/format:webp/'
+... )
+True
+>>> product.images.preview.startswith(
+...     'https://imgproxy.example.com/unsafe/width:1280/format:webp/'
 ... )
 True
 """
@@ -22,18 +28,29 @@ from imgproxykit import Client, Transform
 from imgproxykit.integrations.fastapi import add_imgproxy
 
 app = FastAPI()
-imgproxykit = Client('https://imgproxy.example.com')
+# Define and register client:
+imgproxy = Client('https://imgproxy.example.com')
+get_imgproxy = add_imgproxy(app, imgproxy)
 
-get_imgproxy = add_imgproxy(app, imgproxykit)
+# Define reusable image variants for product cards and previews:
+product_variants = {
+    'thumbnail': Transform(width=320, format='webp'),
+    'preview': Transform(width=1280, format='webp'),
+}
 
-# Define a reusable transformation for 320-pixel-wide WebP thumbnails.
-thumbnail = Transform(width=320, format='webp')
+
+class ProductImages(BaseModel):
+    """Image variants returned for a product."""
+
+    thumbnail: str
+    preview: str
 
 
 class ProductResponse(BaseModel):
-    """Product image returned by the API."""
+    """Product and its image variants returned by the API."""
 
-    image_url: str
+    id: int
+    images: ProductImages
 
 
 @app.get('/products/{product_id}')
@@ -41,7 +58,10 @@ async def get_product(
     product_id: int,
     imgproxy: Annotated[Client, Depends(get_imgproxy)],
 ) -> ProductResponse:
-    """Build a thumbnail URL for a product."""
+    """Return a product with image variants."""
     source = f'https://originals.example.com/products/{product_id}.jpg'
-    thumbnail_url = imgproxy.url(source, transform=thumbnail)
-    return ProductResponse(image_url=thumbnail_url)
+    images = imgproxy.variants(source, variants=product_variants)
+    return ProductResponse(
+        id=product_id,
+        images=ProductImages(**images),
+    )
