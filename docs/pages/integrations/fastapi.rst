@@ -1,8 +1,11 @@
 FastAPI
 =======
 
-Register a :class:`~imgproxykit.Client` on your FastAPI application and
-inject it into route handlers with ``Depends``.
+The FastAPI integration lets you generate imgproxy URLs in route handlers
+using FastAPI's dependency injection. Register a configured
+:class:`~imgproxykit.Client` once when creating your application, then
+inject it into handlers with ``Depends``. The same client is reused across
+requests, keeping the imgproxy address and signing credentials in one place.
 
 Installation
 ------------
@@ -37,28 +40,27 @@ the application. Keep the returned dependency for use in your routes:
    :language: python
    :start-at: from typing
 
-The client is stored on ``app.state.imgproxykit_client`` and reused across
-requests. URL generation makes no network requests. Configure signing
+The client is stored on ``app.state.imgproxykit_client``.
+URL generation makes no network requests. Configure signing
 credentials on :class:`~imgproxykit.Client` as described in
 :doc:`../user-guide/client`.
 
 Multiple clients
 ----------------
 
-Supply a different ``name`` for each additional client. The name is the
-attribute used on ``app.state``:
+Register each client separately and use its returned dependency in
+``Depends``. This example injects both a signed and an unsigned client:
 
 .. literalinclude:: /examples/integrations/fastapi_multiple_clients.py
    :language: python
-   :start-at: get_preview_imgproxy =
+   :start-at: from typing
 
-Use the returned dependency in ``Depends`` in the same way as
-``get_imgproxy``. A name that is already present on ``app.state`` raises
-``ValueError``.
+The first client uses ``app.state.imgproxykit_client``. The additional
+client uses the attribute supplied through ``name``, here
+``app.state.unsigned_imgproxy``. A name that is already present on
+``app.state`` raises ``ValueError``.
 
-Dependencies resolve their client on the application handling the request.
-When sharing a router between applications, register the same name on each
-application.
+Unsigned URLs require an imgproxy server configured to accept them.
 
 Next steps
 ----------

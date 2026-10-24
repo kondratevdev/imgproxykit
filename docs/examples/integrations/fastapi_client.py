@@ -28,11 +28,14 @@ from imgproxykit import Client, Transform
 from imgproxykit.integrations.fastapi import add_imgproxy
 
 app = FastAPI()
-# Define and register client:
-imgproxy = Client('https://imgproxy.example.com')
-get_imgproxy = add_imgproxy(app, imgproxy)
 
-# Define reusable image variants for product cards and previews:
+# Keep the returned dependency for use with Depends in route handlers.
+get_imgproxy = add_imgproxy(
+    app,
+    Client('https://imgproxy.example.com'),  # Public imgproxy address.
+)
+
+# Reuse these image sizes and output format across products.
 product_variants = {
     'thumbnail': Transform(width=320, format='webp'),
     'preview': Transform(width=1280, format='webp'),
@@ -60,7 +63,9 @@ async def get_product(
 ) -> ProductResponse:
     """Return a product with image variants."""
     source = f'https://originals.example.com/products/{product_id}.jpg'
+    # Build one URL per variant for the same source image.
     images = imgproxy.variants(source, variants=product_variants)
+    # Variant names match the fields of ProductImages.
     return ProductResponse(
         id=product_id,
         images=ProductImages(**images),
