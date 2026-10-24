@@ -1,0 +1,55 @@
+name: test-extras
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    paths:
+      - "imgproxykit/**"
+      - "tests/**"
+      - ".github/workflows/test-extras.yml"
+      - "pyproject.toml"
+      - "poetry.lock"
+      - "Makefile"
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+env:
+  POETRY_VIRTUALENVS_IN_PROJECT: "true"
+  POETRY_NO_INTERACTION: "1"
+  PIP_DISABLE_PIP_VERSION_CHECK: "1"
+
+jobs:
+  build-no-extras:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.12']
+
+    steps:
+    - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      with:
+        persist-credentials: false
+
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+      with:
+        python-version: ${{ matrix.python-version }}
+
+    - name: Install Poetry
+      run: pipx install --python "$(command -v python)" poetry==2.5.1
+
+    - name: Install dependencies
+      run: poetry sync
+
+    - name: Run checks
+      run: make smoke

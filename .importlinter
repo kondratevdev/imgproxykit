@@ -13,6 +13,8 @@ containers =
   imgproxykit
 
 layers =
+  # Optional framework adapters depend on the core, never the reverse:
+  integrations
   # Coordinate path construction and signing:
   client
   # Independent client components:

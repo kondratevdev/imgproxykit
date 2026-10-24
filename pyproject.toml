@@ -22,6 +22,9 @@ dependencies = [
   "typing-extensions>=4.16,<5",
 ]
 
+[project.optional-dependencies]
+fastapi = [ "fastapi>=0.135.2,<1" ]
+
 [[project.authors]]
 name = "Alexander Kondratev"
 email = "mail@kondratev.dev"
@@ -54,6 +57,7 @@ pyright = ">=1.1,<2"
 # TODO: relax the pin after a stable `ty` release:
 ty = "==0.0.88"
 pytest = "^9.1"
+pytest-asyncio = ">=1.3,<2"
 pytest-cov = "^7.1"
 pytest-randomly = "^5.0"
 ruff = "^0.17"
@@ -282,6 +286,9 @@ addopts = [
 xfail_strict = true
 # Fail on warnings:
 filterwarnings = [ "error" ]
+# pytest-asyncio configuration:
+# https://pytest-asyncio.readthedocs.io/en/stable/reference/configuration.html
+asyncio_mode = "auto"
 
 
 [tool.coverage.run]

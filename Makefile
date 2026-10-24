@@ -1,5 +1,6 @@
 SHELL := /usr/bin/env bash
 POETRY ?= poetry
+SMOKE_EXTRAS ?=
 .DEFAULT_GOAL := help
 
 .PHONY: help
@@ -28,6 +29,19 @@ type-check: ## Run mypy, Pyright, Pyrefly and ty, including public API type test
 unit: ## Run unit tests with pytest
 	$(POETRY) run pytest --ignore=tests/test_integration
 
+.PHONY: smoke
+smoke: ## Check package imports (SMOKE_EXTRAS=fastapi for the optional integration)
+	$(POETRY) run python -c 'from imgproxykit import Client, Transform'
+	$(POETRY) run python -c 'from imgproxykit.options import *'
+	$(POETRY) run python -c 'from imgproxykit.serialization import *'
+	$(POETRY) run python -c 'from imgproxykit.signing import *'
+	$(POETRY) run python -c 'from imgproxykit.integrations import *'
+	for extra in $(SMOKE_EXTRAS); do \
+	  case "$$extra" in \
+	    fastapi) $(POETRY) run python -c 'from imgproxykit.integrations.fastapi import *' ;; \
+	  esac; \
+	done
+
 .PHONY: integration
 integration: ## Run integration tests (requires Docker)
 	$(POETRY) run pytest tests/test_integration --cov-fail-under=0
@@ -46,4 +60,4 @@ test: ## Run all tests including integration tests (requires Docker)
 	$(POETRY) run pytest
 
 .PHONY: check
-check: lint type-check package test ## Run all checks and tests
+check: lint type-check package smoke test ## Run all checks and tests
