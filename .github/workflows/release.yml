@@ -47,11 +47,11 @@ jobs:
       - name: Install dependencies
         run: |
           poetry check --lock
-          poetry sync
+          poetry sync --all-extras
           poetry run python -m ensurepip
 
       - name: Run checks
-        run: make check
+        run: make check SMOKE_EXTRAS=fastapi
 
       - name: Build distributions
         run: poetry build

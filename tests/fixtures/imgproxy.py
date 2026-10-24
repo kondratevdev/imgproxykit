@@ -52,6 +52,12 @@ def imgproxy_url(
 
 
 @pytest.fixture
+def unsigned_imgproxy_client() -> Client:
+    """Provide an unsigned URL builder without starting an imgproxy server."""
+    return Client('https://images.example.com')
+
+
+@pytest.fixture
 def imgproxy_client(imgproxy_url: str, credentials: Credentials) -> Client:
     """Provide a signed client connected to imgproxy."""
     return Client(imgproxy_url, **credentials)
