@@ -70,19 +70,20 @@ extensions = [
 nitpicky = True
 
 # Sphinx also treats overload defaults as references to ``Ellipsis``.
+_PY_CLASS: Final = 'py:class'
 nitpick_ignore = [
     ('py:data', 'Ellipsis'),
     # Type parameter inherited by concrete scalar options.
-    ('py:class', 'ValueT'),
+    (_PY_CLASS, 'ValueT'),
     ('py:param', 'ValueT'),
     # Method type parameters are not resolved by the type-hint extension.
     ('py:param', 'Key'),
     # External types without local documentation targets.
-    ('py:class', 'collections.abc.Mapping'),
-    ('py:class', 'collections.abc.Callable'),
-    ('py:class', 'collections.abc.Awaitable'),
-    ('py:class', 'fastapi.applications.FastAPI'),
-    ('py:class', 'starlette.requests.Request'),
+    (_PY_CLASS, 'collections.abc.Mapping'),
+    (_PY_CLASS, 'collections.abc.Callable'),
+    (_PY_CLASS, 'collections.abc.Awaitable'),
+    (_PY_CLASS, 'fastapi.applications.FastAPI'),
+    (_PY_CLASS, 'starlette.requests.Request'),
 ]
 
 autodoc_typehints = 'both'
