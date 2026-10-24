@@ -12,6 +12,8 @@ but with a deprecation period.
 
 ### Features
 
+- Added FastAPI integration with support for multiple named clients.
+  Install with `pip install 'imgproxykit[fastapi]'`, #64
 - Added `Client.variants` to build named URLs for one source from a mapping
   of complete transformations. The returned dictionary preserves variant
   names, their order, and their key type, including literal string unions, #59
