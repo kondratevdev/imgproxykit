@@ -64,6 +64,8 @@ Find your way
   transformations, processing options, and named variants.
 * :doc:`pages/api-reference/index` lists classes, arguments, types,
   and extension points.
+* :doc:`Django integration <pages/integrations/django>` configures a shared
+  client and generates URLs from model file fields.
 * :doc:`FastAPI integration <pages/integrations/fastapi>` registers clients
   as application dependencies.
 * :doc:`pages/changelog` tracks releases and compatibility changes.
@@ -89,6 +91,7 @@ Find your way
     :maxdepth: 2
     :hidden:
 
+    pages/integrations/django
     pages/integrations/fastapi
 
 .. toctree::
