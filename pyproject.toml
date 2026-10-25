@@ -23,6 +23,7 @@ dependencies = [
 ]
 
 [project.optional-dependencies]
+django = [ "django>=5.2,<7" ]
 fastapi = [ "fastapi>=0.135.2,<1" ]
 
 [[project.authors]]
@@ -48,6 +49,7 @@ classifiers = [
 ]
 
 [tool.poetry.group.dev.dependencies]
+# TODO: sort and group depends
 covdefaults = "^2.3"
 import-linter = ">=2.5,<3"
 inline-snapshot = ">=0.35,<1"
@@ -67,6 +69,7 @@ testcontainers = ">=4.15,<5"
 pillow = ">=12,<13"
 zapros = ">=0.21,<0.22"
 faker = ">=37,<41"
+django-stubs = "^6.1.2"
 
 [tool.poetry.group.docs]
 optional = true

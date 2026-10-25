@@ -49,7 +49,7 @@ jobs:
         poetry run python -m ensurepip
 
     - name: Run checks
-      run: make check SMOKE_EXTRAS=fastapi
+      run: make check SMOKE_EXTRAS='django fastapi'
 
     # Upload coverage to codecov: https://codecov.io/
     - name: Upload coverage to Codecov
