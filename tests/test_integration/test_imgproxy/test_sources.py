@@ -1,7 +1,7 @@
 import zapros
 
 from imgproxykit import Client
-from tests.test_integration.assertions import assert_image
+from tests.test_integration.test_imgproxy.assertions import assert_image
 
 
 def test_unicode_source(

@@ -11,7 +11,7 @@ from imgproxykit.types import (
     ResizeType,
     WatermarkPosition,
 )
-from tests.test_integration.assertions import assert_image
+from tests.test_integration.test_imgproxy.assertions import assert_image
 
 _SOURCE: Final = 'local:///pattern.png'
 _WIDTH: Final = 80

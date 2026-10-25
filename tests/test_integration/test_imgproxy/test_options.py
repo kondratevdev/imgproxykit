@@ -5,7 +5,7 @@ import zapros
 
 from imgproxykit import Client, Transform
 from imgproxykit.options import Background, Crop, Flip, Padding
-from tests.test_integration.assertions import assert_image
+from tests.test_integration.test_imgproxy.assertions import assert_image
 
 _SOURCE: Final = 'local:///pattern.png'
 _RED: Final = (255, 0, 0)

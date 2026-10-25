@@ -7,7 +7,7 @@ import zapros
 from imgproxykit import Client, Transform
 from imgproxykit.options import Resize
 from tests.fixtures.credentials import Credentials
-from tests.test_integration.assertions import assert_image
+from tests.test_integration.test_imgproxy.assertions import assert_image
 
 _WIDTH: Final = 160
 _HEIGHT: Final = 120

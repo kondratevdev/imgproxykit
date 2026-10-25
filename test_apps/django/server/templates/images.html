@@ -1,0 +1,33 @@
+{% load imgproxykit %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>imgproxykit images</title>
+  </head>
+  <body>
+    <h1>Image transformations</h1>
+    {# Pass the source URI to the view through the query string. #}
+    <form method="get">
+      <label for="source">Source image URI</label>
+      <input id="source" name="source" value="{{ source|default:'' }}" required>
+      <button type="submit">Show images</button>
+    </form>
+
+    {% if source %}
+      {# Build one URL using a named transform from settings. #}
+      <h2>Preview</h2>
+      {% imgproxy_url source 'preview' as preview_url %}
+      <img src="{{ preview_url }}" alt="Preview" style="max-width: 100%">
+
+      {# Build a URL mapping using a named variant set from settings. #}
+      <h2>Variants</h2>
+      {% imgproxy_variants source 'responsive' as images %}
+      {% for name, url in images.items %}
+        <h3>{{ name }}</h3>
+        <img src="{{ url }}" alt="{{ name }} variant" style="max-width: 100%">
+      {% endfor %}
+    {% endif %}
+  </body>
+</html>

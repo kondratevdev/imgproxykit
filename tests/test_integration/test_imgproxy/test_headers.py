@@ -5,7 +5,7 @@ import zapros
 from faker import Faker
 
 from imgproxykit import Client, Transform
-from tests.test_integration.assertions import assert_image
+from tests.test_integration.test_imgproxy.assertions import assert_image
 
 
 @pytest.mark.parametrize(
