@@ -36,7 +36,7 @@ Register Client
 Call :func:`~imgproxykit.integrations.fastapi.add_imgproxy` while creating
 the application. Keep the returned dependency for use in your routes:
 
-.. literalinclude:: /examples/integrations/fastapi_client.py
+.. literalinclude:: /examples/integrations/fastapi/client.py
    :language: python
    :start-at: from typing
 
@@ -51,7 +51,7 @@ Multiple clients
 Register each client separately and use its returned dependency in
 ``Depends``. This example injects both a signed and an unsigned client:
 
-.. literalinclude:: /examples/integrations/fastapi_multiple_clients.py
+.. literalinclude:: /examples/integrations/fastapi/multiple_clients.py
    :language: python
    :start-at: from typing
 
