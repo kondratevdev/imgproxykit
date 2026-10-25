@@ -8,8 +8,6 @@ from imgproxykit.integrations.django.settings import get_config
 
 def test_adapter_defaults(settings: LazySettings) -> None:
     """Add adapter defaults without changing the user's configuration."""
-    settings.IMGPROXYKIT = {'client': {'base_url': 'https://images.com'}}
-
     assert get_config() == {
         'client': settings.IMGPROXYKIT['client'],
         'transforms': {},

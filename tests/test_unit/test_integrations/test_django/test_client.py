@@ -4,10 +4,8 @@ from django.test import override_settings
 from imgproxykit.integrations.django import get_client
 
 
-def test_shared_client(settings: LazySettings) -> None:
+def test_shared_client() -> None:
     """Reuse the client between calls."""
-    settings.IMGPROXYKIT = {'client': {'base_url': 'https://images.com'}}
-
     assert get_client() is get_client()
 
 
@@ -45,7 +43,6 @@ def test_override_client(settings: LazySettings) -> None:
 
 def test_unrelated_setting(settings: LazySettings) -> None:
     """Keep the cached client when an unrelated Django setting changes."""
-    settings.IMGPROXYKIT = {'client': {'base_url': 'https://images.com'}}
     client = get_client()
     settings.DEBUG = True
 

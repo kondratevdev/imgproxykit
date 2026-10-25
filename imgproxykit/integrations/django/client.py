@@ -22,13 +22,14 @@ def get_client() -> Client:
     the cache when entering and leaving an override of ``IMGPROXYKIT``.
     """
     config = get_config()[Settings.client.value]
-    # Client takes base_url positionally; forward the remaining client options.
-    options: dict[str, Any] = {
+    # Client takes `base_url` positionally;
+    # forward the remaining client options.
+    options = {
         name: value
         for name, value in config.items()
         if name != ClientSettings.base_url
     }
-    return Client(config[ClientSettings.base_url.value], **options)
+    return Client(config[ClientSettings.base_url.value], **options)  # type: ignore[call-overload, no-any-return]  # pyright: ignore[reportCallIssue, reportArgumentType]  # ty: ignore[no-matching-overload]
 
 
 @receiver(setting_changed)
