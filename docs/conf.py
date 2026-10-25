@@ -54,6 +54,7 @@ extensions = [
     'sphinx.ext.coverage',
     'sphinx.ext.viewcode',
     'sphinx.ext.githubpages',
+    'sphinx.ext.intersphinx',
     'sphinx.ext.napoleon',
     # https://github.com/executablebooks/MyST-Parser
     'myst_parser',
@@ -86,7 +87,13 @@ nitpick_ignore = [
     (_PY_CLASS, 'starlette.requests.Request'),
 ]
 
-autodoc_typehints = 'both'
+intersphinx_mapping = {
+    'django': ('https://docs.djangoproject.com/en/stable/', None),
+}
+
+# Let sphinx-autodoc-typehints render description types. Sphinx's renderer
+# exposes sphinx-immaterial's internal TypeVar names in return types.
+autodoc_typehints = 'signature'
 autoclass_content = 'both'
 typehints_use_signature = True
 typehints_use_signature_return = True
