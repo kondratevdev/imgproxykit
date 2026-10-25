@@ -12,22 +12,25 @@ but with a deprecation period.
 
 ### Features
 
-- Added Django integration with settings-based client configuration,
-  Python shortcuts, and template tags for URLs and named image variants.
-  Supports model file fields, reusable named transformations, and custom
-  source resolvers. Install with `pip install 'imgproxykit[django]'`, #66
+- Added Django integration to configure clients through Django settings
+  and generate image URLs and named variants with Python shortcuts
+  and template tags. Supports model file fields, reusable named
+  transformations, and custom source resolvers.
+  Install with `pip install 'imgproxykit[django]'`, #66
 - Added FastAPI integration with support for multiple named clients.
   Install with `pip install 'imgproxykit[fastapi]'`, #64
-- Added `Client.variants` to build named URLs for one source from a mapping
-  of complete transformations. The returned dictionary preserves variant
-  names, their order, and their key type, including literal string unions, #59
+- Added `Client.variants` to generate named image URLs for a single source
+  from a mapping of complete transformations. The returned dictionary
+  preserves the names, order, and types of variant keys,
+  including literal string unions, #59
 
 ### Misc
 
-- Expanded the user guide and API reference with runnable examples, #62
-- Added a Variants user guide with reusable transformation sets and typed
-  variant names, plus transformation composition examples. Reworked the
-  README and Getting started around local sources and named variants, #59
+- Added runnable examples to the user guide and API reference, #62
+- Added a Variants guide covering reusable transformation sets and typed
+  variant names, with examples of transformation composition.
+  Updated the README and Getting started to focus on local sources
+  and named variants, #59
 
 ## 0.3.0
 
