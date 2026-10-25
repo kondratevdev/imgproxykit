@@ -19,9 +19,9 @@ True
 
 from typing import Annotated
 
+from fastapi import Depends, FastAPI
 from pydantic import BaseModel
 
-from fastapi import Depends, FastAPI
 from imgproxykit import Client
 from imgproxykit.integrations.fastapi import add_imgproxy
 

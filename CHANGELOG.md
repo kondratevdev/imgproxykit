@@ -12,6 +12,10 @@ but with a deprecation period.
 
 ### Features
 
+- Added Django integration with settings-based client configuration,
+  Python shortcuts, and template tags for URLs and named image variants.
+  Supports model file fields, reusable named transformations, and custom
+  source resolvers. Install with `pip install 'imgproxykit[django]'`, #66
 - Added FastAPI integration with support for multiple named clients.
   Install with `pip install 'imgproxykit[fastapi]'`, #64
 - Added `Client.variants` to build named URLs for one source from a mapping
