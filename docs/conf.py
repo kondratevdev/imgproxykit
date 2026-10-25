@@ -78,13 +78,10 @@ nitpick_ignore = [
     ('py:param', 'ValueT'),
     # Method type parameters are not resolved by the type-hint extension.
     ('py:param', 'Key'),
-    # Theme-generated reference for the generic shortcut return type.
-    (_PY_CLASS, '__SPHINX_IMMATERIAL_TYPE_VAR__V_Key'),
     # External types without local documentation targets.
     (_PY_CLASS, 'collections.abc.Mapping'),
     (_PY_CLASS, 'collections.abc.Callable'),
     (_PY_CLASS, 'collections.abc.Awaitable'),
-    (_PY_CLASS, 'django.db.models.fields.files.FieldFile'),
     (_PY_CLASS, 'fastapi.applications.FastAPI'),
     (_PY_CLASS, 'starlette.requests.Request'),
 ]
