@@ -12,8 +12,13 @@
 
 import sys
 import tomllib
+from collections.abc import Iterable
 from pathlib import Path
 from typing import Final, cast
+
+from docutils.nodes import Node
+from sphinx.addnodes import pending_xref
+from sphinx.application import Sphinx
 
 # We need `imgproxykit` to be importable from here:
 _ROOT = Path(__file__).resolve(strict=True).parent.parent
@@ -88,8 +93,22 @@ nitpick_ignore = [
 ]
 
 intersphinx_mapping = {
+    'python': ('https://docs.python.org/3/', None),
     'django': ('https://docs.djangoproject.com/en/stable/', None),
 }
+
+
+qualname_overrides = {
+    # Override references use implementation paths rather than public names.
+    'imgproxykit.options.base.Option.arguments': (
+        'imgproxykit.options.Option.arguments'
+    ),
+    # ScalarOption is internal; its property implements the public base API.
+    'imgproxykit.options.base.ScalarOption.arguments': (
+        'imgproxykit.options.Option.arguments'
+    ),
+}
+
 
 # Let sphinx-autodoc-typehints render description types. Sphinx's renderer
 # exposes sphinx-immaterial's internal TypeVar names in return types.
@@ -179,3 +198,43 @@ html_theme_options = {
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+
+
+def resolve_canonical_names(app: Sphinx, doctree: Node) -> None:
+    """Resolve canonical names of types to names that resolve in intersphinx.
+
+    Projects often document functions/classes under a name that is re-exported.
+    For example, cryptography documents "Certificate"
+    under ``cryptography.x509.Certificate``, but it's actually implemented in
+    ``cryptography.x509.base.Certificate`` (and re-exported in x509.py).
+
+    When Sphinx encounters typehints it tries to create links to the types,
+    looking up types from external projects using ``sphinx.ext.intersphinx``.
+    The lookup for such re-exported types fails because Sphinx
+    tries to look up the object in the implemented ("canonical") location.
+
+    .. seealso::
+
+        * https://github.com/sphinx-doc/sphinx/issues/4826 - solves this
+            with the "canonical" directive
+        * https://github.com/pyca/cryptography/pull/7938 - where this
+            was fixed for cryptography
+        * https://www.sphinx-doc.org/en/master/extdev/event_callbacks.html
+        * https://stackoverflow.com/a/62301461 - source of this hack
+
+    """
+    pending_xrefs: Iterable[pending_xref] = doctree.findall(
+        condition=pending_xref,
+    )
+    for node in pending_xrefs:
+        alias = node.get('reftarget')
+        if alias is None:
+            continue
+
+        if alias in qualname_overrides:
+            node['reftarget'] = qualname_overrides.get(alias)
+
+
+def setup(app: Sphinx) -> None:
+    """Add hook functions to Sphinx hooks."""
+    app.connect('doctree-read', resolve_canonical_names)
