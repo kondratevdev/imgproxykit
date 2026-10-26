@@ -47,7 +47,7 @@ jobs:
       - name: Install dependencies
         run: |
           poetry check --lock
-          poetry sync --all-extras
+          poetry sync --all-extras --with docs
           poetry run python -m ensurepip
 
       - name: Run checks
