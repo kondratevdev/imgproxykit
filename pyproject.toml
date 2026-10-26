@@ -72,7 +72,7 @@ pytest-cov = "^7.1"
 pytest-randomly = "^5.0"
 
 # Integration tests and image assertions:
-pillow = ">=12,<13"
+pillow = ">=13.0.0,<14"
 testcontainers = ">=4.15,<5"
 zapros = ">=0.21,<0.22"
 
