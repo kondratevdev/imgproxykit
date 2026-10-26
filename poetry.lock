@@ -2430,6 +2430,18 @@ files = [
 ]
 
 [[package]]
+name = "types-docutils"
+version = "0.23.0.20260923"
+description = "Typing stubs for docutils"
+optional = false
+python-versions = ">=3.10"
+groups = ["dev"]
+files = [
+    {file = "types_docutils-0.23.0.20260923-py3-none-any.whl", hash = "sha256:62851b429db623e36853a4a189ce15a846e0636fe090c135d6dc5dd4f9108ef5"},
+    {file = "types_docutils-0.23.0.20260923.tar.gz", hash = "sha256:486d9054ea84410cc201a30c15759077a5f32234247cfc08aa7290ff2509f770"},
+]
+
+[[package]]
 name = "types-pyyaml"
 version = "6.0.12.20260906"
 description = "Typing stubs for PyYAML"
@@ -2686,4 +2698,4 @@ fastapi = ["fastapi"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<4"
-content-hash = "02da5c08ec8f897988169b485d38844d42109bce8b5c061f528db507fd6c83cf"
+content-hash = "e20116550239ad928c7ddfb149112705252e36ccfd3b868b6436def6a41d8ee7"
