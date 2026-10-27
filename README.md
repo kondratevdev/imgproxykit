@@ -14,16 +14,13 @@
 
 </div>
 
-URLs are generated locally without network requests; imgproxy fetches and
-processes the source image when requested.
-
 ## Features
 
 - [x] Fully typed and checked with `mypy`, `pyright`, `ty` and `pyrefly` in strict modes
-- [x] Signed URLs using your imgproxy server's key and salt
+- [x] Signed URLs using your `imgproxy` server's `key` and `salt`
 - [x] Immutable, reusable transforms combining typed options and scalar arguments
 - [x] Variants: generate multiple image URLs from a reusable set of transforms
-- [x] Support for named presets configured on your imgproxy server
+- [x] Support for named presets configured on your `imgproxy` server
 - [x] Native `Django` integration with settings, shortcuts, and template tags
 - [x] Native `FastAPI` integration with dependency injection
 
@@ -48,7 +45,7 @@ There are several included extras:
 
 ### Single URL
 
-Build a URL for a cropped WebP thumbnail:
+Build a URL for a cropped `webp` thumbnail:
 
 ```python
 >>> from imgproxykit import Client, Transform
@@ -74,13 +71,12 @@ The generated URL has this structure, with the source URL encoded as URL-safe Ba
 https://imgproxy.example.com/unsafe/resize:fill:300:300/quality:80/format:webp/<encoded-source>
 ```
 
-`thumbnail_url` points to a 300×300 WebP thumbnail cropped to fill the dimensions.
+`thumbnail_url` points to a 300×300 `webp` thumbnail cropped to fill the dimensions.
 Imgproxy fetches and processes the original image when this URL is requested.
-The example uses an unsigned URL, which requires the server to accept it.
 
 ### Variants
 
-Build variants by combining shared settings with different sizes:
+Build variants by combining shared transforms with different settings:
 
 ```python
 >>> from imgproxykit import Client, Transform
