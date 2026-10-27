@@ -48,6 +48,13 @@ jobs:
         poetry sync --all-extras --with docs
         poetry run python -m ensurepip
 
+    - name: Find code used only by tests
+      if: matrix.python-version == '3.12'
+      uses: milssky/ghostrefs@bd317bb19091c9f3e9f20e0166c58bbf8c4e9e4a
+      with:
+        source: imgproxykit
+        tests: tests
+
     - name: Run checks
       run: make check SMOKE_EXTRAS='django fastapi'
 
