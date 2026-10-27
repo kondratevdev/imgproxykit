@@ -50,7 +50,7 @@ jobs:
 
     - name: Find code used only by tests
       if: matrix.python-version == '3.12'
-      uses: milssky/ghostrefs@bd317bb19091c9f3e9f20e0166c58bbf8c4e9e4a
+      uses: milssky/ghostrefs@bd317bb19091c9f3e9f20e0166c58bbf8c4e9e4a  # v0.1.0
       with:
         source: imgproxykit
         tests: tests
