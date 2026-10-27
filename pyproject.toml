@@ -89,7 +89,7 @@ optional = true
 
 [tool.poetry.group.docs.dependencies]
 myst-parser = "^5.1"
-sphinx = "^9.0"
+sphinx = "^9.1"
 sphinx-autodoc-typehints = "^3.17"
 sphinx-immaterial = "^0.13"
 sphinx-iconify = "^0.3"
