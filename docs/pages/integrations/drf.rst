@@ -1,9 +1,9 @@
 Django REST Framework
 =====================
 
-Generate imgproxy URLs from source strings and model file fields in DRF
-serializers. Return a single image URL or a dictionary of named variants
-using the client and transformations configured in Django settings.
+Generate imgproxy URLs using DRF serializers. Return a single image URL
+or a dictionary of named variants using transformations configured
+in Django settings.
 
 Installation
 ------------
@@ -28,8 +28,7 @@ Installation
 
       pip install 'imgproxykit[drf]'
 
-The extra installs Django and Django REST Framework. Adding imgproxykit
-to ``INSTALLED_APPS`` is only required for Django template tags.
+The extra installs Django and Django REST Framework.
 
 Configuration
 -------------
