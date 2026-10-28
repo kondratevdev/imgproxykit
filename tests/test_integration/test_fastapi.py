@@ -1,6 +1,13 @@
+# Optional integration tests require their framework.
+import pytest
+
+try:
+    import fastapi  # noqa: F401  # pyright: ignore[reportUnusedImport]
+except ImportError:  # pragma: no cover
+    pytest.skip(reason='fastapi is not installed', allow_module_level=True)
+
 from http import HTTPStatus
 
-import pytest
 import zapros
 from inline_snapshot import snapshot
 

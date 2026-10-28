@@ -1,3 +1,14 @@
+# Optional integration tests require their framework.
+import pytest
+
+try:
+    import rest_framework  # noqa: F401  # pyright: ignore[reportUnusedImport]
+except ImportError:  # pragma: no cover
+    pytest.skip(
+        reason='djangorestframework is not installed',
+        allow_module_level=True,
+    )
+
 from http import HTTPStatus
 
 from django.test import Client

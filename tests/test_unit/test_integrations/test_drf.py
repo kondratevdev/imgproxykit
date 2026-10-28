@@ -1,10 +1,19 @@
+# Optional integration tests require their framework.
+import pytest
+
+try:
+    from rest_framework import serializers
+except ImportError:  # pragma: no cover
+    pytest.skip(
+        reason='djangorestframework is not installed',
+        allow_module_level=True,
+    )
+
 from typing import Any
 
-import pytest
 from django.conf import LazySettings
 from django.db.models import ImageField, Model
 from django.db.models.fields.files import FieldFile
-from rest_framework import serializers
 
 from imgproxykit import Transform
 from imgproxykit.integrations.drf import ImgproxyURLField, ImgproxyVariantsField

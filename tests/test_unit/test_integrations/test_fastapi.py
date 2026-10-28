@@ -1,5 +1,11 @@
+# Optional integration tests require their framework.
 import pytest
-from fastapi import FastAPI, Request
+
+try:
+    from fastapi import FastAPI, Request
+except ImportError:  # pragma: no cover
+    pytest.skip(reason='fastapi is not installed', allow_module_level=True)
+
 
 from imgproxykit import Client
 from imgproxykit.integrations.fastapi import add_imgproxy
