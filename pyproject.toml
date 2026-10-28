@@ -24,6 +24,7 @@ dependencies = [
 
 [project.optional-dependencies]
 django = [ "django>=5.2,<7" ]
+drf = [ "django>=5.2,<7", "djangorestframework>=3.16,<4" ]
 fastapi = [ "fastapi>=0.135.2,<1" ]
 
 [[project.authors]]
@@ -31,6 +32,7 @@ name = "Alexander Kondratev"
 email = "mail@kondratev.dev"
 
 [project.urls]
+Documentation = "https://imgproxykit.readthedocs.io/en/latest/"
 GitHub = "https://github.com/kondratevdev/imgproxykit"
 Issues = "https://github.com/kondratevdev/imgproxykit/issues"
 Changelog = "https://github.com/kondratevdev/imgproxykit/releases"
@@ -77,8 +79,9 @@ pillow = ">=13.0.0,<14"
 testcontainers = ">=4.15,<5"
 zapros = ">=0.21,<0.22"
 
-# Django integration typing and tests:
-django-stubs = "^6.1.2"
+# Django and DRF integration typing and tests:
+django-stubs = "^6.1"
+djangorestframework-stubs = "^3.18"
 pytest-django = ">=4.12,<5"
 
 # FastAPI test application server:

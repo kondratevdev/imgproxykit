@@ -30,7 +30,7 @@ unit: ## Run unit tests with pytest
 	$(POETRY) run pytest --ignore=tests/test_integration
 
 .PHONY: smoke
-smoke: ## Check package imports (SMOKE_EXTRAS='django fastapi' for integrations)
+smoke: ## Check package imports (SMOKE_EXTRAS='django drf fastapi' for integrations)
 	$(POETRY) run python -c 'from imgproxykit import Client, Transform'
 	$(POETRY) run python -c 'from imgproxykit.options import *'
 	$(POETRY) run python -c 'from imgproxykit.serialization import *'
@@ -38,7 +38,8 @@ smoke: ## Check package imports (SMOKE_EXTRAS='django fastapi' for integrations)
 	$(POETRY) run python -c 'from imgproxykit.integrations import *'
 	for extra in $(SMOKE_EXTRAS); do \
 	  case "$$extra" in \
-	    django) $(POETRY) run python -c 'import imgproxykit.integrations.django' ;; \
+	    django) $(POETRY) run python -c 'from import imgproxykit.integrations.django import *' ;; \
+	    drf) $(POETRY) run python -c 'from imgproxykit.integrations.drf import *' ;; \
 	    fastapi) $(POETRY) run python -c 'from imgproxykit.integrations.fastapi import *' ;; \
 	  esac; \
 	done

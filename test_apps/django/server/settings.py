@@ -5,9 +5,16 @@ from imgproxykit.integrations.django import SettingsDict
 
 SECRET_KEY = 'imgproxykit-test-project'  # noqa: S105
 
-ALLOWED_HOSTS = ('localhost', '127.0.0.1', 'testserver')
+ALLOWED_HOSTS = (
+    'localhost',
+    '127.0.0.1',
+    'testserver',
+)
 
-INSTALLED_APPS = ('imgproxykit.integrations.django',)
+INSTALLED_APPS = (
+    'imgproxykit.integrations.django',
+    'rest_framework',
+)
 
 ROOT_URLCONF = 'server.urls'
 
@@ -20,6 +27,12 @@ TEMPLATES = (
 )
 
 WSGI_APPLICATION = 'server.wsgi.application'
+
+# The test app has no authentication models or database.
+REST_FRAMEWORK = {  # noqa: WPS407
+    'DEFAULT_AUTHENTICATION_CLASSES': (),
+    'UNAUTHENTICATED_USER': None,
+}
 
 _SMALL = Transform(width=320, format='webp')
 _MEDIUM = Transform(width=640, format='webp')

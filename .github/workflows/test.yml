@@ -56,7 +56,7 @@ jobs:
         tests: tests
 
     - name: Run checks
-      run: make check SMOKE_EXTRAS='django fastapi'
+      run: make check SMOKE_EXTRAS='django drf fastapi'
 
     # Upload coverage to codecov: https://codecov.io/
     - name: Upload coverage to Codecov

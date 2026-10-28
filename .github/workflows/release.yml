@@ -51,7 +51,7 @@ jobs:
           poetry run python -m ensurepip
 
       - name: Run checks
-        run: make check SMOKE_EXTRAS='django fastapi'
+        run: make check SMOKE_EXTRAS='django drf fastapi'
 
       - name: Build distributions
         run: poetry build

@@ -81,7 +81,7 @@ files = [
     {file = "asgiref-3.13.0-py3-none-any.whl", hash = "sha256:f9596a2434512686473d50f96ff6207fbba49ae1a785dfac614df4aeb085674d"},
     {file = "asgiref-3.13.0.tar.gz", hash = "sha256:034cc8cbf72d00553b4be256703ac545120b4e50af13b49dec99da899aeeecb4"},
 ]
-markers = {main = "extra == \"django\""}
+markers = {main = "extra == \"django\" or extra == \"drf\""}
 
 [package.extras]
 mypy = ["mypy (>=1.14.0)"]
@@ -467,7 +467,7 @@ files = [
     {file = "django-6.1.2-py3-none-any.whl", hash = "sha256:141efee6ec64d1db6db90683bf734c550102450f444fb099063b0be1bd27d991"},
     {file = "django-6.1.2.tar.gz", hash = "sha256:a1e92451ccb8b514e91bbb3b6d186d20b4030558f116b5d9de6535455ff210b7"},
 ]
-markers = {main = "extra == \"django\""}
+markers = {main = "extra == \"django\" or extra == \"drf\""}
 
 [package.dependencies]
 asgiref = ">=3.9.1"
@@ -516,6 +516,45 @@ files = [
 [package.dependencies]
 django = "*"
 typing-extensions = "*"
+
+[[package]]
+name = "djangorestframework"
+version = "3.18.3"
+description = "Web APIs for Django, made easy."
+optional = true
+python-versions = ">=3.10"
+groups = ["main"]
+markers = "extra == \"drf\""
+files = [
+    {file = "djangorestframework-3.18.3-py3-none-any.whl", hash = "sha256:8544bb674846731b1e3c9b309236ee1dc412905a0aa725be2ec193ca950a7d12"},
+    {file = "djangorestframework-3.18.3.tar.gz", hash = "sha256:446a9b352e7eff630421ab3f2328bd2401b109a9470afa4a31189994911ed030"},
+]
+
+[package.dependencies]
+django = ">=5.2"
+
+[[package]]
+name = "djangorestframework-stubs"
+version = "3.18.1"
+description = "PEP-484 stubs for django-rest-framework"
+optional = false
+python-versions = ">=3.11"
+groups = ["dev"]
+files = [
+    {file = "djangorestframework_stubs-3.18.1-py3-none-any.whl", hash = "sha256:a2021f45f7759b493504c2a721f112ec4fd677753590c1ba346f4ebfb49a7f03"},
+    {file = "djangorestframework_stubs-3.18.1.tar.gz", hash = "sha256:65ed4a9ea094616759a2cba4fe0ad85efe25b471b28281b790bfefb46704c64a"},
+]
+
+[package.dependencies]
+django-stubs = ">=6.1.0"
+types-pyyaml = "*"
+typing-extensions = ">=4.0"
+
+[package.extras]
+compatible-mypy = ["django-stubs[compatible-mypy]", "mypy (>=1.13,<2.4)"]
+coreapi = ["coreapi (>=2.0.0)"]
+markdown = ["types-markdown (>=0.1.5)"]
+requests = ["types-requests"]
 
 [[package]]
 name = "docker"
@@ -2322,7 +2361,7 @@ files = [
     {file = "sqlparse-0.6.0-py3-none-any.whl", hash = "sha256:b861c0288ce2fa56209a9a6412d2e066ac664b3873b89c26c9d8415e8e32996f"},
     {file = "sqlparse-0.6.0.tar.gz", hash = "sha256:113c35c75365ab9cc9c7231d68c6428fb11c085fc8e9eb1ad659b7ddbf6cd2b9"},
 ]
-markers = {main = "extra == \"django\""}
+markers = {main = "extra == \"django\" or extra == \"drf\""}
 
 [package.extras]
 dev = ["build"]
@@ -2495,7 +2534,7 @@ files = [
     {file = "tzdata-2026.5-py2.py3-none-any.whl", hash = "sha256:b683bd1b6659ddcd810ff02ad09ba821d4bf1065072805063eb35c49617905ac"},
     {file = "tzdata-2026.5.tar.gz", hash = "sha256:8cc73c0a0bfca7dbfa59235d60b2eff82231dee33f53d206db1acd9173cfc0a7"},
 ]
-markers = {main = "extra == \"django\" and sys_platform == \"win32\"", dev = "sys_platform == \"win32\" or platform_system == \"Windows\""}
+markers = {main = "(extra == \"django\" or extra == \"drf\") and sys_platform == \"win32\"", dev = "sys_platform == \"win32\" or platform_system == \"Windows\""}
 
 [[package]]
 name = "urllib3"
@@ -2696,9 +2735,10 @@ zstd = ["zstandard (>=0.18.0)"]
 
 [extras]
 django = ["django"]
+drf = ["django", "djangorestframework"]
 fastapi = ["fastapi"]
 
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<4"
-content-hash = "cd63490838446b5ab76a9b63e77fd9442cab13384a0a9483d30d1fedc05c26d3"
+content-hash = "0bad38f48dc50eae826fe856a67f5eab8163f8bd6ceab6df01d97fba3cb49f38"
