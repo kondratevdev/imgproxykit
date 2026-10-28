@@ -66,6 +66,8 @@ Find your way
   and extension points.
 * :doc:`Django integration <pages/integrations/django>` configures a shared
   client and generates URLs from model file fields.
+* :doc:`DRF integration <pages/integrations/drf>` returns image URLs and
+  variants from serializer fields.
 * :doc:`FastAPI integration <pages/integrations/fastapi>` registers clients
   as application dependencies.
 * :doc:`pages/changelog` tracks releases and compatibility changes.
@@ -92,6 +94,7 @@ Find your way
     :hidden:
 
     pages/integrations/django
+    pages/integrations/drf
     pages/integrations/fastapi
 
 .. toctree::

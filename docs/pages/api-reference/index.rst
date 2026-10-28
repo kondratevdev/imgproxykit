@@ -10,6 +10,7 @@ and examples, see the :doc:`User guide <../user-guide/client>`.
 * :doc:`types` — supported values and type aliases.
 * :doc:`extensions` — custom path serialization and URL signing.
 * :doc:`django` — optional Django settings, shortcuts, and source resolution.
+* :doc:`drf` — optional Django REST Framework serializer fields.
 * :doc:`fastapi` — optional FastAPI client registration and dependencies.
 
 .. toctree::
@@ -22,4 +23,5 @@ and examples, see the :doc:`User guide <../user-guide/client>`.
    types
    extensions
    django
+   drf
    fastapi

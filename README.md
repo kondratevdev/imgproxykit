@@ -22,6 +22,7 @@
 - [x] Variants: generate multiple image URLs from a reusable set of transforms
 - [x] Support for named presets configured on your `imgproxy` server
 - [x] Native `Django` integration with settings, shortcuts, and template tags
+- [x] Native `Django REST Framework` integration with serializers
 - [x] Native `FastAPI` integration with dependency injection
 
 ---------
@@ -38,6 +39,8 @@ There are several included extras:
 
 - `'imgproxykit[django]'` provides [Django integration](https://imgproxykit.readthedocs.io/en/latest/pages/integrations/django.html)
   with settings, shortcuts, and template tags
+- `'imgproxykit[drf]'` provides [Django REST Framework integration](https://imgproxykit.readthedocs.io/en/latest/pages/integrations/drf.html)
+  with serializer fields for image URLs and named variants
 - `'imgproxykit[fastapi]'` provides [FastAPI integration](https://imgproxykit.readthedocs.io/en/latest/pages/integrations/fastapi.html)
   with client registration and dependency injection
 
