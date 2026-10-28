@@ -8,6 +8,15 @@ After `Development Status :: 4 - Beta` we will still break things
 but with a deprecation period.
 
 
+## 0.5.0 WIP
+
+### Features
+
+- Added Django REST Framework integration with read-only serializer fields
+  for image URLs and named variants. Reuses Django settings, transformations,
+  and source resolution. Supports source strings and model file fields.
+  Install with `pip install 'imgproxykit[drf]'`, #77
+
 ## 0.4.0
 
 ### Features
