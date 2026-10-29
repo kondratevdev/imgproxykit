@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import ClassVar
 
 from imgproxykit.options.base import ScalarOption
-from imgproxykit.types import FormatType, OptionType
+from imgproxykit.types import FormatType
 
 
 @dataclass(frozen=True, slots=True)
@@ -27,4 +27,5 @@ class Format(ScalarOption[FormatType]):
     # Public API:
 
     # Public API:
-    name: ClassVar[OptionType] = 'format'
+    name: ClassVar[str] = 'format'
+    short_name: ClassVar[str | None] = 'f'

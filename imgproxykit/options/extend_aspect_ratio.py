@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import ClassVar, override
 
 from imgproxykit.options.base import Option
-from imgproxykit.types import Argument, OptionType, Position
+from imgproxykit.types import Argument, Position
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)
@@ -35,7 +35,8 @@ class ExtendAspectRatio(Option):
     offset_x: float | None = None
     offset_y: float | None = None
 
-    name: ClassVar[OptionType] = 'extend_aspect_ratio'
+    name: ClassVar[str] = 'extend_aspect_ratio'
+    short_name: ClassVar[str | None] = 'exar'
 
     @property
     @override

@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import ClassVar, override
 
 from imgproxykit.options.base import Option
-from imgproxykit.types import Argument, OptionType
+from imgproxykit.types import Argument
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)
@@ -36,7 +36,8 @@ class Background(Option):
 
     color: str | tuple[int, int, int] | None = None
 
-    name: ClassVar[OptionType] = 'background'
+    name: ClassVar[str] = 'background'
+    short_name: ClassVar[str | None] = 'bg'
 
     @property
     @override

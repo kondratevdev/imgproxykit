@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from typing import ClassVar
 
 from imgproxykit.options.base import ScalarOption
-from imgproxykit.types import OptionType
 
 
 @dataclass(frozen=True, slots=True)
@@ -26,4 +25,5 @@ class MinHeight(ScalarOption[int]):
 
     """
 
-    name: ClassVar[OptionType] = 'min-height'
+    name: ClassVar[str] = 'min-height'
+    short_name: ClassVar[str | None] = 'mh'

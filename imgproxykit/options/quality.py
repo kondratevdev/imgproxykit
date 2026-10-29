@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from typing import ClassVar
 
 from imgproxykit.options.base import ScalarOption
-from imgproxykit.types import OptionType
 
 
 @dataclass(frozen=True, slots=True)
@@ -27,4 +26,5 @@ class Quality(ScalarOption[int]):
     # Public API:
 
     # Public API:
-    name: ClassVar[OptionType] = 'quality'
+    name: ClassVar[str] = 'quality'
+    short_name: ClassVar[str | None] = 'q'

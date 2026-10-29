@@ -3,7 +3,7 @@ from typing import ClassVar, override
 from urllib.parse import quote
 
 from imgproxykit.options.base import ScalarOption
-from imgproxykit.types import Argument, OptionType
+from imgproxykit.types import Argument
 
 
 @dataclass(frozen=True, slots=True)
@@ -28,7 +28,8 @@ class CacheBuster(ScalarOption[str]):
 
     """
 
-    name: ClassVar[OptionType] = 'cachebuster'
+    name: ClassVar[str] = 'cachebuster'
+    short_name: ClassVar[str | None] = 'cb'
 
     @property
     @override

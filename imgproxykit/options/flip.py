@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import ClassVar, override
 
 from imgproxykit.options.base import Option
-from imgproxykit.types import Argument, OptionType
+from imgproxykit.types import Argument
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)
@@ -34,7 +34,8 @@ class Flip(Option):
     horizontal: bool | None = None
     vertical: bool | None = None
 
-    name: ClassVar[OptionType] = 'flip'
+    name: ClassVar[str] = 'flip'
+    short_name: ClassVar[str | None] = 'fl'
 
     @property
     @override

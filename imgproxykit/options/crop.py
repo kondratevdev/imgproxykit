@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import ClassVar, override
 
 from imgproxykit.options.base import Option
-from imgproxykit.types import Argument, OptionType, Position
+from imgproxykit.types import Argument, Position
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)
@@ -45,7 +45,8 @@ class Crop(Option):
     offset_x: float | None = None
     offset_y: float | None = None
 
-    name: ClassVar[OptionType] = 'crop'
+    name: ClassVar[str] = 'crop'
+    short_name: ClassVar[str | None] = 'c'
 
     @property
     @override

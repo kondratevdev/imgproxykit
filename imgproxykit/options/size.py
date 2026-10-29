@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import ClassVar, override
 
 from imgproxykit.options.base import Option
-from imgproxykit.types import Argument, OptionType
+from imgproxykit.types import Argument
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)
@@ -35,7 +35,8 @@ class Size(Option):
     enlarge: bool | None = None
     extend: bool | None = None
 
-    name: ClassVar[OptionType] = 'size'
+    name: ClassVar[str] = 'size'
+    short_name: ClassVar[str | None] = 's'
 
     @property
     @override

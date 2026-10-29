@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from typing import ClassVar
 
 from imgproxykit.options.base import ScalarOption
-from imgproxykit.types import OptionType
 
 
 @dataclass(frozen=True, slots=True)
@@ -29,4 +28,5 @@ class MaxSrcResolution(ScalarOption[float]):
 
     """
 
-    name: ClassVar[OptionType] = 'max_src_resolution'
+    name: ClassVar[str] = 'max_src_resolution'
+    short_name: ClassVar[str | None] = 'msr'

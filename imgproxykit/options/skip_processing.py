@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import ClassVar, override
 
 from imgproxykit.options.base import Option
-from imgproxykit.types import Argument, FormatType, OptionType
+from imgproxykit.types import Argument, FormatType
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)
@@ -29,7 +29,8 @@ class SkipProcessing(Option):
 
     formats: tuple[FormatType, ...]
 
-    name: ClassVar[OptionType] = 'skip_processing'
+    name: ClassVar[str] = 'skip_processing'
+    short_name: ClassVar[str | None] = 'skp'
 
     @property
     @override

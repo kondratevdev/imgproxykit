@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from typing import ClassVar
 
 from imgproxykit.options.base import ScalarOption
-from imgproxykit.types import OptionType
 
 
 @dataclass(frozen=True, slots=True)
@@ -29,4 +28,5 @@ class MaxResultDimension(ScalarOption[int]):
 
     """
 
-    name: ClassVar[OptionType] = 'max_result_dimension'
+    name: ClassVar[str] = 'max_result_dimension'
+    short_name: ClassVar[str | None] = 'mrd'

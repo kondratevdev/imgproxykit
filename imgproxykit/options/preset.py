@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import ClassVar, override
 
 from imgproxykit.options.base import Option
-from imgproxykit.types import Argument, OptionType
+from imgproxykit.types import Argument
 
 
 @dataclass(frozen=True, slots=True, init=False)
@@ -30,7 +30,8 @@ class Preset(Option):
 
     names: tuple[str, ...]
 
-    name: ClassVar[OptionType] = 'preset'
+    name: ClassVar[str] = 'preset'
+    short_name: ClassVar[str | None] = 'pr'
 
     def __init__(self, *names: str) -> None:
         """

@@ -23,6 +23,7 @@ class ClientSettings(enum.StrEnum):
     signature_size = 'signature_size'
     unsigned_signature = 'unsigned_signature'
     arguments_separator = 'arguments_separator'
+    short_option_name = 'short_option_name'
 
 
 @final
@@ -51,6 +52,8 @@ class ClientSettingsDict(TypedDict, total=False, closed=True):
     unsigned_signature: str
     #: Processing argument separator; must match the server.
     arguments_separator: str
+    #: Use short processing option aliases when available.
+    short_option_name: bool
 
 
 class SettingsDict(TypedDict, total=False, closed=True):

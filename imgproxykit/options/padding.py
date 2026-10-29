@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import ClassVar, override
 
 from imgproxykit.options.base import Option
-from imgproxykit.types import Argument, OptionType
+from imgproxykit.types import Argument
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)
@@ -40,7 +40,8 @@ class Padding(Option):
     bottom: int | None = None
     left: int | None = None
 
-    name: ClassVar[OptionType] = 'padding'
+    name: ClassVar[str] = 'padding'
+    short_name: ClassVar[str | None] = 'pd'
 
     @property
     @override

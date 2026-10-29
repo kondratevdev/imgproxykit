@@ -2,7 +2,7 @@ from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from typing import Any, ClassVar, override
 
-from imgproxykit.types import Argument, OptionType
+from imgproxykit.types import Argument
 
 
 class Option(ABC):
@@ -25,12 +25,20 @@ class Option(ABC):
     __slots__ = ()
 
     # Public API:
-    name: ClassVar[OptionType]
+    name: ClassVar[str]
     """
     All subtypes must provide a supported imgproxy processing option name.
 
     The name is shared by all instances and is not a dataclass field
     or a constructor argument.
+    """
+
+    short_name: ClassVar[str | None] = None
+    """
+    Shortest documented imgproxy alias, or ``None`` if none is available.
+
+    Like ``name``, this is shared by instances and is not a constructor
+    argument. Use ``name`` when no short alias is defined.
     """
 
     def __post_init__(self) -> None:

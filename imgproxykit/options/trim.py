@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import ClassVar, override
 
 from imgproxykit.options.base import Option
-from imgproxykit.types import Argument, OptionType
+from imgproxykit.types import Argument
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)
@@ -37,7 +37,8 @@ class Trim(Option):
     equal_hor: bool | None = None
     equal_ver: bool | None = None
 
-    name: ClassVar[OptionType] = 'trim'
+    name: ClassVar[str] = 'trim'
+    short_name: ClassVar[str | None] = 't'
 
     @property
     @override

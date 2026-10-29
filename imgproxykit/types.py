@@ -43,68 +43,6 @@ See `imgproxy format
 <https://docs.imgproxy.net/image_formats_support>`_.
 """
 
-type OptionType = Literal[
-    'format',
-    'preset',
-    'width',
-    'height',
-    'min-width',
-    'min-height',
-    'resizing_type',
-    'enlarge',
-    'auto_rotate',
-    'rotate',
-    'blur',
-    'sharpen',
-    'pixelate',
-    'strip_metadata',
-    'keep_copyright',
-    'strip_color_profile',
-    'preserve_hdr',
-    'enforce_thumbnail',
-    'max_bytes',
-    'raw',
-    'expires',
-    'return_attachment',
-    'max_src_resolution',
-    'max_src_file_size',
-    'max_animation_frames',
-    'max_animation_frame_resolution',
-    'max_result_dimension',
-    'size',
-    'zoom',
-    'extend',
-    'extend_aspect_ratio',
-    'crop',
-    'trim',
-    'padding',
-    'flip',
-    'background',
-    'format_quality',
-    'skip_processing',
-    'filename',
-    'cachebuster',
-    'resize',
-    'gravity',
-    'dpr',
-    'quality',
-    'watermark',
-]
-"""
-Processing option names represented by imgproxykit's built-in options.
-
-Names in :attr:`~imgproxykit.options.Option.name` identify URL segments.
-These are protocol names; scalar keywords in
-:class:`~imgproxykit.Transform` replace hyphens with underscores.
-For example, ``min-width`` corresponds to ``min_width``.
-
-This type describes the library's supported names, rather than every
-option available in every imgproxy version or edition.
-
-See `imgproxy processing options
-<https://docs.imgproxy.net/usage/processing#processing-options>`_.
-"""
-
 type WatermarkPosition = Literal[
     'ce',
     'no',

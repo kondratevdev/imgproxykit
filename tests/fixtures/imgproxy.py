@@ -57,7 +57,15 @@ def unsigned_imgproxy_client() -> Client:
     return Client('https://images.example.com')
 
 
-@pytest.fixture
-def imgproxy_client(imgproxy_url: str, credentials: Credentials) -> Client:
-    """Provide a signed client connected to imgproxy."""
-    return Client(imgproxy_url, **credentials)
+@pytest.fixture(params=[False, True])
+def imgproxy_client(
+    imgproxy_url: str,
+    credentials: Credentials,
+    request: pytest.FixtureRequest,
+) -> Client:
+    """Exercise signed imgproxy requests with full names and short aliases."""
+    return Client(
+        imgproxy_url,
+        **credentials,
+        short_option_name=bool(request.param),
+    )

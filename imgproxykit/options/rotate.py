@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from typing import ClassVar
 
 from imgproxykit.options.base import ScalarOption
-from imgproxykit.types import OptionType
 
 
 @dataclass(frozen=True, slots=True)
@@ -26,4 +25,5 @@ class Rotate(ScalarOption[int]):
 
     """
 
-    name: ClassVar[OptionType] = 'rotate'
+    name: ClassVar[str] = 'rotate'
+    short_name: ClassVar[str | None] = 'rot'

@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from typing import ClassVar
 
 from imgproxykit.options.base import ScalarOption
-from imgproxykit.types import OptionType
 
 
 @dataclass(frozen=True, slots=True)
@@ -29,4 +28,4 @@ class DPR(ScalarOption[float]):
     # Public API:
 
     # Public API:
-    name: ClassVar[OptionType] = 'dpr'
+    name: ClassVar[str] = 'dpr'

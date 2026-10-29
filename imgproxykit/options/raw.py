@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from typing import ClassVar
 
 from imgproxykit.options.base import ScalarOption
-from imgproxykit.types import OptionType
 
 
 @dataclass(frozen=True, slots=True)
@@ -27,4 +26,4 @@ class Raw(ScalarOption[bool]):
 
     """
 
-    name: ClassVar[OptionType] = 'raw'
+    name: ClassVar[str] = 'raw'

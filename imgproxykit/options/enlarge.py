@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from typing import ClassVar
 
 from imgproxykit.options.base import ScalarOption
-from imgproxykit.types import OptionType
 
 
 @dataclass(frozen=True, slots=True)
@@ -26,4 +25,5 @@ class Enlarge(ScalarOption[bool]):
 
     """
 
-    name: ClassVar[OptionType] = 'enlarge'
+    name: ClassVar[str] = 'enlarge'
+    short_name: ClassVar[str | None] = 'el'

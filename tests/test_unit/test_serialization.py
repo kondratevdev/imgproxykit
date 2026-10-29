@@ -124,8 +124,21 @@ def test_serialize_segment(
 
 def test_custom_arguments_separator() -> None:
     """Ensure that custom separators preserve omitted argument positions."""
-    serializer = PathSerializer(arguments_separator=',')
+    serializer = PathSerializer(
+        arguments_separator=',',
+        short_option_name=False,
+    )
     transform = Transform(Resize(width=300), format='webp')
     assert serializer(_SOURCE, transform=transform) == (
         '/resize,,300/format,webp/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc'
+    )
+
+
+def test_short_names_with_custom_separator() -> None:
+    """Combine short aliases, omitted arguments and a custom separator."""
+    serializer = PathSerializer(arguments_separator=',', short_option_name=True)
+    transform = Transform(Resize(width=300), format='webp', raw=False)
+
+    assert serializer(_SOURCE, transform=transform) == (
+        '/rs,,300/f,webp/raw,0/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc'
     )

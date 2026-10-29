@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from typing import ClassVar
 
 from imgproxykit.options.base import ScalarOption
-from imgproxykit.types import OptionType
 
 
 @dataclass(frozen=True, slots=True)
@@ -26,4 +25,5 @@ class MinWidth(ScalarOption[int]):
 
     """
 
-    name: ClassVar[OptionType] = 'min-width'
+    name: ClassVar[str] = 'min-width'
+    short_name: ClassVar[str | None] = 'mw'

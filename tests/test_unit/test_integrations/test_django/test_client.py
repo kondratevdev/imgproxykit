@@ -1,6 +1,7 @@
 from django.conf import LazySettings
 from django.test import override_settings
 
+from imgproxykit import Transform
 from imgproxykit.integrations.django import get_client
 
 
@@ -15,13 +16,14 @@ def test_client_configuration(settings: LazySettings) -> None:
         'client': {
             'base_url': 'https://images.example.com',
             'unsigned_signature': 'trusted',
+            'short_option_name': True,
         },
     }
 
     assert (
         get_client()
-        .url('source')
-        .startswith('https://images.example.com/trusted/')
+        .url('source', transform=Transform(width=300))
+        .startswith('https://images.example.com/trusted/w:300/')
     )
 
 

@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from typing import ClassVar
 
 from imgproxykit.options.base import ScalarOption
-from imgproxykit.types import OptionType
 
 
 @dataclass(frozen=True, slots=True)
@@ -27,4 +26,5 @@ class MaxBytes(ScalarOption[int]):
 
     """
 
-    name: ClassVar[OptionType] = 'max_bytes'
+    name: ClassVar[str] = 'max_bytes'
+    short_name: ClassVar[str | None] = 'mb'

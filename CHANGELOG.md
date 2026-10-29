@@ -12,10 +12,18 @@ but with a deprecation period.
 
 ### Features
 
+- Added `Option.short_name` with documented processing option aliases and
+  `Client(short_option_name=True)` to use them in URLs. Full names remain
+  the default; options without a separate alias inherit `None`.
 - Added Django REST Framework integration with read-only serializer fields
   for image URLs and named variants. Reuses Django settings, transformations,
   and source resolution. Supports source strings and model file fields.
   Install with `pip install 'imgproxykit[drf]'`, #77
+
+### Breaking changes
+
+- Removed `imgproxykit.types.OptionType`. Processing option names now use
+  `str`, allowing custom options to define their own protocol names.
 
 ## 0.4.0
 

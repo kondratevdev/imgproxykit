@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from typing import ClassVar
 
 from imgproxykit.options.base import ScalarOption
-from imgproxykit.types import OptionType
 
 
 @dataclass(frozen=True, slots=True)
@@ -29,4 +28,5 @@ class MaxAnimationFrameResolution(ScalarOption[float]):
 
     """
 
-    name: ClassVar[OptionType] = 'max_animation_frame_resolution'
+    name: ClassVar[str] = 'max_animation_frame_resolution'
+    short_name: ClassVar[str | None] = 'mafr'

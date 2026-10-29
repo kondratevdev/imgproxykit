@@ -45,6 +45,7 @@ class Client:
         salt: None = None,
         unsigned_signature: str = 'unsafe',
         arguments_separator: str = ':',
+        short_option_name: bool = False,
     ) -> None: ...
 
     @overload
@@ -57,6 +58,7 @@ class Client:
         salt: str,
         signature_size: int = 32,
         arguments_separator: str = ':',
+        short_option_name: bool = False,
     ) -> None: ...
 
     def __init__(  # noqa: WPS211
@@ -69,6 +71,7 @@ class Client:
         signature_size: int = 32,
         unsigned_signature: str = 'unsafe',
         arguments_separator: str = ':',
+        short_option_name: bool = False,
     ) -> None:
         """
         Configure the imgproxy address and create the client components.
@@ -99,6 +102,8 @@ class Client:
                 `IMGPROXY_ARGUMENTS_SEPARATOR
                 <https://docs.imgproxy.net/latest/configuration/options#miscellaneous>`__.
                 Defaults to ``':'``.
+            short_option_name: Use short processing option aliases when
+                available, falling back to full names. Defaults to ``False``.
 
         Raises:
             ValueError: With the default signer, if only one signing
@@ -124,6 +129,7 @@ class Client:
         self._base_url = base_url.rstrip('/')
         self._path_serializer = self.path_serializer_cls(
             arguments_separator=arguments_separator,
+            short_option_name=short_option_name,
         )
         self._url_signer = self.url_signer_cls(
             key=key,

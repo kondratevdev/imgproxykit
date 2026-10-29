@@ -3,7 +3,7 @@ from typing import ClassVar, override
 
 from imgproxykit.internal.encoding import encode_base64
 from imgproxykit.options.base import ScalarOption
-from imgproxykit.types import Argument, OptionType
+from imgproxykit.types import Argument
 
 
 @dataclass(frozen=True, slots=True)
@@ -29,7 +29,8 @@ class Filename(ScalarOption[str]):
 
     """
 
-    name: ClassVar[OptionType] = 'filename'
+    name: ClassVar[str] = 'filename'
+    short_name: ClassVar[str | None] = 'fn'
 
     @property
     @override

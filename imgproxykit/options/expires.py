@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from typing import ClassVar
 
 from imgproxykit.options.base import ScalarOption
-from imgproxykit.types import OptionType
 
 
 @dataclass(frozen=True, slots=True)
@@ -24,4 +23,5 @@ class Expires(ScalarOption[int]):
     # timestamps. Consider timedelta for relative expiry, resolved once at
     # construction so reusing a Transform produces a stable URL. Define how
     # naive datetimes and subsecond precision are handled.
-    name: ClassVar[OptionType] = 'expires'
+    name: ClassVar[str] = 'expires'
+    short_name: ClassVar[str | None] = 'exp'

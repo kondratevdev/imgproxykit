@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from typing import ClassVar
 
 from imgproxykit.options.base import ScalarOption
-from imgproxykit.types import OptionType
 
 
 @dataclass(frozen=True, slots=True)
@@ -29,4 +28,5 @@ class MaxSrcFileSize(ScalarOption[int]):
 
     """
 
-    name: ClassVar[OptionType] = 'max_src_file_size'
+    name: ClassVar[str] = 'max_src_file_size'
+    short_name: ClassVar[str | None] = 'msfs'

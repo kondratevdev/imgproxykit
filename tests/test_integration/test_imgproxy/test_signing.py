@@ -34,9 +34,9 @@ def test_invalid_credentials(
 @pytest.mark.parametrize(
     ('original', 'replacement'),
     [
-        ('resize:fill:160:120', 'resize:fill:80:60'),
+        (':fill:160:120', ':fill:80:60'),
         ('bG9jYWw6Ly8vc291cmNlLnBuZw', 'bG9jYWw6Ly8vcGF0dGVybi5wbmc'),
-        ('format:png', 'format:webp'),
+        (':png/', ':webp/'),
     ],
 )
 def test_modified_path(

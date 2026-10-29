@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from typing import ClassVar
 
 from imgproxykit.options.base import ScalarOption
-from imgproxykit.types import OptionType
 
 
 @dataclass(frozen=True, slots=True)
@@ -27,4 +26,5 @@ class StripColorProfile(ScalarOption[bool]):
 
     """
 
-    name: ClassVar[OptionType] = 'strip_color_profile'
+    name: ClassVar[str] = 'strip_color_profile'
+    short_name: ClassVar[str | None] = 'scp'

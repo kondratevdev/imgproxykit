@@ -21,10 +21,18 @@ class PathSerializer:
 
     """
 
-    __slots__ = ('_arguments_separator',)
+    __slots__ = (
+        '_arguments_separator',
+        '_short_option_name',
+    )
 
     # TODO: Support the plain option for unencoded source URLs.
-    def __init__(self, *, arguments_separator: str) -> None:
+    def __init__(
+        self,
+        *,
+        arguments_separator: str,
+        short_option_name: bool,
+    ) -> None:
         """
         Configure processing option serialization.
 
@@ -33,9 +41,12 @@ class PathSerializer:
                 and their arguments. Must match the server's
                 `IMGPROXY_ARGUMENTS_SEPARATOR
                 <https://docs.imgproxy.net/latest/configuration/options#miscellaneous>`__.
+            short_option_name: Use short aliases when available, otherwise
+                full names. Defaults to ``False``.
 
         """
         self._arguments_separator = arguments_separator
+        self._short_option_name = short_option_name
 
     def __call__(
         self,
@@ -67,7 +78,10 @@ class PathSerializer:
             >>> from imgproxykit import Transform
             >>> from imgproxykit.serialization import PathSerializer
             >>> from imgproxykit.options import Resize
-            >>> serializer = PathSerializer(arguments_separator=':')
+            >>> serializer = PathSerializer(
+            ...     arguments_separator=':',
+            ...     short_option_name=False,
+            ... )
             >>> thumbnail = Transform(
             ...     Resize(width=96, height=96, mode='fill'),
             ...     format='webp',
@@ -76,14 +90,17 @@ class PathSerializer:
             '/resize:fill:96:96/format:webp/czM6Ly9pbWFnZXMvcGhvdG8uanBn'
 
         """
-        options = (
-            ()
-            if transform is None
-            else tuple(
-                self._serialize_segment(option.name, option.arguments)
+        options: tuple[str, ...] = ()
+        if transform is not None:
+            options = tuple(
+                self._serialize_segment(
+                    (option.short_name or option.name)
+                    if self._short_option_name
+                    else option.name,
+                    option.arguments,
+                )
                 for option in transform.options
             )
-        )
         return '/'.join(('', *options, encode_base64(source)))
 
     def _serialize_segment(

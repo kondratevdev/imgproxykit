@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from typing import ClassVar
 
 from imgproxykit.options.base import ScalarOption
-from imgproxykit.types import OptionType
 
 
 @dataclass(frozen=True, slots=True)
@@ -26,4 +25,5 @@ class Pixelate(ScalarOption[int]):
 
     """
 
-    name: ClassVar[OptionType] = 'pixelate'
+    name: ClassVar[str] = 'pixelate'
+    short_name: ClassVar[str | None] = 'pix'

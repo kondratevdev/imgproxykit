@@ -28,9 +28,8 @@ def test_content_disposition(
         format='png',
     )
 
-    response = http_client.get(
-        imgproxy_client.url('local:///source.png', transform=transform),
-    )
+    url = imgproxy_client.url('local:///source.png', transform=transform)
+    response = http_client.get(url)
 
     assert_image(response.read(), size=(640, 480))
     headers = Message()

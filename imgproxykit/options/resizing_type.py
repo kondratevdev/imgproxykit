@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from typing import ClassVar
 
 from imgproxykit.options.base import ScalarOption
-from imgproxykit.types import OptionType, ResizeType
+from imgproxykit.types import ResizeType
 
 
 @dataclass(frozen=True, slots=True)
@@ -27,4 +27,5 @@ class ResizingType(ScalarOption[ResizeType]):
 
     """
 
-    name: ClassVar[OptionType] = 'resizing_type'
+    name: ClassVar[str] = 'resizing_type'
+    short_name: ClassVar[str | None] = 'rt'

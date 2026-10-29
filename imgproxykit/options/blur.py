@@ -2,7 +2,6 @@ from dataclasses import dataclass
 from typing import ClassVar
 
 from imgproxykit.options.base import ScalarOption
-from imgproxykit.types import OptionType
 
 
 @dataclass(frozen=True, slots=True)
@@ -26,4 +25,5 @@ class Blur(ScalarOption[float]):
 
     """
 
-    name: ClassVar[OptionType] = 'blur'
+    name: ClassVar[str] = 'blur'
+    short_name: ClassVar[str | None] = 'bl'
