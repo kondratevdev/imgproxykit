@@ -93,7 +93,7 @@ class Transform:
             >>> from imgproxykit import Transform
             >>> from imgproxykit.options import Resize
             >>> thumbnail = Transform(
-            ...     Resize(width=96, height=96, mode='fill'),
+            ...     Resize.fill(width=96, height=96),
             ...     quality=85,
             ...     format='webp',
             ... )

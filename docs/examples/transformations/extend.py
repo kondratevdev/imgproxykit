@@ -16,7 +16,7 @@ from imgproxykit.options import Resize
 base = Transform(quality=85, format='webp')
 
 # Add a square crop without changing the base transformation.
-thumbnail = base.extend(Resize(width=300, height=300, mode='fill'))
+thumbnail = base.extend(Resize.fill(width=300, height=300))
 
 # Create a higher pixel density version of the thumbnail.
 retina = thumbnail.extend(dpr=2)

@@ -56,7 +56,7 @@ Build a URL for a cropped `webp` thumbnail:
 >>> client = Client('https://imgproxy.example.com')
 
 >>> thumbnail = Transform(
-...     Resize(width=300, height=300, mode='fill'),  # Pass typed option objects.
+...     Resize.fill(width=300, height=300),  # Pass typed option objects.
 ...     quality=80,  # Or scalar keywords, equivalent to Quality(80).
 ...     format='webp',
 ... )

@@ -13,7 +13,7 @@ client = Client('http://localhost:8080')
 source_url = 'https://picsum.photos/id/237/1600/1200'
 
 thumbnail = Transform(
-    Resize(width=300, height=300, mode='fill'),
+    Resize.fill(width=300, height=300),
     format='webp',
 )
 

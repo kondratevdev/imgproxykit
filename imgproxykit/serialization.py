@@ -93,7 +93,7 @@ class PathSerializer:
             ...     source_encoding='base64',
             ... )
             >>> thumbnail = Transform(
-            ...     Resize(width=96, height=96, mode='fill'),
+            ...     Resize.fill(width=96, height=96),
             ...     format='webp',
             ... )
             >>> serializer('s3://images/photo.jpg', transform=thumbnail)

@@ -13,7 +13,7 @@ client = Client('https://imgproxy.example.com')
 source_url = 'https://originals.example.com/photo.jpg'
 
 thumbnail = Transform(
-    Resize(width=300, height=300, mode='fill'),
+    Resize.fill(width=300, height=300),
     format='webp',
 )
 

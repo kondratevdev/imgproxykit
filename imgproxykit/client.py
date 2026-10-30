@@ -1,10 +1,14 @@
 from collections.abc import Mapping
-from typing import ClassVar, overload
+from typing import TYPE_CHECKING, ClassVar, overload
 
 from imgproxykit.serialization import PathSerializer
 from imgproxykit.signing import UrlSigner
 from imgproxykit.transform import Transform
 from imgproxykit.types import SourceEncoding
+from imgproxykit.variants import DataclassVariantsResolver
+
+if TYPE_CHECKING:
+    from _typeshed import DataclassInstance
 
 
 class Client:
@@ -19,9 +23,11 @@ class Client:
     option instances or scalar keyword arguments. Preset options reference
     names configured on the imgproxy server.
 
-    Subclass this client and override :attr:`path_serializer_cls` or
-    :attr:`url_signer_cls` to customize path construction or signing.
-    Each client creates its own instances of these components.
+    Subclass this client and override :attr:`path_serializer_cls`,
+    :attr:`url_signer_cls`, or :attr:`variants_resolver_cls` to customize
+    path construction, signing, or dataclass declaration resolution.
+    Each client creates its own serializer and signer. A variants resolver
+    is created for each dataclass declaration passed to :meth:`variants`.
 
     """
 
@@ -35,6 +41,10 @@ class Client:
     path_serializer_cls: ClassVar[type[PathSerializer]] = PathSerializer
     #: Component that signs paths or returns the unsigned URL marker.
     url_signer_cls: ClassVar[type[UrlSigner]] = UrlSigner
+    #: Component that validates dataclass variant declarations.
+    variants_resolver_cls: ClassVar[type[DataclassVariantsResolver]] = (
+        DataclassVariantsResolver
+    )
 
     @overload
     def __init__(
@@ -186,28 +196,53 @@ class Client:
         signature = self._url_signer(path)
         return f'{self._base_url}/{signature}{path}'
 
+    @overload
     def variants[Key: str](
         self,
         source: str,
         *,
         variants: Mapping[Key, Transform],
-    ) -> dict[Key, str]:
+    ) -> dict[Key, str]: ...
+
+    @overload
+    def variants[VariantSet: DataclassInstance](
+        self,
+        source: str,
+        *,
+        variants: type[VariantSet],
+    ) -> VariantSet: ...
+
+    def variants[Key: str](
+        self,
+        source: str,
+        *,
+        variants: Mapping[Key, Transform] | type['DataclassInstance'],
+    ) -> dict[Key, str] | dict[str, str] | 'DataclassInstance':
         """
         Build named URLs for one source using complete transformations.
 
         Args:
             source: Complete source URI understood by the imgproxy server.
             variants: Names mapped to the transformation for each variant.
-                Each transformation is passed unchanged to :meth:`url`.
+                Alternatively, a dataclass class with fields declared as
+                ``Annotated[str, Transform(...)]``. Each transformation is
+                passed unchanged to :meth:`url`.
 
         Returns:
             A new dictionary preserving the input keys and iteration order.
             The key type is preserved, including literal string unions.
             An empty mapping produces an empty dictionary.
+            A dataclass class produces a new instance of that exact class,
+            with a generated URL in every field.
             No network request is made.
-
         """
-        return {
-            name: self.url(source, transform=transform)
-            for name, transform in variants.items()
+        transforms = (
+            variants
+            if isinstance(variants, Mapping)
+            else self.variants_resolver_cls(model=variants)()
+        )
+        urls = {
+            name: self.url(source, transform=transform)  # ty: ignore[invalid-argument-type]
+            for name, transform in transforms.items()
         }
+        return urls if isinstance(variants, Mapping) else variants(**urls)  # ty: ignore[invalid-return-type, invalid-argument-type]
