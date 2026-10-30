@@ -12,6 +12,8 @@ but with a deprecation period.
 
 ### Features
 
+- Added `Transform.extend()` to create a new transformation with additional
+  typed options and scalar keyword arguments, preserving the original,
 - Added `Option.short_name` with documented processing option aliases and
   `Client(use_short_options=True)` to use them in URLs. Full names remain
   the default; options without a separate alias inherit `None`, #79

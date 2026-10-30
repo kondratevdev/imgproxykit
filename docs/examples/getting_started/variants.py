@@ -15,10 +15,10 @@ source_url = 'https://picsum.photos/id/237/1600/1200'
 # Share quality and output format across all variants.
 base = Transform(quality=85, format='webp')
 products = {
-    # Unpack shared options and add a width for each variant.
-    'small': Transform(*base.options, width=320),
-    'medium': Transform(*base.options, width=640),
-    'large': Transform(*base.options, width=1280),
+    # Add a width to the shared options for each variant.
+    'small': base.extend(width=320),
+    'medium': base.extend(width=640),
+    'large': base.extend(width=1280),
 }
 product_urls = client.variants(source=source_url, variants=products)
 

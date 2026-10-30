@@ -28,8 +28,9 @@ the client's signing settings.
 Reuse a variant set
 -------------------
 
-Define a set once and reuse it across source images. Shared settings can
-be composed into each transformation, as described in :doc:`transformations`:
+Define a set once and reuse it across source images. Keep shared settings
+in a base transformation and use :meth:`~imgproxykit.Transform.extend` to
+add a width for each variant:
 
 .. literalinclude:: /examples/variants/reusable_sets.py
    :language: python

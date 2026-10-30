@@ -19,9 +19,9 @@ pug_source = 'https://picsum.photos/id/1025/1600/1200'
 # Share quality and output format across all variants.
 base = Transform(quality=85, format='webp')
 sizes = {
-    'small': Transform(*base.options, width=320),
-    'medium': Transform(*base.options, width=640),
-    'large': Transform(*base.options, width=1280),
+    'small': base.extend(width=320),
+    'medium': base.extend(width=640),
+    'large': base.extend(width=1280),
 }
 
 # Reuse the same set for different source images.

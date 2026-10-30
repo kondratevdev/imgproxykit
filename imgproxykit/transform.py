@@ -9,7 +9,12 @@ from imgproxykit.types import FormatType, ResizeType
 
 
 class ScalarOptions(TypedDict, total=False, closed=True):
-    """Optional scalar processing arguments accepted by :class:`Transform`."""
+    """
+    Optional scalar processing arguments.
+
+    Accepted by :class:`Transform` and :meth:`~imgproxykit.Transform.extend`.
+
+    """
 
     auto_rotate: bool
     blur: float
@@ -51,6 +56,8 @@ class Transform:
     Stores an immutable tuple of options for reuse with
     :meth:`imgproxykit.Client.url`. Pass option instances or scalar keyword
     arguments; scalar options follow the positional options in keyword order.
+    Use :meth:`extend` to create a new transformation with additional options
+    without changing the original.
 
     Options retain their supplied order during serialization. Imgproxy
     determines the image processing pipeline and resolves omitted arguments
@@ -98,3 +105,30 @@ class Transform:
         # Bypassing __setattr__ is safe until initialization is finished.
         scalar_options = tuple(starmap(ScalarOption.from_kwarg, kwargs.items()))
         object.__setattr__(self, 'options', (*options, *scalar_options))
+
+    def extend(
+        self,
+        *options: Option,
+        **kwargs: Unpack[ScalarOptions],
+    ) -> 'Transform':
+        """
+        Return a new transformation with additional processing options.
+
+        The original transformation remains unchanged. Existing options are
+        followed by positional options, then scalar keyword options in keyword
+        order. Repeated options are retained without merging or replacing them.
+
+        Args:
+            *options: Additional processing option instances.
+            **kwargs: Additional scalar processing arguments.
+
+        Examples:
+            >>> base = Transform(quality=85, format='webp')
+            >>> retina = base.extend(dpr=2)
+            >>> [option.name for option in base.options]
+            ['quality', 'format']
+            >>> [option.name for option in retina.options]
+            ['quality', 'format', 'dpr']
+
+        """
+        return Transform(*self.options, *options, **kwargs)

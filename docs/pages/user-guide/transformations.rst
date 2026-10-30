@@ -42,25 +42,34 @@ images:
 
 ``thumbnail_urls`` contains a URL for each source, using the same crop and
 format. You can keep ``thumbnail`` at module level and reuse it across
-requests. To use different settings, create a new transformation.
+requests. To add processing options, create a new transformation with
+:meth:`~imgproxykit.Transform.extend`, as shown below.
 
 Compose transformations
 -----------------------
 
-Group related settings in separate transformations, then unpack their
-``options`` to combine them. You can add more options to the result:
+Use :meth:`~imgproxykit.Transform.extend` to create a new transformation
+with additional options. It accepts the same positional options and scalar
+keyword arguments as the constructor:
+
+.. literalinclude:: /examples/transformations/extend.py
+   :language: python
+   :start-at: from imgproxykit
+
+Each call returns a new transformation, leaving the original unchanged.
+New positional options follow the existing options; scalar keyword options
+come last, in keyword order.
+
+To combine reusable groups, pass another transformation's unpacked
+``options`` to ``extend()``:
 
 .. literalinclude:: /examples/transformations/composition.py
    :language: python
-   :lines: 12-34
+   :start-at: from imgproxykit
 
-``thumbnail`` combines the quality and format from ``base`` with the crop
-from ``square``. ``retina`` uses the same options with twice the pixel
-density. Each composition creates a new transformation; the original
-transformations remain unchanged.
-
-Unpacking appends options without merging or replacing them. Keep shared
-groups focused on different settings to avoid conflicting options.
+``extend()`` appends options without merging or replacing them. For example,
+``base.extend(quality=70)`` retains both quality options. Imgproxy resolves
+the resulting settings and determines the processing pipeline.
 
 Next steps
 ----------

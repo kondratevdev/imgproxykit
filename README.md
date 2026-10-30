@@ -21,9 +21,7 @@
 - [x] Immutable, reusable transforms combining typed options and scalar arguments
 - [x] Variants: generate multiple image URLs from a reusable set of transforms
 - [x] Support for named presets configured on your `imgproxy` server
-- [x] Native `Django` integration with settings, shortcuts, and template tags
-- [x] Native `Django REST Framework` integration with serializers
-- [x] Native `FastAPI` integration with dependency injection
+- [x] `FastAPI`, `Django`, `Django REST Framework` integration
 
 ---------
 
@@ -75,11 +73,10 @@ https://imgproxy.example.com/unsafe/resize:fill:300:300/quality:80/format:webp/<
 ```
 
 `thumbnail_url` points to a 300×300 `webp` thumbnail cropped to fill the dimensions.
-Imgproxy fetches and processes the original image when this URL is requested.
 
 ### Variants
 
-Build variants by combining shared transforms with different settings:
+Build variants by extending a shared transform with a width for each size:
 
 ```python
 >>> from imgproxykit import Client, Transform
@@ -89,9 +86,9 @@ Build variants by combining shared transforms with different settings:
 >>> # Share quality and output format across all variants.
 >>> base = Transform(quality=85, format='webp')
 >>> products = {
-...     'small': Transform(*base.options, width=320),
-...     'medium': Transform(*base.options, width=640),
-...     'large': Transform(*base.options, width=1280),
+...     'small': base.extend(width=320),
+...     'medium': base.extend(width=640),
+...     'large': base.extend(width=1280),
 ... }
 
 >>> source_url = 'https://originals.example.com/products/backpack.jpg'
@@ -102,8 +99,7 @@ Build variants by combining shared transforms with different settings:
 ```
 
 `product_urls` contains a URL for each size, all using the shared quality
-and WebP format. Reuse `products` with other source images to keep the same
-variants across your catalog.
+and WebP format.
 
 ## Next steps
 

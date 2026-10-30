@@ -67,8 +67,8 @@ Build variants
 
 To generate several sizes of the same image, define a set of transformations.
 Reuse ``client`` and ``source_url`` from above, keep quality and format in a
-base transformation, then unpack
-``base.options`` into a complete transformation for each width:
+base transformation, then use :meth:`~imgproxykit.Transform.extend` to
+create a new transformation for each width without changing the base:
 
 .. literalinclude:: /examples/getting_started/variants.py
    :language: python
