@@ -56,7 +56,7 @@ class ClientSettingsDict(TypedDict, total=False, closed=True):
     argument_separator: str
     #: Use short processing option aliases when available.
     use_short_options: bool
-    #: Source URL representation: Base64 or percent-encoded plain.
+    #: Source URL representation using Base64 or percent-encoded plain mode.
     source_encoding: SourceEncoding
 
 
