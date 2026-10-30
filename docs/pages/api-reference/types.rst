@@ -9,4 +9,6 @@ Types
 
 .. autodata:: imgproxykit.types.ResizeType
 
+.. autodata:: imgproxykit.types.SourceEncoding
+
 .. autodata:: imgproxykit.types.WatermarkPosition

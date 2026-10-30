@@ -1,5 +1,18 @@
 from typing import Literal
 
+type SourceEncoding = Literal['base64', 'plain']
+"""
+Source URL representations accepted by :class:`~imgproxykit.Client`.
+
+Values for the ``source_encoding`` keyword of :class:`~imgproxykit.Client`
+and :class:`~imgproxykit.serialization.PathSerializer`. Use ``base64`` for
+URL-safe Base64 without padding or ``plain`` for full UTF-8 percent-encoding.
+The default is ``base64``.
+
+See `imgproxy source URLs
+<https://docs.imgproxy.net/usage/processing#source-url>`_.
+"""
+
 type Argument = str | int | float | bool | None
 """
 Scalar value accepted in an option's positional arguments.

@@ -1,6 +1,8 @@
-from imgproxykit.internal.encoding import encode_base64
+from collections.abc import Callable
+
+from imgproxykit.internal.encoding import encode_base64, encode_plain
 from imgproxykit.transform import Transform
-from imgproxykit.types import Argument
+from imgproxykit.types import Argument, SourceEncoding
 
 
 class PathSerializer:
@@ -8,8 +10,8 @@ class PathSerializer:
     Serialize processing options into an unsigned imgproxy path.
 
     Used by :class:`~imgproxykit.Client` before signing the resulting path.
-    Sources are encoded as URL-safe Base64 without padding. Processing
-    options are included before the source in the supplied order.
+    Sources use URL-safe Base64 without padding or full percent-encoding.
+    Processing options precede the source in the supplied order.
 
     Pass processing options through :class:`~imgproxykit.Transform` as
     option instances or scalar keyword arguments. Preset options reference
@@ -23,18 +25,19 @@ class PathSerializer:
 
     __slots__ = (
         '_argument_separator',
+        '_source_serializer',
         '_use_short_options',
     )
 
-    # TODO: Support the plain option for unencoded source URLs.
     def __init__(
         self,
         *,
         argument_separator: str,
         use_short_options: bool,
+        source_encoding: SourceEncoding,
     ) -> None:
         """
-        Configure processing option serialization.
+        Configure processing options and select the source URL serializer.
 
         Args:
             argument_separator: Separator between processing option names
@@ -43,10 +46,17 @@ class PathSerializer:
                 <https://docs.imgproxy.net/latest/configuration/options#miscellaneous>`__.
             use_short_options: Use short aliases when available,
                 otherwise full names.
+            source_encoding: Source URL representation: ``'base64'`` without
+                padding or ``'plain'`` with full UTF-8 percent-encoding.
+                See `imgproxy source URLs
+                <https://docs.imgproxy.net/usage/processing#source-url>`_.
 
         """
         self._argument_separator = argument_separator
         self._use_short_options = use_short_options
+        self._source_serializer = self._resolve_source_serializer(
+            source_encoding,
+        )
 
     def __call__(
         self,
@@ -63,8 +73,7 @@ class PathSerializer:
 
         Args:
             source: Complete source URI understood by the imgproxy server.
-                Its UTF-8 representation is encoded as URL-safe Base64
-                without padding. The URI is neither validated nor resolved.
+                Encoded according to ``source_encoding``.
             transform: Reusable processing options and optional output format.
                 Omit or pass ``None`` to add no processing options.
 
@@ -81,6 +90,7 @@ class PathSerializer:
             >>> serializer = PathSerializer(
             ...     argument_separator=':',
             ...     use_short_options=False,
+            ...     source_encoding='base64',
             ... )
             >>> thumbnail = Transform(
             ...     Resize(width=96, height=96, mode='fill'),
@@ -101,7 +111,37 @@ class PathSerializer:
                 )
                 for option in transform.options
             )
-        return '/'.join(('', *options, encode_base64(source)))
+        return '/'.join(('', *options, self._source_serializer(source)))
+
+    def _resolve_source_serializer(
+        self,
+        source_encoding: SourceEncoding,
+    ) -> Callable[[str], str]:
+        """
+        Select source path serialization once during initialization.
+
+        The callable returns the encoded source with any required path marker,
+        ready to append after processing options and include in the signature.
+        """
+        return (
+            encode_base64
+            if source_encoding == 'base64'
+            else self._serialize_plain_source
+        )
+
+    @classmethod
+    def _serialize_plain_source(cls, source: str) -> str:
+        """
+        Prefix the percent-encoded source with imgproxy's plain path marker.
+
+        Encode only the source so that the separating slash remains part of
+        the imgproxy path. Output formats remain processing option segments.
+
+        The ``/plain/`` segment identifies a percent-encoded source URL.
+        See `imgproxy plain source URLs
+        <https://docs.imgproxy.net/usage/processing#plain>`_.
+        """
+        return f'plain/{encode_plain(source)}'
 
     def _serialize_segment(
         self,

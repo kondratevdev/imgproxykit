@@ -12,6 +12,9 @@ but with a deprecation period.
 
 ### Features
 
+- Added `Client(source_encoding='plain')` to generate URLs with
+  percent-encoded sources and imgproxy's `/plain/` marker. Base64 remains
+  the default, #106
 - Added `Gravity` factories to configure crop positioning without
   using protocol codes, #104
 - Added `Transform.extend()` to create a new transformation with additional
@@ -26,6 +29,9 @@ but with a deprecation period.
 
 ### Breaking changes
 
+- `PathSerializer` now requires the `source_encoding` keyword-only argument.
+  Custom path serializer constructors must accept it. Pass `'base64'` to
+  retain the previous source URL representation, #106
 - Renamed `arguments_separator` to `argument_separator`,
   and `unsigned_signature` to `unsigned_marker` in `Client`, its serializer
   and signer components, and Django client settings. Update keyword arguments,

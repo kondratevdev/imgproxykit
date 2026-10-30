@@ -7,6 +7,7 @@ from django.db.models.fields.files import FieldFile
 from typing_extensions import TypedDict
 
 from imgproxykit.transform import Transform
+from imgproxykit.types import SourceEncoding
 
 #: Django setting containing the imgproxy client configuration.
 IMGPROXYKIT_SETTINGS: Final = 'IMGPROXYKIT'
@@ -24,6 +25,7 @@ class ClientSettings(enum.StrEnum):
     unsigned_marker = 'unsigned_marker'
     argument_separator = 'argument_separator'
     use_short_options = 'use_short_options'
+    source_encoding = 'source_encoding'
 
 
 @final
@@ -54,6 +56,8 @@ class ClientSettingsDict(TypedDict, total=False, closed=True):
     argument_separator: str
     #: Use short processing option aliases when available.
     use_short_options: bool
+    #: Source URL representation using Base64 or percent-encoded plain mode.
+    source_encoding: SourceEncoding
 
 
 class SettingsDict(TypedDict, total=False, closed=True):
