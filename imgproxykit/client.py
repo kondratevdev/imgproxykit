@@ -10,6 +10,10 @@ from imgproxykit.variants import DataclassVariantsResolver
 if TYPE_CHECKING:
     from _typeshed import DataclassInstance
 
+type _VariantsResult[Key: str] = (
+    dict[Key, str] | dict[str, str] | DataclassInstance
+)
+
 
 class Client:
     """
@@ -215,7 +219,7 @@ class Client:
         source: str,
         *,
         variants: Mapping[Key, Transform] | type['DataclassInstance'],
-    ) -> dict[Key, str] | dict[str, str] | 'DataclassInstance':
+    ) -> _VariantsResult[Key]:
         """
         Build named URLs for one source using complete transformations.
 
