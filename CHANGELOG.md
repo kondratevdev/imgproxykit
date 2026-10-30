@@ -25,7 +25,7 @@ but with a deprecation period.
 - Renamed `arguments_separator` to `argument_separator`,
   and `unsigned_signature` to `unsigned_marker` in `Client`, its serializer
   and signer components, and Django client settings. Update keyword arguments,
-  Django settings, and custom component constructors to use the new names,
+  Django settings, and custom component constructors to use the new names, #102
 - Removed `imgproxykit.types.OptionType`. Processing option names now use
   `str`, allowing custom options to define their own protocol names, #79
 - `PathSerializer` now requires the `use_short_options`
