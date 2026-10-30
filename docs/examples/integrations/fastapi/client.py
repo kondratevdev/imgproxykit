@@ -10,15 +10,16 @@ Register a client and use it in a FastAPI route.
 >>> product.id
 42
 >>> product.images.thumbnail.startswith(
-...     'https://imgproxy.example.com/unsafe/width:320/format:webp/'
+...     'https://imgproxy.example.com/unsafe/format:webp/width:320/'
 ... )
 True
 >>> product.images.preview.startswith(
-...     'https://imgproxy.example.com/unsafe/width:1280/format:webp/'
+...     'https://imgproxy.example.com/unsafe/format:webp/width:1280/'
 ... )
 True
 """
 
+from dataclasses import dataclass
 from typing import Annotated
 
 from fastapi import Depends, FastAPI
@@ -36,17 +37,15 @@ get_imgproxy = add_imgproxy(
 )
 
 # Reuse these image sizes and output format across products.
-product_variants = {
-    'thumbnail': Transform(width=320, format='webp'),
-    'preview': Transform(width=1280, format='webp'),
-}
+base = Transform(format='webp')
 
 
-class ProductImages(BaseModel):
-    """Image variants returned for a product."""
+@dataclass(frozen=True, slots=True)
+class ProductImages:
+    """Declare the image response fields and their transformations."""
 
-    thumbnail: str
-    preview: str
+    thumbnail: Annotated[str, base.extend(width=320)]
+    preview: Annotated[str, base.extend(width=1280)]
 
 
 class ProductResponse(BaseModel):
@@ -64,9 +63,5 @@ async def get_product(
     """Return a product with image variants."""
     source = f'https://originals.example.com/products/{product_id}.jpg'
     # Build one URL per variant for the same source image.
-    images = imgproxy.variants(source, variants=product_variants)
-    # Variant names match the fields of ProductImages.
-    return ProductResponse(
-        id=product_id,
-        images=ProductImages(**images),
-    )
+    images = imgproxy.variants(source, variants=ProductImages)
+    return ProductResponse(id=product_id, images=images)
