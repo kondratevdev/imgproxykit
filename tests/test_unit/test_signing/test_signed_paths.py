@@ -42,3 +42,41 @@ def test_signer_reuse(url_signer: UrlSigner) -> None:
     url_signer('/second')
 
     assert url_signer(path) == signature
+
+
+@pytest.mark.parametrize(
+    ('path', 'signature', 'expected'),
+    [
+        (
+            '/café/naïve.jpg',
+            'ZN61oYlsd53IQaf_0-oqrAi9eBYyCLJrkYNriTUOkGE',
+            True,
+        ),
+        (
+            '/café/naïve.jpg',
+            'wrong_signature_value',
+            False,
+        ),
+        (
+            '/different/path.jpg',
+            'ZN61oYlsd53IQaf_0-oqrAi9eBYyCLJrkYNriTUOkGE',
+            False,
+        ),
+    ],
+)
+def test_verify_signature(
+    url_signer: UrlSigner,
+    *,
+    path: str,
+    signature: str,
+    expected: bool,
+) -> None:
+    """Ensure that verify checks signatures correctly."""
+    assert url_signer.verify(path, signature) is expected
+
+
+def test_verify_unsigned_signature(unsigned_url_signer: UrlSigner) -> None:
+    """Ensure that verify checks unsigned marker correctly."""
+    assert unsigned_url_signer.verify('/any/path', 'unsafe') is True
+    assert unsigned_url_signer.verify('/any/path', 'invalid') is False
+

@@ -114,6 +114,26 @@ class UrlSigner:
         )
         return encode_base64(signature[: self._signature_size])
 
+    def verify(self, path: str, signature: str) -> bool:
+        """
+        Verify that a signature matches the path.
+
+        Compares the expected signature for ``path`` against ``signature``
+        using constant-time comparison to protect against timing attacks.
+
+        Args:
+            path: Finalized path beginning with ``/``, excluding server
+                address and signature segment.
+            signature: Signature string to verify against.
+
+        Returns:
+            ``True`` if signature matches the expected signature, ``False``
+            otherwise.
+
+        """
+        expected = self(path)
+        return hmac.compare_digest(expected, signature)
+
     def _decode_hex(self, value: str) -> bytes:
         """
         Decode a nonempty hexadecimal credential.
