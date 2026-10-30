@@ -68,7 +68,7 @@ type _ScalarRegistry = dict[str, type[ScalarOption[Any]]]
 
 
 @dataclass(frozen=True, slots=True)
-class ScalarOption[ValueT: Argument](Option):
+class ScalarOption[ValueT](Option):
     """
     Base class for processing options accepting one scalar value.
 
@@ -101,10 +101,10 @@ class ScalarOption[ValueT: Argument](Option):
     @override
     def arguments(self) -> tuple[Argument, ...]:
         """Positional arguments in imgproxy protocol order."""
-        return (self.value,)
+        return (self.value,)  # pyright: ignore[reportReturnType]
 
     @classmethod
-    def from_kwarg(cls, name: str, value: Argument) -> 'ScalarOption[Any]':
+    def from_kwarg(cls, name: str, value: Any) -> 'ScalarOption[Any]':
         """
         Construct a registered scalar option from a Transform keyword.
 

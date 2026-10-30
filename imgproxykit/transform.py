@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from datetime import datetime, timedelta
 from itertools import starmap
 from typing import Unpack
 
@@ -17,7 +18,7 @@ class ScalarOptions(TypedDict, total=False, closed=True):
     dpr: float
     enforce_thumbnail: bool
     enlarge: bool
-    expires: int
+    expires: int | datetime | timedelta
     filename: str
     format: FormatType
     height: int

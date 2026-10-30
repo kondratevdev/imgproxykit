@@ -82,6 +82,34 @@ depend on your imgproxy installation; type annotations do not check server
 capabilities. See the `imgproxy configuration documentation
 <https://docs.imgproxy.net/latest/configuration/options>`__ for server settings.
 
+URL expiration
+--------------
+
+:class:`~imgproxykit.options.Expires` invalidates an image URL after a given
+time. It accepts an integer Unix timestamp, a timezone-aware
+:class:`~datetime.datetime`, or a relative :class:`~datetime.timedelta`:
+
+.. code-block:: python
+
+   from datetime import datetime, timedelta, timezone
+
+   from imgproxykit import Transform
+   from imgproxykit.options import Expires
+
+   # Fixed expiration at a specific date:
+   transform_fixed = Transform(
+       Expires(datetime(2026, 1, 1, 12, 0, tzinfo=timezone.utc)),
+   )
+
+   # Relative expiration resolved dynamically when building URLs:
+   transform_relative = Transform(expires=timedelta(hours=2))
+
+When passed a :class:`~datetime.timedelta`, the expiration timestamp is
+resolved dynamically at serialization time when the URL is generated. This
+keeps the :class:`~imgproxykit.Transform` reusable across multiple requests.
+Naive datetimes are rejected with :exc:`ValueError` to prevent timezone
+mismatches.
+
 Next steps
 ----------
 
