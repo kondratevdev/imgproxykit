@@ -15,7 +15,7 @@ source_url = 'https://picsum.photos/id/237/1600/1200'
 # Combine structured options with a scalar keyword.
 thumbnail = Transform(
     Resize(width=300, height=300, mode='fill'),
-    Gravity(position='ce'),
+    Gravity.center(),
     dpr=2,
 )
 

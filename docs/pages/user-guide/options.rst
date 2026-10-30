@@ -36,7 +36,7 @@ while :class:`~imgproxykit.options.Gravity` selects the crop position:
    :language: python
    :lines: 8-25
 
-``Resize`` requests a 300×300 crop, ``Gravity(position='ce')`` keeps the
+``Resize`` requests a 300×300 crop, ``Gravity.center()`` keeps the
 center, and ``dpr=2`` requests twice the pixel density. Pass structured
 options as positional arguments to ``Transform``; scalar keywords can
 follow them.
