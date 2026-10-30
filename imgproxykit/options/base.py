@@ -15,7 +15,8 @@ class Option(ABC):
 
     Arguments retain ``None`` values until
     serialization: internal gaps keep their positions, while trailing
-    empty arguments are omitted.
+    ``None`` values are omitted. Other false values (such as empty
+    strings, zeroes, and ``False``) keep their positions.
 
     See `imgproxy processing options
     <https://docs.imgproxy.net/usage/processing#processing-options>`_.
