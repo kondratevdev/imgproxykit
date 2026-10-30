@@ -117,13 +117,22 @@ class PathSerializer:
         positions. Booleans are serialized as ``1`` and ``0``.
 
         """
-        # TODO: Verify reserved characters in string arguments and preset names
-        # against imgproxy before choosing encoding or rejection.
         end = len(arguments)
         while end and arguments[end - 1] is None:
             end -= 1
 
-        serialized = map(self._serialize_argument, arguments[:end])
+        serialized = tuple(map(self._serialize_argument, arguments[:end]))
+        for arg in serialized:
+            if self._arguments_separator in arg:
+                raise ValueError(
+                    f'Option argument {arg!r} contains the arguments '
+                    f'separator {self._arguments_separator!r}.',
+                )
+            if any(char in arg for char in ('/', '?', '#')):
+                raise ValueError(
+                    f'Option argument {arg!r} contains a URL reserved '
+                    'character.',
+                )
         return self._arguments_separator.join((name, *serialized))
 
     @classmethod

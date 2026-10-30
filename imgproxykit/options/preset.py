@@ -32,6 +32,9 @@ class Preset(Option):
 
     name: ClassVar[str] = 'preset'
     short_name: ClassVar[str | None] = 'pr'
+    RESERVED_CHARACTERS: ClassVar[frozenset[str]] = frozenset(
+        {'/', '?', '#', ':'},
+    )
 
     def __init__(self, *names: str) -> None:
         """
@@ -53,6 +56,26 @@ class Preset(Option):
         # Bypassing __setattr__ is safe until initialization is finished.
         object.__setattr__(self, 'names', names)
         self.validate()
+
+    @override
+    def validate(self) -> None:
+        """
+        Validate that preset names do not alter URL path structure.
+
+        Raises:
+            ValueError: If any preset name is empty or contains reserved
+                characters (``/``, ``?``, ``#``, or ``:``).
+
+        """
+        for name in self.names:
+            if not name:
+                raise ValueError('Preset name cannot be empty.')
+            for char in name:
+                if char in self.RESERVED_CHARACTERS:
+                    raise ValueError(
+                        f'Preset name {name!r} contains reserved '
+                        f'character {char!r}.',
+                    )
 
     @property
     @override
