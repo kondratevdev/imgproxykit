@@ -10,6 +10,25 @@ from tests.fixtures.credentials import Credentials
 _SOURCE: Final = 'https://example.com/photo.jpg'
 
 
+def test_signed_plain_url(credentials: Credentials) -> None:
+    """Sign the escaped source, plain marker, and processing options."""
+    client = Client(
+        'https://example.com/images',
+        source_encoding='plain',
+        **credentials,
+    )
+
+    assert client.url(
+        'http://example.com/images/curiosity.jpg?size=300',
+        transform=Transform(format='webp'),
+    ) == (
+        'https://example.com/images/'
+        '0s1_Nbh2MUZKyCQSiyR84xwesu69AYqKEYO_ux_Qgc8/'
+        'format:webp/plain/'
+        'http%3A%2F%2Fexample.com%2Fimages%2Fcuriosity.jpg%3Fsize%3D300'
+    )
+
+
 @pytest.mark.parametrize(
     'base_url',
     [

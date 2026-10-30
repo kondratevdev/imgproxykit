@@ -17,13 +17,12 @@ def test_client_configuration(settings: LazySettings) -> None:
             'base_url': 'https://images.example.com',
             'unsigned_marker': 'trusted',
             'use_short_options': True,
+            'source_encoding': 'plain',
         },
     }
 
-    assert (
-        get_client()
-        .url('source', transform=Transform(width=300))
-        .startswith('https://images.example.com/trusted/w:300/')
+    assert get_client().url('source', transform=Transform(width=300)) == (
+        'https://images.example.com/trusted/w:300/plain/source'
     )
 
 

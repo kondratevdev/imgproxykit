@@ -4,6 +4,7 @@ from typing import ClassVar, overload
 from imgproxykit.serialization import PathSerializer
 from imgproxykit.signing import UrlSigner
 from imgproxykit.transform import Transform
+from imgproxykit.types import SourceEncoding
 
 
 class Client:
@@ -43,6 +44,7 @@ class Client:
         *,
         key: None = None,
         salt: None = None,
+        source_encoding: SourceEncoding = 'base64',
         unsigned_marker: str = 'unsafe',
         argument_separator: str = ':',
         use_short_options: bool = False,
@@ -56,6 +58,7 @@ class Client:
         *,
         key: str,
         salt: str,
+        source_encoding: SourceEncoding = 'base64',
         signature_size: int = 32,
         argument_separator: str = ':',
         use_short_options: bool = False,
@@ -68,6 +71,7 @@ class Client:
         *,
         key: str | None = None,
         salt: str | None = None,
+        source_encoding: SourceEncoding = 'base64',
         signature_size: int = 32,
         unsigned_marker: str = 'unsafe',
         argument_separator: str = ':',
@@ -86,8 +90,12 @@ class Client:
                 stored as supplied, without validation.
             key: Nonempty hex-encoded signing key matching the server.
                 Supply together with ``salt``; ``None`` selects unsigned mode.
+                See `IMGPROXY_KEY
+                <https://docs.imgproxy.net/configuration/options#url-signature>`__.
             salt: Nonempty hex-encoded signing salt matching the server.
                 Supply together with ``key``; ``None`` selects unsigned mode.
+                See `IMGPROXY_SALT
+                <https://docs.imgproxy.net/configuration/options#url-signature>`__.
             signature_size: Positive digest byte count to encode. Must match
                 the server's `IMGPROXY_SIGNATURE_SIZE
                 <https://docs.imgproxy.net/latest/configuration/options#url-signature>`__.
@@ -102,6 +110,11 @@ class Client:
                 `IMGPROXY_ARGUMENTS_SEPARATOR
                 <https://docs.imgproxy.net/latest/configuration/options#miscellaneous>`__.
                 Defaults to ``':'``.
+            source_encoding: Source URL representation: ``'base64'`` or
+                ``'plain'`` with full percent-encoding. See
+                `imgproxy source URLs
+                <https://docs.imgproxy.net/usage/processing#source-url>`__.
+                Defaults to ``'base64'``.
             use_short_options: Use short processing option aliases when
                 available, falling back to full names. Defaults to ``False``.
 
@@ -130,6 +143,7 @@ class Client:
         self._path_serializer = self.path_serializer_cls(
             argument_separator=argument_separator,
             use_short_options=use_short_options,
+            source_encoding=source_encoding,
         )
         self._url_signer = self.url_signer_cls(
             key=key,
@@ -157,9 +171,9 @@ class Client:
 
         Args:
             source: Complete source URI understood by the imgproxy server.
-                The default serializer encodes its UTF-8 representation as
-                URL-safe Base64 without padding. The URI is neither validated
-                nor resolved against ``base_url``.
+                The default serializer uses URL-safe Base64 without padding
+                or percent-encoding according to ``source_encoding``. The URI
+                is neither validated nor resolved against ``base_url``.
             transform: Reusable processing options and optional output format.
                 Omit or pass ``None`` to add no processing options.
 

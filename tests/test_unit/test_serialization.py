@@ -127,6 +127,7 @@ def test_custom_argument_separator() -> None:
     serializer = PathSerializer(
         argument_separator=',',
         use_short_options=False,
+        source_encoding='base64',
     )
     transform = Transform(Resize(width=300), format='webp')
     assert serializer(_SOURCE, transform=transform) == (
@@ -136,9 +137,29 @@ def test_custom_argument_separator() -> None:
 
 def test_short_names_with_custom_separator() -> None:
     """Combine short aliases, omitted arguments and a custom separator."""
-    serializer = PathSerializer(argument_separator=',', use_short_options=True)
+    serializer = PathSerializer(
+        argument_separator=',',
+        use_short_options=True,
+        source_encoding='base64',
+    )
     transform = Transform(Resize(width=300), format='webp', raw=False)
 
     assert serializer(_SOURCE, transform=transform) == (
         '/rs,,300/f,webp/raw,0/aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc'
+    )
+
+
+def test_plain_source_path() -> None:
+    """Place the escaped source after options and the plain marker."""
+    serializer = PathSerializer(
+        argument_separator=',',
+        use_short_options=True,
+        source_encoding='plain',
+    )
+    assert serializer(
+        'http://example.com/images/curiosity.jpg?size=300',
+        transform=Transform(width=300, format='webp'),
+    ) == (
+        '/w,300/f,webp/plain/'
+        'http%3A%2F%2Fexample.com%2Fimages%2Fcuriosity.jpg%3Fsize%3D300'
     )
