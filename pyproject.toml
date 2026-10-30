@@ -62,7 +62,7 @@ mypy = "^2.4"
 pyrefly = ">=1,<2"
 pyright = ">=1.1,<2"
 # TODO: relax the pin after a stable `ty` release:
-ty = "==0.0.90"
+ty = "==0.0.91"
 types-docutils = ">=0.22,<0.24"
 
 # Unit tests, snapshots, and coverage:
