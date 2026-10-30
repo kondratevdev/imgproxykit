@@ -23,7 +23,6 @@ class EnforceThumbnail(ScalarOption[bool]):
 
     See `imgproxy enforce thumbnail
     <https://docs.imgproxy.net/usage/processing#enforce-thumbnail>`_.
-
     """
 
     name: ClassVar[str] = 'enforce_thumbnail'

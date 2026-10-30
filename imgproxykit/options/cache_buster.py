@@ -25,7 +25,6 @@ class CacheBuster(ScalarOption[str]):
 
     See `imgproxy cache buster
     <https://docs.imgproxy.net/usage/processing#cache-buster>`_.
-
     """
 
     name: ClassVar[str] = 'cachebuster'

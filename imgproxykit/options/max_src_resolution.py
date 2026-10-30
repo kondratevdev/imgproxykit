@@ -25,7 +25,6 @@ class MaxSrcResolution(ScalarOption[float]):
 
     See `imgproxy max src resolution
     <https://docs.imgproxy.net/usage/processing#max-src-resolution>`_.
-
     """
 
     name: ClassVar[str] = 'max_src_resolution'

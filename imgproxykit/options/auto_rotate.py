@@ -23,7 +23,6 @@ class AutoRotate(ScalarOption[bool]):
 
     See `imgproxy auto rotate
     <https://docs.imgproxy.net/usage/processing#auto-rotate>`_.
-
     """
 
     name: ClassVar[str] = 'auto_rotate'

@@ -28,7 +28,6 @@ class Client:
     path construction, signing, or dataclass declaration resolution.
     Each client creates its own serializer and signer. A variants resolver
     is created for each dataclass declaration passed to :meth:`variants`.
-
     """
 
     __slots__ = (
@@ -146,7 +145,6 @@ class Client:
             ...     key='736563726574',
             ...     salt='73616c74',
             ... )
-
         """
         # Prepare `base_url` only once pre instance
         self._base_url = base_url.rstrip('/')

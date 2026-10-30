@@ -104,7 +104,6 @@ def get_config() -> SettingsDict:
 
     Raises:
         ImproperlyConfigured: If ``IMGPROXYKIT`` is missing or ``None``.
-
     """
     # Keep LazySettings out of module globals: doctest inspection evaluates it.
     from django.conf import settings  # noqa: PLC0415

@@ -27,7 +27,6 @@ class ExtendAspectRatio(Option):
 
     See `imgproxy extend aspect ratio
     <https://docs.imgproxy.net/usage/processing#extend-aspect-ratio>`_.
-
     """
 
     value: bool

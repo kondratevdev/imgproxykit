@@ -22,7 +22,6 @@ class Pixelate(ScalarOption[int]):
 
     See `imgproxy pixelate
     <https://docs.imgproxy.net/usage/processing#pixelate>`_.
-
     """
 
     name: ClassVar[str] = 'pixelate'

@@ -38,14 +38,12 @@ class Resize(Option):  # noqa: WPS214
 
     """
 
-    # Public API:
     width: int | None = None
     height: int | None = None
     mode: ResizeType | None = None
     enlarge: bool | None = None
     extend: bool | None = None
 
-    # Public API:
     name: ClassVar[str] = 'resize'
     short_name: ClassVar[str | None] = 'rs'
 

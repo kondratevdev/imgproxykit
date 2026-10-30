@@ -23,7 +23,6 @@ class Width(ScalarOption[int]):
 
     See `imgproxy width
     <https://docs.imgproxy.net/usage/processing#width>`_.
-
     """
 
     name: ClassVar[str] = 'width'

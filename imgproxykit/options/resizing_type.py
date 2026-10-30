@@ -24,7 +24,6 @@ class ResizingType(ScalarOption[ResizeType]):
 
     See `imgproxy resizing type
     <https://docs.imgproxy.net/usage/processing#resizing-type>`_.
-
     """
 
     name: ClassVar[str] = 'resizing_type'

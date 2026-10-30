@@ -26,7 +26,6 @@ class Filename(ScalarOption[str]):
 
     See `imgproxy filename
     <https://docs.imgproxy.net/usage/processing#filename>`_.
-
     """
 
     name: ClassVar[str] = 'filename'

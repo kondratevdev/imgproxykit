@@ -23,7 +23,6 @@ class StripColorProfile(ScalarOption[bool]):
 
     See `imgproxy strip color profile
     <https://docs.imgproxy.net/usage/processing#strip-color-profile>`_.
-
     """
 
     name: ClassVar[str] = 'strip_color_profile'

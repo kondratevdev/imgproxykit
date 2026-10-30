@@ -22,7 +22,6 @@ class StripMetadata(ScalarOption[bool]):
 
     See `imgproxy strip metadata
     <https://docs.imgproxy.net/usage/processing#strip-metadata>`_.
-
     """
 
     name: ClassVar[str] = 'strip_metadata'

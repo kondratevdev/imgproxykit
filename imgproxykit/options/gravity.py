@@ -31,15 +31,12 @@ class Gravity(Option):  # noqa: WPS214
 
     See `imgproxy gravity
     <https://docs.imgproxy.net/usage/processing#gravity>`_.
-
     """
 
-    # Public API:
     position: Position
     offset_x: float | None = None
     offset_y: float | None = None
 
-    # Public API:
     name: ClassVar[str] = 'gravity'
     short_name: ClassVar[str | None] = 'g'
 

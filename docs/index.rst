@@ -62,14 +62,14 @@ Find your way
   image URLs.
 * :doc:`User guide <pages/user-guide/client>` introduces the client,
   transformations, processing options, and named variants.
-* :doc:`pages/api-reference/index` lists classes, arguments, types,
-  and extension points.
 * :doc:`Django integration <pages/integrations/django>` configures a shared
   client and generates URLs from model file fields.
 * :doc:`DRF integration <pages/integrations/drf>` returns image URLs and
   variants from serializer fields.
 * :doc:`FastAPI integration <pages/integrations/fastapi>` registers clients
   as application dependencies.
+* :doc:`pages/api-reference/index` lists classes, arguments, types,
+  and extension points.
 * :doc:`pages/changelog` tracks releases and compatibility changes.
 
 .. toctree::

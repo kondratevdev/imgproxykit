@@ -20,7 +20,6 @@ class Option(ABC):
 
     See `imgproxy processing options
     <https://docs.imgproxy.net/usage/processing#processing-options>`_.
-
     """
 
     __slots__ = ()
@@ -55,7 +54,6 @@ class Option(ABC):
 
         Raises:
             ValueError: If option arguments are invalid.
-
         """
         # TODO: Add per option validation
 
@@ -82,7 +80,6 @@ class ScalarOption[ValueT: Argument](Option):
 
     Attributes:
         value: Scalar processing option value.
-
     """
 
     value: ValueT
@@ -119,7 +116,6 @@ class ScalarOption[ValueT: Argument](Option):
         Raises:
             TypeError: If the keyword does not identify a scalar option.
             ValueError: If the concrete option rejects the supplied value.
-
         """
         option_cls = cls._registry.get(name)
         if option_cls is None:

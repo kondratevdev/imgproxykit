@@ -20,7 +20,6 @@ class ImgproxyURLField(serializers.URLField):
         transform: Transformation or name from ``IMGPROXYKIT['transforms']``.
             Omit to add no processing options.
         **kwargs: DRF field options. ``allow_null`` defaults to ``True``.
-
     """
 
     def __init__(
@@ -68,7 +67,6 @@ class ImgproxyVariantsField(serializers.DictField):
         variants: Transformation mapping or set name from
             ``IMGPROXYKIT['variants']``.
         **kwargs: DRF field options. ``allow_null`` defaults to ``True``.
-
     """
 
     def __init__(

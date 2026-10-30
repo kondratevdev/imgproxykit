@@ -22,7 +22,6 @@ class KeepCopyright(ScalarOption[bool]):
 
     See `imgproxy keep copyright
     <https://docs.imgproxy.net/usage/processing#keep-copyright>`_.
-
     """
 
     name: ClassVar[str] = 'keep_copyright'

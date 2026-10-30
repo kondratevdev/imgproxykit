@@ -24,7 +24,6 @@ class SkipProcessing(Option):
 
     See `imgproxy skip processing
     <https://docs.imgproxy.net/usage/processing#skip-processing>`_.
-
     """
 
     formats: tuple[FormatType, ...]

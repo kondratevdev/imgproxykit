@@ -21,11 +21,7 @@ class Format(ScalarOption[FormatType]):
 
     See `imgproxy format
     <https://docs.imgproxy.net/usage/processing#format>`_.
-
     """
 
-    # Public API:
-
-    # Public API:
     name: ClassVar[str] = 'format'
     short_name: ClassVar[str | None] = 'f'

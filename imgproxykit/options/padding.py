@@ -38,7 +38,6 @@ class Padding(Option):
 
     See `imgproxy padding
     <https://docs.imgproxy.net/usage/processing#padding>`_.
-
     """
 
     top: int | None = None

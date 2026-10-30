@@ -84,7 +84,10 @@ nitpick_ignore = [
     ('py:param', 'ValueT'),
     # Method type parameters are not resolved by the type-hint extension.
     ('py:param', 'Key'),
+    (_PY_CLASS, 'VariantSet'),
+    ('py:param', 'VariantSet'),
     # External types without local documentation targets.
+    (_PY_CLASS, '_typeshed.DataclassInstance'),
     (_PY_CLASS, 'collections.abc.Mapping'),
     (_PY_CLASS, 'collections.abc.Callable'),
     (_PY_CLASS, 'collections.abc.Awaitable'),

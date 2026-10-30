@@ -22,7 +22,6 @@ class MinHeight(ScalarOption[int]):
 
     See `imgproxy min height
     <https://docs.imgproxy.net/usage/processing#min-height>`_.
-
     """
 
     name: ClassVar[str] = 'min-height'

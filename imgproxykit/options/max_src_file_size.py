@@ -25,7 +25,6 @@ class MaxSrcFileSize(ScalarOption[int]):
 
     See `imgproxy max src file size
     <https://docs.imgproxy.net/usage/processing#max-src-file-size>`_.
-
     """
 
     name: ClassVar[str] = 'max_src_file_size'

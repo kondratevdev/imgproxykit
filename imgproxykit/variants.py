@@ -2,6 +2,7 @@ from dataclasses import Field, InitVar, dataclass, fields
 from typing import (
     TYPE_CHECKING,
     Annotated,
+    Any,
     get_args,
     get_origin,
     get_type_hints,
@@ -42,15 +43,14 @@ class DataclassVariantsResolver:
                 invalid field annotations, or ambiguous transformations.
             NameError: If a forward reference in the annotations cannot
                 be resolved in the model's defining namespace.
-
         """
-        hints = self._validate_model()
+        hints = self._resolve_annotations()
         return {
             field.name: self._resolve_field(field, hints[field.name])
             for field in fields(self.model)
         }
 
-    def _validate_model(self) -> dict[str, object]:
+    def _resolve_annotations(self) -> dict[str, Any]:
         """Resolve annotation metadata and reject init-only fields."""
         hints = get_type_hints(self.model, include_extras=True)
         model = self.model
@@ -62,11 +62,7 @@ class DataclassVariantsResolver:
                 )
         return hints
 
-    def _resolve_field(
-        self,
-        field: Field[object],
-        annotation: object,
-    ) -> Transform:
+    def _resolve_field(self, field: Field[Any], annotation: Any) -> Transform:
         """Validate a result field and extract its transformation metadata."""
         model = self.model
         field_name = field.name
