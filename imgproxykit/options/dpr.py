@@ -1,5 +1,6 @@
+import math
 from dataclasses import dataclass
-from typing import ClassVar
+from typing import ClassVar, override
 
 from imgproxykit.options.base import ScalarOption
 
@@ -13,6 +14,9 @@ class DPR(ScalarOption[float]):
 
     Attributes:
         value: Positive pixel density multiplier.
+
+    Raises:
+        ValueError: If the value is not a finite number greater than zero.
 
     Usage:
 
@@ -28,3 +32,12 @@ class DPR(ScalarOption[float]):
 
     # Public API:
     name: ClassVar[str] = 'dpr'
+
+    @override
+    def validate(self) -> None:
+        """Require a finite multiplier greater than zero."""
+        if not (math.isfinite(self.value) and self.value > 0):
+            raise ValueError(
+                f'DPR must be a finite number greater than zero, '
+                f'got {self.value!r}',
+            )

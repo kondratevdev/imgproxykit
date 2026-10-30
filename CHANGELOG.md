@@ -33,6 +33,12 @@ but with a deprecation period.
   and source resolution. Supports source strings and model file fields.
   Install with `pip install 'imgproxykit[drf]'`, #77
 
+### Bugfixes
+
+- `DPR` and `Zoom` now raise `ValueError` for factors that are zero,
+  negative, NaN or infinite, instead of putting them into the URL.
+  This also applies to `Transform(dpr=...)`, #88
+
 ### Breaking changes
 
 - `PathSerializer` now requires the `source_encoding` keyword-only argument.
