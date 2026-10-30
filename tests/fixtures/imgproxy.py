@@ -67,5 +67,5 @@ def imgproxy_client(
     return Client(
         imgproxy_url,
         **credentials,
-        short_option_name=bool(request.param),
+        use_short_options=bool(request.param),
     )

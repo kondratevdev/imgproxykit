@@ -21,9 +21,9 @@ class ClientSettings(enum.StrEnum):
     key = 'key'
     salt = 'salt'
     signature_size = 'signature_size'
-    unsigned_signature = 'unsigned_signature'
-    arguments_separator = 'arguments_separator'
-    short_option_name = 'short_option_name'
+    unsigned_marker = 'unsigned_marker'
+    argument_separator = 'argument_separator'
+    use_short_options = 'use_short_options'
 
 
 @final
@@ -49,11 +49,11 @@ class ClientSettingsDict(TypedDict, total=False, closed=True):
     #: Positive signature digest byte count; must match the server.
     signature_size: int
     #: Signature marker used when signing credentials are omitted.
-    unsigned_signature: str
+    unsigned_marker: str
     #: Processing argument separator; must match the server.
-    arguments_separator: str
+    argument_separator: str
     #: Use short processing option aliases when available.
-    short_option_name: bool
+    use_short_options: bool
 
 
 class SettingsDict(TypedDict, total=False, closed=True):

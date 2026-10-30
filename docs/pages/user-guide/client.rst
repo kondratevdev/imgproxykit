@@ -55,12 +55,12 @@ Imgproxy applies its server defaults.
 .. tip::
 
     To shorten URLs with many processing options, set
-    ``short_option_name=True``. This uses aliases such as ``w`` and ``q``
+    ``use_short_options=True``. This uses aliases such as ``w`` and ``q``
     instead of the full names used by default:
 
     .. code-block:: python
 
-        client = Client('https://imgproxy.example.com', short_option_name=True)
+        client = Client('https://imgproxy.example.com', use_short_options=True)
         client.url(source, transform=Transform(width=300, quality=85))
 
     Options without a short alias keep their full names. Switching this

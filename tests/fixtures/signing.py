@@ -10,7 +10,7 @@ def url_signer(credentials: Credentials) -> UrlSigner:
     return UrlSigner(
         **credentials,
         signature_size=32,
-        unsigned_signature='unsafe',
+        unsigned_marker='unsafe',
     )
 
 
@@ -21,5 +21,5 @@ def unsigned_url_signer() -> UrlSigner:
         key=None,
         salt=None,
         signature_size=32,
-        unsigned_signature='unsafe',
+        unsigned_marker='unsafe',
     )

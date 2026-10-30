@@ -23,7 +23,7 @@ def test_signature_size(
     signer = UrlSigner(
         **credentials,
         signature_size=signature_size,
-        unsigned_signature='unsafe',
+        unsigned_marker='unsafe',
     )
 
     assert signer('/b') == expected
@@ -37,5 +37,5 @@ def test_invalid_signature_size(*, signature_size: int) -> None:
             key=None,
             salt=None,
             signature_size=signature_size,
-            unsigned_signature='unsafe',
+            unsigned_marker='unsafe',
         )

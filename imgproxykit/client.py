@@ -43,9 +43,9 @@ class Client:
         *,
         key: None = None,
         salt: None = None,
-        unsigned_signature: str = 'unsafe',
-        arguments_separator: str = ':',
-        short_option_name: bool = False,
+        unsigned_marker: str = 'unsafe',
+        argument_separator: str = ':',
+        use_short_options: bool = False,
     ) -> None: ...
 
     @overload
@@ -57,8 +57,8 @@ class Client:
         key: str,
         salt: str,
         signature_size: int = 32,
-        arguments_separator: str = ':',
-        short_option_name: bool = False,
+        argument_separator: str = ':',
+        use_short_options: bool = False,
     ) -> None: ...
 
     def __init__(  # noqa: WPS211
@@ -69,9 +69,9 @@ class Client:
         key: str | None = None,
         salt: str | None = None,
         signature_size: int = 32,
-        unsigned_signature: str = 'unsafe',
-        arguments_separator: str = ':',
-        short_option_name: bool = False,
+        unsigned_marker: str = 'unsafe',
+        argument_separator: str = ':',
+        use_short_options: bool = False,
     ) -> None:
         """
         Configure the imgproxy address and create the client components.
@@ -93,16 +93,16 @@ class Client:
                 <https://docs.imgproxy.net/latest/configuration/options#url-signature>`__.
                 Defaults to ``32``.
                 Values of 32 or more use the full digest.
-            unsigned_signature: URL marker used when key and salt are omitted.
+            unsigned_marker: URL marker used when key and salt are omitted.
                 Defaults to ``'unsafe'``. With server signing enabled,
                 configure this marker in `IMGPROXY_TRUSTED_SIGNATURES
                 <https://docs.imgproxy.net/latest/configuration/options#url-signature>`__.
-            arguments_separator: Separator between processing option names
+            argument_separator: Separator between processing option names
                 and their arguments. Must match the server's
                 `IMGPROXY_ARGUMENTS_SEPARATOR
                 <https://docs.imgproxy.net/latest/configuration/options#miscellaneous>`__.
                 Defaults to ``':'``.
-            short_option_name: Use short processing option aliases when
+            use_short_options: Use short processing option aliases when
                 available, falling back to full names. Defaults to ``False``.
 
         Raises:
@@ -128,14 +128,14 @@ class Client:
         # Prepare `base_url` only once pre instance
         self._base_url = base_url.rstrip('/')
         self._path_serializer = self.path_serializer_cls(
-            arguments_separator=arguments_separator,
-            short_option_name=short_option_name,
+            argument_separator=argument_separator,
+            use_short_options=use_short_options,
         )
         self._url_signer = self.url_signer_cls(
             key=key,
             salt=salt,
             signature_size=signature_size,
-            unsigned_signature=unsigned_signature,
+            unsigned_marker=unsigned_marker,
         )
 
     def url(

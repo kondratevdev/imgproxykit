@@ -13,8 +13,8 @@ but with a deprecation period.
 ### Features
 
 - Added `Option.short_name` with documented processing option aliases and
-  `Client(short_option_name=True)` to use them in URLs. Full names remain
-  the default; options without a separate alias inherit `None`.
+  `Client(use_short_options=True)` to use them in URLs. Full names remain
+  the default; options without a separate alias inherit `None`, #79
 - Added Django REST Framework integration with read-only serializer fields
   for image URLs and named variants. Reuses Django settings, transformations,
   and source resolution. Supports source strings and model file fields.
@@ -22,19 +22,14 @@ but with a deprecation period.
 
 ### Breaking changes
 
+- Renamed `arguments_separator` to `argument_separator`,
+  and `unsigned_signature` to `unsigned_marker` in `Client`, its serializer
+  and signer components, and Django client settings. Update keyword arguments,
+  Django settings, and custom component constructors to use the new names,
 - Removed `imgproxykit.types.OptionType`. Processing option names now use
-  `str`, allowing custom options to define their own protocol names.
-- `PathSerializer` now requires the `short_option_name` keyword-only argument.
-  Direct construction must pass it explicitly:
-
-  ```python
-  PathSerializer(arguments_separator=':', short_option_name=False)
-  ```
-
-  Custom serializers used as `Client.path_serializer_cls` must accept
-  `short_option_name` (and `arguments_separator`) in their constructor,
-  as `Client` passes both. The previous constructor signature is no longer valid.
-  #80
+  `str`, allowing custom options to define their own protocol names, #79
+- `PathSerializer` now requires the `use_short_options`
+  keyword-only argument, #80
 
 ## 0.4.0
 

@@ -21,7 +21,7 @@ def test_incomplete_credentials(
             key=None if credential == 'key' else credentials['key'],
             salt=None if credential == 'salt' else credentials['salt'],
             signature_size=32,
-            unsigned_signature='unsafe',
+            unsigned_marker='unsafe',
         )
 
 
@@ -44,5 +44,5 @@ def test_invalid_credentials(
         UrlSigner(
             **changed,
             signature_size=32,
-            unsigned_signature='unsafe',
+            unsigned_marker='unsafe',
         )

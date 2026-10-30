@@ -27,7 +27,7 @@ class UrlSigner:
     __slots__ = (
         '_credentials',
         '_signature_size',
-        '_unsigned_signature',
+        '_unsigned_marker',
     )
 
     def __init__(
@@ -36,7 +36,7 @@ class UrlSigner:
         key: str | None,
         salt: str | None,
         signature_size: int,
-        unsigned_signature: str,
+        unsigned_marker: str,
     ) -> None:
         """
         Configure signing credentials or enable unsigned mode.
@@ -54,7 +54,7 @@ class UrlSigner:
                 the server's `IMGPROXY_SIGNATURE_SIZE
                 <https://docs.imgproxy.net/latest/configuration/options#url-signature>`__.
                 Values of 32 or more use the full digest.
-            unsigned_signature: URL marker used when key and salt are both
+            unsigned_marker: URL marker used when key and salt are both
                 ``None``.
                 With server signing enabled, configure this marker
                 in `IMGPROXY_TRUSTED_SIGNATURES
@@ -73,7 +73,7 @@ class UrlSigner:
         if (key is None) != (salt is None):
             raise ValueError('key and salt must be supplied together.')
 
-        self._unsigned_signature = unsigned_signature
+        self._unsigned_marker = unsigned_marker
         self._signature_size = signature_size
 
         # Passing None for both credentials selects unsigned mode.
@@ -104,7 +104,7 @@ class UrlSigner:
 
         """
         if self._credentials is None:
-            return self._unsigned_signature
+            return self._unsigned_marker
 
         key, salt = self._credentials
         signature = hmac.digest(

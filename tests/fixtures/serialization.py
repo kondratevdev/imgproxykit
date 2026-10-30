@@ -6,4 +6,4 @@ from imgproxykit.serialization import PathSerializer
 @pytest.fixture
 def path_serializer() -> PathSerializer:
     """Provide a serializer with the standard argument separator."""
-    return PathSerializer(arguments_separator=':', short_option_name=False)
+    return PathSerializer(argument_separator=':', use_short_options=False)

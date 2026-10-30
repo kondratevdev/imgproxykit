@@ -15,8 +15,8 @@ def test_client_configuration(settings: LazySettings) -> None:
     settings.IMGPROXYKIT = {
         'client': {
             'base_url': 'https://images.example.com',
-            'unsigned_signature': 'trusted',
-            'short_option_name': True,
+            'unsigned_marker': 'trusted',
+            'use_short_options': True,
         },
     }
 

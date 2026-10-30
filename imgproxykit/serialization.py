@@ -22,32 +22,31 @@ class PathSerializer:
     """
 
     __slots__ = (
-        '_arguments_separator',
-        '_short_option_name',
+        '_argument_separator',
+        '_use_short_options',
     )
 
     # TODO: Support the plain option for unencoded source URLs.
     def __init__(
         self,
         *,
-        arguments_separator: str,
-        short_option_name: bool,
+        argument_separator: str,
+        use_short_options: bool,
     ) -> None:
         """
         Configure processing option serialization.
 
         Args:
-            arguments_separator: Separator between processing option names
+            argument_separator: Separator between processing option names
                 and their arguments. Must match the server's
                 `IMGPROXY_ARGUMENTS_SEPARATOR
                 <https://docs.imgproxy.net/latest/configuration/options#miscellaneous>`__.
-            short_option_name: Use short aliases when available, otherwise
-                full names. Required for direct construction; ``Client``
-                passes ``False`` by default.
+            use_short_options: Use short aliases when available,
+                otherwise full names.
 
         """
-        self._arguments_separator = arguments_separator
-        self._short_option_name = short_option_name
+        self._argument_separator = argument_separator
+        self._use_short_options = use_short_options
 
     def __call__(
         self,
@@ -80,8 +79,8 @@ class PathSerializer:
             >>> from imgproxykit.serialization import PathSerializer
             >>> from imgproxykit.options import Resize
             >>> serializer = PathSerializer(
-            ...     arguments_separator=':',
-            ...     short_option_name=False,
+            ...     argument_separator=':',
+            ...     use_short_options=False,
             ... )
             >>> thumbnail = Transform(
             ...     Resize(width=96, height=96, mode='fill'),
@@ -96,7 +95,7 @@ class PathSerializer:
             options = tuple(
                 self._serialize_segment(
                     (option.short_name or option.name)
-                    if self._short_option_name
+                    if self._use_short_options
                     else option.name,
                     option.arguments,
                 )
@@ -124,7 +123,7 @@ class PathSerializer:
             end -= 1
 
         serialized = map(self._serialize_argument, arguments[:end])
-        return self._arguments_separator.join((name, *serialized))
+        return self._argument_separator.join((name, *serialized))
 
     @classmethod
     def _serialize_argument(cls, value: Argument) -> str:
