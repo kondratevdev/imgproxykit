@@ -10,6 +10,9 @@ from imgproxykit.serialization import PathSerializer
         (Background(), 'background'),
         (Background(color='ff0080'), 'background:ff0080'),
         (Background(color=(0, 128, 255)), 'background:0:128:255'),
+        (Background.rgb(red=0, green=128, blue=255), 'background:0:128:255'),
+        (Background.hex('ff0080'), 'background:ff0080'),
+        (Background.disabled(), 'background'),
     ],
 )
 def test_background(

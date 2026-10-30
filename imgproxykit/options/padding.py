@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import ClassVar, override
+from typing import ClassVar, Self, override
 
 from imgproxykit.options.base import Option
 from imgproxykit.types import Argument
@@ -15,6 +15,9 @@ class Padding(Option):
     Supply at least one side; omitted arguments remain
     ``None``.
 
+    Use :meth:`all` for uniform padding, :meth:`symmetric` for separate
+    horizontal and vertical padding, or the constructor for individual sides.
+
     Attributes:
         top: Top padding in pixels; fallback for omitted sides.
         right: Right padding; also used for an omitted left side.
@@ -23,9 +26,12 @@ class Padding(Option):
 
     Usage:
 
-    >>> option = Padding(top=10)
+    >>> option = Padding.all(10)
     >>> option.arguments
     (10, None, None, None)
+    >>> option = Padding.symmetric(horizontal=20, vertical=10)
+    >>> option.arguments
+    (10, 20, None, None)
     >>> option = Padding(top=10, right=20, bottom=30, left=40)
     >>> option.arguments
     (10, 20, 30, 40)
@@ -42,6 +48,16 @@ class Padding(Option):
 
     name: ClassVar[str] = 'padding'
     short_name: ClassVar[str | None] = 'pd'
+
+    @classmethod
+    def all(cls, value: int) -> Self:
+        """Apply the same padding to all sides using protocol fallback."""
+        return cls(top=value)
+
+    @classmethod
+    def symmetric(cls, *, horizontal: int, vertical: int) -> Self:
+        """Set padding for both axes, requiring both values explicitly."""
+        return cls(top=vertical, right=horizontal)
 
     @property
     @override

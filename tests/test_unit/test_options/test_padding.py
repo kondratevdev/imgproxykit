@@ -8,16 +8,10 @@ from imgproxykit.serialization import PathSerializer
     ('option', 'expected'),
     [
         (Padding(), 'padding'),
-        (
-            Padding(
-                top=10,
-                right=20,
-                bottom=30,
-                left=40,
-            ),
-            'padding:10:20:30:40',
-        ),
+        (Padding(top=10, right=20, bottom=30, left=40), 'padding:10:20:30:40'),
         (Padding(left=0), 'padding::::0'),
+        (Padding.all(0), 'padding:0'),
+        (Padding.symmetric(horizontal=0, vertical=10), 'padding:10:0'),
     ],
 )
 def test_padding(
