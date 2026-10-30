@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import ClassVar, override
+from typing import ClassVar, Self, override
 
 from imgproxykit.options.base import Option
 from imgproxykit.types import Argument
@@ -8,10 +8,11 @@ from imgproxykit.types import Argument
 @dataclass(frozen=True, slots=True, kw_only=True)
 class Background(Option):
     """
-    Fill the background with a hex color or RGB tuple; omit to disable.
+    Fill the background with a hex or RGB color, or explicitly disable filling.
 
-    Useful when converting transparent images to JPEG. Omit the color
-    to disable background manipulation.
+    Useful when converting transparent images to JPEG. Use :meth:`hex` or
+    :meth:`rgb` to select a color, and :meth:`disabled` to override background
+    filling set earlier in the request, including by a preset.
 
     Attributes:
         color: Hex color without a leading hash, or an RGB tuple with
@@ -19,13 +20,13 @@ class Background(Option):
 
     Usage:
 
-    >>> option = Background(color='ffffff')
+    >>> option = Background.hex('ffffff')
     >>> option.arguments
     ('ffffff',)
-    >>> option = Background(color=(255, 255, 255))
+    >>> option = Background.rgb(red=255, green=255, blue=255)
     >>> option.arguments
     (255, 255, 255)
-    >>> option = Background()
+    >>> option = Background.disabled()
     >>> option.arguments
     (None,)
 
@@ -38,6 +39,27 @@ class Background(Option):
 
     name: ClassVar[str] = 'background'
     short_name: ClassVar[str | None] = 'bg'
+
+    @classmethod
+    def rgb(cls, *, red: int, green: int, blue: int) -> Self:
+        """Fill the background using three required RGB channels."""
+        return cls(color=(red, green, blue))
+
+    @classmethod
+    def hex(cls, color: str) -> Self:
+        """Fill the background using a hex color without a leading hash."""
+        return cls(color=color)
+
+    @classmethod
+    def disabled(cls) -> Self:
+        """
+        Explicitly disable background filling, including a preset's color.
+
+        Emits the background option without arguments. Unlike omitting the
+        option, this overrides background filling configured earlier in the
+        request. Equivalent to ``Background()``.
+        """
+        return cls()
 
     @property
     @override
