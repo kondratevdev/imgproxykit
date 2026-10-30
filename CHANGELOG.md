@@ -12,6 +12,9 @@ but with a deprecation period.
 
 ### Features
 
+- Added `Resize`, `Padding`, and `Background` factories to select resizing
+  strategies, configure uniform or symmetric padding, and set or explicitly
+  disable background colors, #107
 - Added `Client(source_encoding='plain')` to generate URLs with
   percent-encoded sources and imgproxy's `/plain/` marker. Base64 remains
   the default, #106
