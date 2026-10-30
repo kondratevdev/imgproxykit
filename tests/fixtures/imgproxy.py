@@ -35,7 +35,9 @@ def imgproxy_url(
         # Different preset sizes make their ordering observable.
         .with_env(
             'IMGPROXY_PRESETS',
-            'thumbnail=resize:fill:160:120,small=resize:fill:80:60',
+            'thumbnail=resize:fill:160:120,small=resize:fill:80:60,'
+            # A name with every URL-safe punctuation imgproxy can parse here.
+            "v1.2-x~y_z!$&'()*+;@=resize:fill:40:30",
         )
         .with_copy_into_container(_IMAGES, '/data')
         # Reuse the image under a name that exercises UTF-8 and spaces.

@@ -20,6 +20,13 @@ but with a deprecation period.
   and source resolution. Supports source strings and model file fields.
   Install with `pip install 'imgproxykit[drf]'`, #77
 
+### Bugfixes
+
+- `Preset` now raises `ValueError` for empty names and names with
+  characters that change the URL or never match a server preset,
+  such as `#`, `?`, `/`, `%`, spaces or non-ASCII letters.
+  Building a URL also fails when a name contains the arguments separator, #86
+
 ### Breaking changes
 
 - Removed `imgproxykit.types.OptionType`. Processing option names now use

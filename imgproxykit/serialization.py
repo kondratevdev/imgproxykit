@@ -1,4 +1,7 @@
+import itertools
+
 from imgproxykit.internal.encoding import encode_base64
+from imgproxykit.options import Preset
 from imgproxykit.transform import Transform
 from imgproxykit.types import Argument
 
@@ -73,6 +76,9 @@ class PathSerializer:
             Unsigned path beginning with ``/``, ready for signing.
             Contains neither the imgproxy address nor a signature segment.
 
+        Raises:
+            ValueError: If a preset name contains the arguments separator.
+
         Examples:
             Build a square WebP thumbnail path:
 
@@ -93,6 +99,7 @@ class PathSerializer:
         """
         options: tuple[str, ...] = ()
         if transform is not None:
+            self._check_preset_names(transform)
             options = tuple(
                 self._serialize_segment(
                     (option.short_name or option.name)
@@ -103,6 +110,19 @@ class PathSerializer:
                 for option in transform.options
             )
         return '/'.join(('', *options, encode_base64(source)))
+
+    def _check_preset_names(self, transform: Transform) -> None:
+        """Reject preset names that would be split at the separator."""
+        for preset_name in itertools.chain.from_iterable(
+            option.names
+            for option in transform.options
+            if isinstance(option, Preset)
+        ):
+            if self._arguments_separator in preset_name:
+                raise ValueError(
+                    f'Preset name {preset_name!r} contains the arguments '
+                    f'separator {self._arguments_separator!r}',
+                )
 
     def _serialize_segment(
         self,
@@ -117,7 +137,7 @@ class PathSerializer:
         positions. Booleans are serialized as ``1`` and ``0``.
 
         """
-        # TODO: Verify reserved characters in string arguments and preset names
+        # TODO: Verify reserved characters in other string arguments
         # against imgproxy before choosing encoding or rejection.
         end = len(arguments)
         while end and arguments[end - 1] is None:

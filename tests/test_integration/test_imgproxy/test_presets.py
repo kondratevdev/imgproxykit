@@ -12,6 +12,7 @@ from tests.test_integration.test_imgproxy.assertions import assert_image
         (('thumbnail',), (160, 120)),
         (('thumbnail', 'small'), (80, 60)),
         (('small', 'thumbnail'), (160, 120)),
+        (("v1.2-x~y_z!$&'()*+;@",), (40, 30)),
     ],
 )
 def test_presets(
