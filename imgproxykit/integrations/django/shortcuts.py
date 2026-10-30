@@ -27,7 +27,6 @@ def imgproxy_url(
     Raises:
         KeyError: If a named transformation is not configured.
         ValueError: If the default source resolver receives an empty file field.
-
     """
     if isinstance(transform, str):
         transform = get_config()[Settings.transforms.value][transform]  # pyright: ignore[reportTypedDictNotRequiredAccess]
@@ -66,7 +65,6 @@ def imgproxy_variants[Key: str](
     Raises:
         KeyError: If a named variant set is not configured.
         ValueError: If the default source resolver receives an empty file field.
-
     """
     client = get_client()
 

@@ -33,17 +33,14 @@ class Watermark(Option):
     <https://docs.imgproxy.net/usage/processing#watermark>`_
     and `watermark image configuration
     <https://docs.imgproxy.net/features/watermark#specifying-watermark-image>`_.
-
     """
 
-    # Public API:
     opacity: float
     position: WatermarkPosition | None = None
     offset_x: float | None = None
     offset_y: float | None = None
     scale: float | None = None
 
-    # Public API:
     name: ClassVar[str] = 'watermark'
     short_name: ClassVar[str | None] = 'wm'
 

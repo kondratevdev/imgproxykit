@@ -38,12 +38,21 @@ the application. Keep the returned dependency for use in your routes:
 
 .. literalinclude:: /examples/integrations/fastapi/client.py
    :language: python
-   :start-at: from typing
+   :start-at: from dataclasses
 
 The client is stored on ``app.state.imgproxykit_client``.
 URL generation makes no network requests. Configure signing
 credentials on :class:`~imgproxykit.Client` as described in
 :doc:`../user-guide/client`.
+
+``ProductImages`` is a standard-library dataclass that declares both the
+response fields and their transformations. ``client.variants()`` returns
+an instance directly, which the enclosing Pydantic ``ProductResponse``
+serializes as a nested object. FastAPI includes its string fields in the
+OpenAPI response schema.
+
+See :ref:`dataclass-variants` for declaration requirements and shared
+transformations.
 
 Multiple clients
 ----------------

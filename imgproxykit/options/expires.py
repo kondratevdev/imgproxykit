@@ -16,7 +16,6 @@ class Expires(ScalarOption[int]):
 
     See `imgproxy expires
     <https://docs.imgproxy.net/usage/processing#expires>`_.
-
     """
 
     # TODO: Accept timezone-aware datetime objects and convert them to Unix

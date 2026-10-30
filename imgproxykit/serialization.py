@@ -20,7 +20,6 @@ class PathSerializer:
     Subclass this serializer and override :meth:`__call__` to customize path
     construction. Set the subclass on
     :attr:`imgproxykit.Client.path_serializer_cls` to use it in a client.
-
     """
 
     __slots__ = (
@@ -50,7 +49,6 @@ class PathSerializer:
                 padding or ``'plain'`` with full UTF-8 percent-encoding.
                 See `imgproxy source URLs
                 <https://docs.imgproxy.net/usage/processing#source-url>`_.
-
         """
         self._argument_separator = argument_separator
         self._use_short_options = use_short_options
@@ -93,12 +91,11 @@ class PathSerializer:
             ...     source_encoding='base64',
             ... )
             >>> thumbnail = Transform(
-            ...     Resize(width=96, height=96, mode='fill'),
+            ...     Resize.fill(width=96, height=96),
             ...     format='webp',
             ... )
             >>> serializer('s3://images/photo.jpg', transform=thumbnail)
             '/resize:fill:96:96/format:webp/czM6Ly9pbWFnZXMvcGhvdG8uanBn'
-
         """
         options: tuple[str, ...] = ()
         if transform is not None:
@@ -154,7 +151,6 @@ class PathSerializer:
         Internal ``None`` values become empty positions; trailing ``None``
         values are omitted. Explicit zeroes and empty strings retain their
         positions. Booleans are serialized as ``1`` and ``0``.
-
         """
         # TODO: Verify reserved characters in string arguments and preset names
         # against imgproxy before choosing encoding or rejection.

@@ -27,7 +27,6 @@ class Size(Option):
 
     See `imgproxy size
     <https://docs.imgproxy.net/usage/processing#size>`_.
-
     """
 
     width: int | None = None

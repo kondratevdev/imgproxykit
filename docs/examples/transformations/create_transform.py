@@ -16,7 +16,7 @@ source_url = 'https://picsum.photos/id/237/1600/1200'
 
 # Define the thumbnail dimensions, quality, and output format.
 thumbnail = Transform(
-    Resize(width=300, height=300, mode='fill'),  # Pass typed option objects.
+    Resize.fill(width=300, height=300),  # Pass typed option objects.
     quality=85,  # Or scalar keywords, equivalent to Quality(85).
     format='webp',
 )

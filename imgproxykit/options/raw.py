@@ -23,7 +23,6 @@ class Raw(ScalarOption[bool]):
 
     See `imgproxy raw
     <https://docs.imgproxy.net/usage/processing#raw>`_.
-
     """
 
     name: ClassVar[str] = 'raw'

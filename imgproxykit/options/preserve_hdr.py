@@ -22,7 +22,6 @@ class PreserveHDR(ScalarOption[bool]):
 
     See `imgproxy preserve hdr
     <https://docs.imgproxy.net/usage/processing#preserve-hdr>`_.
-
     """
 
     name: ClassVar[str] = 'preserve_hdr'

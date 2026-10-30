@@ -25,7 +25,6 @@ class Preset(Option):
 
     See `imgproxy preset
     <https://docs.imgproxy.net/usage/processing#preset>`_.
-
     """
 
     names: tuple[str, ...]

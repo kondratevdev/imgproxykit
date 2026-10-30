@@ -29,7 +29,6 @@ class Zoom(Option):
 
     See `imgproxy zoom
     <https://docs.imgproxy.net/usage/processing#zoom>`_.
-
     """
 
     factor_x: float

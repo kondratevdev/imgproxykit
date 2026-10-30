@@ -23,7 +23,6 @@ class FormatQuality(Option):
 
     See `imgproxy format quality
     <https://docs.imgproxy.net/usage/processing#format-quality>`_.
-
     """
 
     qualities: tuple[tuple[FormatType, int], ...]

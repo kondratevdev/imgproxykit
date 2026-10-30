@@ -21,7 +21,6 @@ class UrlSigner:
     Subclass this signer and override :meth:`__call__` to customize signing.
     Set the subclass on :attr:`imgproxykit.Client.url_signer_cls` to use it
     in a client.
-
     """
 
     __slots__ = (
@@ -101,7 +100,6 @@ class UrlSigner:
         Returns:
             URL-safe Base64 signature without padding, or the unsigned
             marker when both signing credentials are ``None``.
-
         """
         if self._credentials is None:
             return self._unsigned_marker

@@ -25,7 +25,6 @@ class MaxResultDimension(ScalarOption[int]):
 
     See `imgproxy max result dimension
     <https://docs.imgproxy.net/usage/processing#max-result-dimension>`_.
-
     """
 
     name: ClassVar[str] = 'max_result_dimension'

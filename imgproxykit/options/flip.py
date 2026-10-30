@@ -28,7 +28,6 @@ class Flip(Option):
 
     See `imgproxy flip
     <https://docs.imgproxy.net/usage/processing#flip>`_.
-
     """
 
     horizontal: bool | None = None

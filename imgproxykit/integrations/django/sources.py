@@ -22,7 +22,6 @@ def resolve_source(source: str | FieldFile) -> str:
 
     Returns:
         Source URI to pass to the configured client.
-
     """
     resolver = get_config()[Settings.source_resolver.value]  # pyright: ignore[reportTypedDictNotRequiredAccess]
     if isinstance(resolver, str):
@@ -39,6 +38,5 @@ def default_source_resolver(source: str | FieldFile) -> str:
     Raises:
         ValueError: If the file field has no associated file, as with
             direct access to ``FieldFile.url``.
-
     """
     return source.url if isinstance(source, FieldFile) else source

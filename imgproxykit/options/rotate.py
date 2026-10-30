@@ -22,7 +22,6 @@ class Rotate(ScalarOption[int]):
 
     See `imgproxy rotate
     <https://docs.imgproxy.net/usage/processing#rotate>`_.
-
     """
 
     name: ClassVar[str] = 'rotate'

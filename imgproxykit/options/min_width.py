@@ -22,7 +22,6 @@ class MinWidth(ScalarOption[int]):
 
     See `imgproxy min width
     <https://docs.imgproxy.net/usage/processing#min-width>`_.
-
     """
 
     name: ClassVar[str] = 'min-width'

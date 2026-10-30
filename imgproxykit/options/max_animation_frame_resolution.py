@@ -25,7 +25,6 @@ class MaxAnimationFrameResolution(ScalarOption[float]):
 
     See `imgproxy max animation frame resolution
     <https://docs.imgproxy.net/usage/processing#max-animation-frame-resolution>`_.
-
     """
 
     name: ClassVar[str] = 'max_animation_frame_resolution'

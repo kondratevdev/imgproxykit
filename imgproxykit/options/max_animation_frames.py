@@ -25,7 +25,6 @@ class MaxAnimationFrames(ScalarOption[int]):
 
     See `imgproxy max animation frames
     <https://docs.imgproxy.net/usage/processing#max-animation-frames>`_.
-
     """
 
     name: ClassVar[str] = 'max_animation_frames'

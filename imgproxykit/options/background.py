@@ -32,7 +32,6 @@ class Background(Option):
 
     See `imgproxy background
     <https://docs.imgproxy.net/usage/processing#background>`_.
-
     """
 
     color: str | tuple[int, int, int] | None = None

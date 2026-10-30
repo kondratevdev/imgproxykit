@@ -22,7 +22,6 @@ class Blur(ScalarOption[float]):
 
     See `imgproxy blur
     <https://docs.imgproxy.net/usage/processing#blur>`_.
-
     """
 
     name: ClassVar[str] = 'blur'

@@ -36,7 +36,6 @@ class Crop(Option):
 
     See `imgproxy crop
     <https://docs.imgproxy.net/usage/processing#crop>`_.
-
     """
 
     width: float | None = None

@@ -29,7 +29,6 @@ class Trim(Option):
 
     See `imgproxy trim
     <https://docs.imgproxy.net/usage/processing#trim>`_.
-
     """
 
     threshold: float

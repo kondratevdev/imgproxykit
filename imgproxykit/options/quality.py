@@ -20,11 +20,7 @@ class Quality(ScalarOption[int]):
 
     See `imgproxy quality
     <https://docs.imgproxy.net/usage/processing#quality>`_.
-
     """
 
-    # Public API:
-
-    # Public API:
     name: ClassVar[str] = 'quality'
     short_name: ClassVar[str | None] = 'q'

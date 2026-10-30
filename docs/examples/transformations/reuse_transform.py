@@ -18,7 +18,7 @@ from imgproxykit.options import Resize
 client = Client('http://localhost:8080')
 # Reuse the same transformation for multiple source images.
 thumbnail = Transform(
-    Resize(width=300, height=300, mode='fill'),
+    Resize.fill(width=300, height=300),
     format='webp',
 )
 

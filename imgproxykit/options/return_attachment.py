@@ -23,7 +23,6 @@ class ReturnAttachment(ScalarOption[bool]):
 
     See `imgproxy return attachment
     <https://docs.imgproxy.net/usage/processing#return-attachment>`_.
-
     """
 
     name: ClassVar[str] = 'return_attachment'

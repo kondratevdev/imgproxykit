@@ -22,7 +22,6 @@ class Enlarge(ScalarOption[bool]):
 
     See `imgproxy enlarge
     <https://docs.imgproxy.net/usage/processing#enlarge>`_.
-
     """
 
     name: ClassVar[str] = 'enlarge'

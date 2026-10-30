@@ -23,7 +23,6 @@ class MaxBytes(ScalarOption[int]):
 
     See `imgproxy max bytes
     <https://docs.imgproxy.net/usage/processing#max-bytes>`_.
-
     """
 
     name: ClassVar[str] = 'max_bytes'

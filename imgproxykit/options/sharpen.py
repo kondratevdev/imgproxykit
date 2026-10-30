@@ -22,7 +22,6 @@ class Sharpen(ScalarOption[float]):
 
     See `imgproxy sharpen
     <https://docs.imgproxy.net/usage/processing#sharpen>`_.
-
     """
 
     name: ClassVar[str] = 'sharpen'

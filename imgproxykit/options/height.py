@@ -23,7 +23,6 @@ class Height(ScalarOption[int]):
 
     See `imgproxy height
     <https://docs.imgproxy.net/usage/processing#height>`_.
-
     """
 
     name: ClassVar[str] = 'height'

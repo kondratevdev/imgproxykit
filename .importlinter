@@ -18,7 +18,7 @@ layers =
   # Coordinate path construction and signing:
   client
   # Independent client components:
-  serialization | signing
+  serialization | signing | variants
   # Reusable processing configuration:
   transform
   options

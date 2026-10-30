@@ -13,7 +13,6 @@ class ScalarOptions(TypedDict, total=False, closed=True):
     Optional scalar processing arguments.
 
     Accepted by :class:`Transform` and :meth:`~imgproxykit.Transform.extend`.
-
     """
 
     auto_rotate: bool
@@ -67,7 +66,6 @@ class Transform:
     Attributes:
         options: Tuple of processing options. Defaults to an empty tuple,
             which adds no processing option segments to the URL.
-
     """
 
     options: tuple[Option, ...]
@@ -93,13 +91,12 @@ class Transform:
             >>> from imgproxykit import Transform
             >>> from imgproxykit.options import Resize
             >>> thumbnail = Transform(
-            ...     Resize(width=96, height=96, mode='fill'),
+            ...     Resize.fill(width=96, height=96),
             ...     quality=85,
             ...     format='webp',
             ... )
             >>> [option.name for option in thumbnail.options]
             ['resize', 'quality', 'format']
-
         """
         # Keep variadic options while initializing a frozen dataclass.
         # Bypassing __setattr__ is safe until initialization is finished.
@@ -129,6 +126,5 @@ class Transform:
             ['quality', 'format']
             >>> [option.name for option in retina.options]
             ['quality', 'format', 'dpr']
-
         """
         return Transform(*self.options, *options, **kwargs)

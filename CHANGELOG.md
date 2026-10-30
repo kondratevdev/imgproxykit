@@ -12,6 +12,9 @@ but with a deprecation period.
 
 ### Features
 
+- Added dataclass support to `Client.variants()`: declare URL fields with
+  `Annotated[str, Transform(...)]` and pass the class to receive a typed
+  instance, #108
 - Added `Resize`, `Padding`, and `Background` factories to select resizing
   strategies, configure uniform or symmetric padding, and set or explicitly
   disable background colors, #107

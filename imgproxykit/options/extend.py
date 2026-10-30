@@ -27,7 +27,6 @@ class Extend(Option):
 
     See `imgproxy extend
     <https://docs.imgproxy.net/usage/processing#extend>`_.
-
     """
 
     value: bool

@@ -3,7 +3,8 @@ Variants
 
 Variants define a named group of image versions, each with its own
 transformation. Pass a mapping of names to :class:`~imgproxykit.Transform`
-objects to :meth:`~imgproxykit.Client.variants` to generate their URLs together.
+objects to :meth:`~imgproxykit.Client.variants` to generate a dictionary of
+URLs. Pass a dataclass class to return a typed instance with URL attributes.
 
 .. tip::
 
@@ -54,6 +55,33 @@ when accessing the generated URLs:
 ``product_urls['small']`` and reports ``product_urls['profile']`` as an
 invalid key. Without an explicit key annotation, a regular string-keyed
 mapping typically produces ``dict[str, str]``.
+
+.. _dataclass-variants:
+
+Return a dataclass
+------------------
+
+Declare a standard-library dataclass when you want a named result type
+for an API response or application code. Each field combines its result
+type, ``str``, with a transformation in ``Annotated``:
+
+.. literalinclude:: /examples/variants/dataclass.py
+   :language: python
+   :start-at: from dataclasses
+
+Pass the class as ``variants=ProductImages`` and access the generated URLs
+as attributes, such as ``product_urls.small``. Reuse the class with other
+sources or clients.
+
+.. note::
+
+    Each field must declare exactly one ``Transform`` in
+    ``Annotated[str, Transform(...)]``. Use ``Transform()`` for a URL without
+    processing options. ``InitVar`` and ``init=False`` fields are unsupported.
+
+Use ``ProductImages`` as a field type in a Pydantic model or msgspec Struct,
+and pass the result of ``client.variants()`` to that field. See the
+:doc:`FastAPI example <../integrations/fastapi>`.
 
 Next steps
 ----------

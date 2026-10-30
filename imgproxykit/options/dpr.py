@@ -22,7 +22,6 @@ class DPR(ScalarOption[float]):
 
     See `imgproxy DPR
     <https://docs.imgproxy.net/usage/processing#dpr>`_.
-
     """
 
     # Public API:
