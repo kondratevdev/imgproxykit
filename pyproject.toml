@@ -77,7 +77,7 @@ pytest-randomly = "^5.0"
 # Integration tests and image assertions:
 pillow = ">=13.0.0,<14"
 testcontainers = ">=4.15,<5"
-zapros = ">=0.21,<0.22"
+zapros = ">=0.22.0,<0.23"
 
 # Django and DRF integration typing and tests:
 django-stubs = "^6.1"
