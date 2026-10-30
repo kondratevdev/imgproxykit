@@ -89,13 +89,32 @@ class ScalarOption[ValueT: Argument](Option):
     _registry: ClassVar[_ScalarRegistry] = {}
 
     @override
-    def __init_subclass__(cls) -> None:
+    def __init_subclass__(cls, *, replace: bool = False, **kwargs: Any) -> None:
         """Register a concrete scalar option for keyword construction."""
         # Explicit super is required because slots=True replaces this class.
-        super(ScalarOption, cls).__init_subclass__()  # noqa: WPS608
-        # Slotted dataclasses create a replacement class. Register it again
-        # so keyword construction uses the final class, including its slots.
-        ScalarOption._registry[cls._get_kwarg_name()] = cls
+        super(ScalarOption, cls).__init_subclass__(**kwargs)  # noqa: WPS608
+        kwarg_name = cls._get_kwarg_name()
+        existing = ScalarOption._registry.get(kwarg_name)
+        if existing is not None and not replace:
+            # Slotted dataclasses create a replacement class with the exact
+            # same name and module. Allow this re-registration so keyword
+            # construction uses the final class, including its slots.
+            is_same_class = (
+                cls.__name__ == existing.__name__
+                and cls.__module__ == existing.__module__
+            )
+            if is_same_class:
+                ScalarOption._registry[kwarg_name] = cls
+                return
+            # Subclasses inheriting the option name do not replace the existing
+            # registration.
+            if issubclass(cls, existing):
+                return
+            raise ValueError(
+                f'Scalar option keyword {kwarg_name!r} is already registered '
+                f'by {existing.__name__}. Pass replace=True to override it.',
+            )
+        ScalarOption._registry[kwarg_name] = cls
 
     @property
     @override
