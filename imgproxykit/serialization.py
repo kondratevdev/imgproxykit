@@ -123,10 +123,11 @@ class PathSerializer:
         The callable returns the encoded source with any required path marker,
         ready to append after processing options and include in the signature.
         """
-        if source_encoding == 'base64':
-            return encode_base64
-        if source_encoding == 'plain':
-            return self._serialize_plain_source
+        return (
+            encode_base64
+            if source_encoding == 'base64'
+            else self._serialize_plain_source
+        )
 
     @classmethod
     def _serialize_plain_source(cls, source: str) -> str:
