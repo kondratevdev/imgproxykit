@@ -13,7 +13,7 @@ but with a deprecation period.
 ### Features
 
 - Added `Gravity` factories to configure crop positioning without
-  using protocol codes, #
+  using protocol codes, #104
 - Added `Transform.extend()` to create a new transformation with additional
   typed options and scalar keyword arguments, preserving the original, #103
 - Added `Option.short_name` with documented processing option aliases and
