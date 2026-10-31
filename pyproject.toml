@@ -79,7 +79,8 @@ pillow = ">=13.0.0,<14"
 testcontainers = ">=4.15,<5"
 zapros = ">=0.22.0,<0.23"
 
-# Django and DRF integration typing and tests:
+# Django integration typing and tests:
+django-modern-rest = { version = ">=0.16,<0.17", extras = [ "pydantic" ] }
 django-stubs = "^6.1"
 djangorestframework-stubs = "^3.18"
 pytest-django = ">=4.12,<5"
@@ -288,13 +289,14 @@ addopts = [
   "--doctest-glob=*.rst",
   "--doctest-glob=README.md",
   "--ignore=docs/conf.py",
+  "--ignore=docs/_ext/",
+  "--ignore=docs/examples/",
   "--ignore=docs/_build/",
   # Output:
   "--tb=short",
   # Coverage:
   "--cov=imgproxykit",
   "--cov=tests",
-  "--cov=docs/examples",
   "--cov-report=term-missing:skip-covered",
   "--cov-report=html",
   "--cov-report=xml",

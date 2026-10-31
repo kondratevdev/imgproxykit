@@ -1,13 +1,19 @@
 Django
 ======
 
-Generate imgproxy URLs from source strings and model file fields in Python
-code or Django templates. Configure the client and reusable transformations
-in Django settings, then generate individual image URLs or named sets of
-image variants.
+`Django <https://docs.djangoproject.com/>`__ is a Python web framework.
+Use imgproxykit's shortcuts and template tags to generate image URLs and
+named variants from source strings and model file fields, with the client
+and reusable transformations configured in Django settings.
+
+Explore the `Django getting started guide
+<https://www.djangoproject.com/start/>`__
+and the `project on GitHub <https://github.com/django/django>`__.
 
 Installation
 ------------
+
+In your Django project, install imgproxykit with Django support:
 
 .. md-tab-set::
 
@@ -50,15 +56,17 @@ Define ``IMGPROXYKIT`` in your Django settings:
 
 .. literalinclude:: /examples/integrations/django/settings.py
    :language: python
-   :start-at: from
+   :lines: 1-19
 
-``client.base_url`` is required. Set ``key`` and ``salt`` to your server's
-hex-encoded credentials, or omit both if the server accepts unsigned URLs.
+.. code-annotations::
+
+   1. Configure the shared client. ``base_url`` is required.
+   2. Use your server's hex-encoded key and salt, or omit both if the server
+      accepts unsigned URLs.
+   3. Optional named transformations for Python shortcuts and template tags.
+   4. Optional named sets of transformations for generating variants.
+
 See :doc:`../user-guide/client` for other client options.
-
-``transforms`` defines named transformations, and ``variants`` groups
-transformations into named sets. Both are optional and can be reused by
-Python shortcuts and template tags.
 
 Generate URLs
 -------------
@@ -66,14 +74,15 @@ Generate URLs
 Use ``imgproxy_url`` with a source string or model file field and a
 transformation name from ``IMGPROXYKIT['transforms']``:
 
-.. TODO: Move this code block to docs/examples/integrations/django/url.py.
+.. literalinclude:: /examples/integrations/django/url.py
+   :language: python
+   :lines: 10-14
+   :dedent: 4
+   :show-output:
 
-.. code-block:: python
+.. code-annotations::
 
-    from imgproxykit.integrations.django import imgproxy_url
-
-    source = 'https://media.example.com/products/42.jpg'
-    image_url = imgproxy_url(source, 'thumbnail')
+   1. Select ``IMGPROXYKIT['transforms']['thumbnail']``.
 
 You can also pass a ``Transform`` object directly. Omit the transformation
 argument to generate a URL without processing options.
@@ -84,17 +93,17 @@ Generate variants
 Use ``imgproxy_variants`` with a set name from ``IMGPROXYKIT['variants']``
 to generate several URLs for the same source:
 
-.. TODO: Move this code block to docs/examples/integrations/django/variants.py.
+.. literalinclude:: /examples/integrations/django/variants.py
+   :language: python
+   :lines: 10-16
+   :dedent: 4
+   :show-output:
+   :output-language: python
 
-.. code-block:: python
+.. code-annotations::
 
-    from imgproxykit.integrations.django import imgproxy_variants
-
-    source = 'https://media.example.com/products/42.jpg'
-    images = imgproxy_variants(source, 'product')
-
-    preview_url = images['small']
-    large_url = images['large']
+   1. Select ``IMGPROXYKIT['variants']['product']`` and generate a URL
+      for each configured name.
 
 The result is a dictionary of URLs with the configured variant names as keys.
 You can also pass a dictionary of names and ``Transform`` objects directly
@@ -115,7 +124,9 @@ an image with the ``thumbnail`` transformation configured above:
 
     {% load imgproxykit %}
 
-    <img src="{% imgproxy_url product.image 'thumbnail' %}" alt="{{ product.name }}">
+    {% if product.image %}
+      <img src="{% imgproxy_url product.image 'thumbnail' %}" alt="{{ product.name }}">
+    {% endif %}
 
 The source can be a model file field, as shown here, or a source string.
 The transformation name is optional; omitting it generates a URL without
@@ -127,38 +138,36 @@ the configured ``product`` variant set:
 .. code-block:: django
 
     {% load imgproxykit %}
-    {% imgproxy_variants product.image 'product' as images %}
-
-    <a href="{{ images.large }}">
-      <img src="{{ images.small }}" alt="{{ product.name }}">
-    </a>
+    {% if product.image %}
+      {% imgproxy_variants product.image 'product' as images %}
+      <a href="{{ images.large }}">
+        <img src="{{ images.small }}" alt="{{ product.name }}">
+      </a>
+    {% endif %}
 
 Source resolution
 -----------------
 
-When generating URLs in Python or templates, imgproxykit passes source
-strings unchanged and reads ``.url`` from model file fields.
+By default, strings are passed unchanged and model file fields use ``.url``.
+Relative URLs are not expanded automatically.
 
-In Django, a file field's URL depends on the storage backend and its
-configuration. It may be relative, such as ``/media/photo.jpg``, or absolute,
-such as ``https://media.example.com/photo.jpg``. imgproxykit does not expand
-relative URLs automatically.
-
-To use relative URLs, you can configure `IMGPROXY_BASE_URL
+Configure `IMGPROXY_BASE_URL
 <https://docs.imgproxy.net/latest/configuration/options#source-image-urls>`__
-on your imgproxy server. For example, with
-``IMGPROXY_BASE_URL=https://media.example.com``, imgproxy fetches
-``/media/photo.jpg`` from ``https://media.example.com/media/photo.jpg``.
-This setting adds a prefix to source URLs unless they already contain it.
+on imgproxy, or set ``IMGPROXYKIT['source_resolver']`` to resolve sources in
+Django. The resolver receives the original string or file field and must
+return a URI accessible to imgproxy.
 
-Alternatively, override source resolution in Django with
-``IMGPROXYKIT['source_resolver']``. The resolver receives the original string
-or file field and must return a URI that your imgproxy server can access.
-For example, add a media domain in ``myapp/images.py``:
+Define a resolver in ``myapp/images.py``:
 
 .. literalinclude:: /examples/integrations/django/source_resolver.py
    :language: python
-   :start-at: from urllib.parse
+   :lines: 1-13
+   :show-output:
+
+.. code-annotations::
+
+   1. Resolve relative paths against the media domain. Absolute URLs keep
+      their own domain.
 
 Register the resolver in your Django settings:
 
@@ -169,15 +178,16 @@ Register the resolver in your Django settings:
         'source_resolver': 'myapp.images.resolve_image_source',
     }
 
-This turns ``/media/photo.jpg`` into
-``https://media.example.com/media/photo.jpg`` and leaves absolute URLs
-unchanged. The setting also accepts a callable directly instead of an
-import path.
+The setting also accepts a callable directly instead of an import path.
 
 Next steps
 ----------
 
-* :doc:`../user-guide/transformations` describes reusable transformations.
-* :doc:`../user-guide/variants` shows how to generate several image URLs.
+* `Django documentation <https://docs.djangoproject.com/>`__
+  covers models, views, templates, and project configuration.
+* `Django on GitHub <https://github.com/django/django>`__
+  provides the source code, issues, and contribution guide.
+* :doc:`dmr` returns image URLs and variants from typed controllers.
+* :doc:`drf` returns image URLs and variants from serializer fields.
 * :doc:`../api-reference/django` documents the client, URL generation functions,
   source resolution, and settings.

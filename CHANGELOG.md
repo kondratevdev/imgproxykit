@@ -47,6 +47,10 @@ but with a deprecation period.
 - `PathSerializer` now requires the `use_short_options`
   keyword-only argument, #80
 
+### Misc
+
+- Reworked documentation and added a Django Modern REST integration example, #109
+
 ## 0.4.0
 
 ### Features

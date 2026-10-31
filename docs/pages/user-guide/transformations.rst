@@ -19,53 +19,68 @@ keyword arguments:
 
 .. literalinclude:: /examples/transformations/create_transform.py
    :language: python
-   :lines: 10-27
+   :show-output:
+   :lines: 1-15
 
-``thumbnail`` combines a 300×300 crop, quality 85, and WebP output format.
-Pass it to ``client.url()`` through the ``transform`` argument and open the
-printed URL to see the result. The :doc:`options` chapter explains the
-available option classes and their arguments.
+.. code-annotations::
+
+   1. Pass structured processing options as positional option instances.
+   2. Pass scalar options as keywords. ``quality=85`` is equivalent to
+      ``Quality(85)``.
+
+Pass ``thumbnail`` to ``client.url()`` to apply it to an image.
+See :doc:`options` for available options and their arguments.
 
 Reuse a transformation
 ----------------------
 
-Transformations are immutable and designed for reuse. Define a transformation
-once and use it for different source images; building a URL does not change
-its settings. Built-in option instances are immutable too.
-
-For example, reuse a 300×300 WebP thumbnail transformation across product
-images:
+Define a transformation once and use it with different source images:
 
 .. literalinclude:: /examples/transformations/reuse_transform.py
    :language: python
-   :start-at: from imgproxykit
+   :show-output:
+   :lines: 1-19
 
-``thumbnail_urls`` contains a URL for each source, using the same crop and
-format. You can keep ``thumbnail`` at module level and reuse it across
-requests. To add processing options, create a new transformation with
-:meth:`~imgproxykit.Transform.extend`, as shown below.
+.. code-annotations::
+
+   1. Transformations and built-in options are immutable. You can keep
+      ``thumbnail`` at module level and reuse it across requests.
+
+Each URL uses the same transformation with a different source.
 
 Compose transformations
 -----------------------
 
 Use :meth:`~imgproxykit.Transform.extend` to create a new transformation
-with additional options. It accepts the same positional options and scalar
-keyword arguments as the constructor:
+with additional options:
 
 .. literalinclude:: /examples/transformations/extend.py
    :language: python
-   :start-at: from imgproxykit
+   :show-output:
+   :lines: 1-15
 
-Each call returns a new transformation, leaving the original unchanged.
-New positional options follow the existing options; scalar keyword options
-come last, in keyword order.
+.. code-annotations::
+
+   1. Shared quality and output format.
+   2. Append a square crop, leaving ``base`` unchanged.
+   3. Append a pixel density option, leaving ``thumbnail`` unchanged.
+
+The generated URLs show the options retained by each transformation.
+New positional options follow existing options; scalar keywords come last,
+in keyword order.
 
 To combine reusable groups, pass another transformation's unpacked
 ``options`` to ``extend()``:
 
 .. literalinclude:: /examples/transformations/composition.py
    :language: python
-   :start-at: from imgproxykit
+   :show-output:
+   :lines: 1-12
+
+.. code-annotations::
+
+   1. Unpack ``square.options`` to append its options to ``base``.
+      Both original transformations remain unchanged.
 
 ``extend()`` appends options without merging or replacing them. For example,
 ``base.extend(quality=70)`` retains both quality options. Imgproxy resolves

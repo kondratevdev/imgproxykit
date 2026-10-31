@@ -19,12 +19,18 @@ source image:
 
 .. literalinclude:: /examples/variants/basic.py
    :language: python
-   :lines: 10-27
+   :lines: 1-16
+   :show-output:
+   :output-language: python
 
-``product_urls`` contains a URL for each of the three widths. Access a URL
-by its name, or pass the dictionary to a template or API response.
-The names belong to your application; each URL uses its transformation and
-the client's signing settings.
+.. code-annotations::
+
+   1. Choose names for your application and a complete transformation for
+      each variant.
+   2. Generate one URL per variant using the same source and client settings.
+
+Access URLs by name, such as ``product_urls['small']``, or pass the dictionary
+to a template or API response.
 
 Reuse a variant set
 -------------------
@@ -35,11 +41,18 @@ add a width for each variant:
 
 .. literalinclude:: /examples/variants/reusable_sets.py
    :language: python
-   :lines: 12-32
+   :lines: 1-20
+   :show-output:
+   :output-language: python
 
-Both dictionaries contain the same names and processing settings, with
-URLs pointing to their respective sources. The shared ``sizes`` mapping
-can be kept at module level and reused across requests.
+.. code-annotations::
+
+   1. Share quality and format, then use ``extend()`` to add each width.
+   2. Reuse ``sizes`` with different sources. You can keep the mapping at
+      module level and reuse it across requests.
+
+Both dictionaries have the same variant names and transformations, with
+URLs pointing to their respective sources.
 
 Type variant names
 ------------------
@@ -49,12 +62,19 @@ when accessing the generated URLs:
 
 .. literalinclude:: /examples/variants/typed.py
    :language: python
-   :lines: 8-29
+   :lines: 1-20
+   :show-output:
+   :output-language: python
 
-``product_urls`` has type ``dict[ProductKeys, str]``. A type checker accepts
-``product_urls['small']`` and reports ``product_urls['profile']`` as an
-invalid key. Without an explicit key annotation, a regular string-keyed
-mapping typically produces ``dict[str, str]``.
+.. code-annotations::
+
+   1. Limit variant names to a ``Literal`` union and use it as the mapping's
+      key type.
+   2. The returned dictionary preserves that key type. A type checker accepts
+      ``product_urls['small']`` and rejects ``product_urls['profile']``.
+
+Without an explicit key annotation, a regular string-keyed mapping typically
+produces ``dict[str, str]``.
 
 .. _dataclass-variants:
 
@@ -67,11 +87,17 @@ type, ``str``, with a transformation in ``Annotated``:
 
 .. literalinclude:: /examples/variants/dataclass.py
    :language: python
-   :start-at: from dataclasses
+   :lines: 1-27
+   :show-output:
+   :output-language: python
 
-Pass the class as ``variants=ProductImages`` and access the generated URLs
-as attributes, such as ``product_urls.small``. Reuse the class with other
-sources or clients.
+.. code-annotations::
+
+   1. Declare each URL field as ``Annotated[str, Transform(...)]``.
+   2. Pass the class to return a ``ProductImages`` instance containing URLs.
+
+Access URLs as attributes, such as ``product_urls.small``. Reuse the class
+with other sources or clients.
 
 .. note::
 

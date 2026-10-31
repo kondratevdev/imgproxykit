@@ -31,7 +31,7 @@ version = "0.8.0"
 description = "Reusable constraint types to use with typing.Annotated"
 optional = false
 python-versions = ">=3.10"
-groups = ["main", "docs"]
+groups = ["main", "dev", "docs"]
 files = [
     {file = "annotated_types-0.8.0-py3-none-any.whl", hash = "sha256:f072f4d804ea359e4eaf198b1af7a8b0943881a87f31bb764f8bf219bb9419e0"},
     {file = "annotated_types-0.8.0.tar.gz", hash = "sha256:13b2beaad985e05e2d6407ee4c4f35590b11f8d693a258a561055cac8f64cab7"},
@@ -479,6 +479,55 @@ argon2 = ["argon2-cffi (>=23.1.0)"]
 bcrypt = ["bcrypt (>=4.1.1)"]
 
 [[package]]
+name = "django-modern-rest"
+version = "0.16.0"
+description = "Modern REST framework for Django with types and async support"
+optional = false
+python-versions = ">=3.11"
+groups = ["dev"]
+files = [
+    {file = "django_modern_rest-0.16.0-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:a961c242a3506978270e8fe5353db2a618a313aea7fe0a95f37372fe2944b78e"},
+    {file = "django_modern_rest-0.16.0-cp311-cp311-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:31eb9c615099c4bca8793bcf1464ea3ca19716ffef5f59357d96962ac1916ca4"},
+    {file = "django_modern_rest-0.16.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:de04c6c43bc902f13c9d2819a2537b0dd0e709878d0ba13fbea6e289750bf629"},
+    {file = "django_modern_rest-0.16.0-cp311-cp311-musllinux_1_2_aarch64.whl", hash = "sha256:95cee28595905bc29eecfcff8b06b35827e7c716d2df492d4eeffd37891cdce6"},
+    {file = "django_modern_rest-0.16.0-cp311-cp311-musllinux_1_2_x86_64.whl", hash = "sha256:227a57c01566d518163be6a92512bc41f4e4f0889793de97c71d379e285b5add"},
+    {file = "django_modern_rest-0.16.0-cp311-cp311-win_amd64.whl", hash = "sha256:db1abbddbdbc99e5fd74115ee411b9ef0c7a26b011eb2f545dbcc9c76971bd18"},
+    {file = "django_modern_rest-0.16.0-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:6eee91d7200a9370773bd0d873126640d3f13ac0423a943438e98083a7939f12"},
+    {file = "django_modern_rest-0.16.0-cp312-cp312-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:8bf7be5e20c551a8d79f6a11befac8dea45a3b9e19f696dae82cc4204141a27e"},
+    {file = "django_modern_rest-0.16.0-cp312-cp312-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:4014e9d03723477d48579f88f0d9d19d40216509c864407490b9ed64dd4bb1fe"},
+    {file = "django_modern_rest-0.16.0-cp312-cp312-musllinux_1_2_aarch64.whl", hash = "sha256:da9380e4e5f499fa524f7987ed0c4ae40f757826cd0575559e5d832f7edb0dfa"},
+    {file = "django_modern_rest-0.16.0-cp312-cp312-musllinux_1_2_x86_64.whl", hash = "sha256:0278d9c38a05d5eb22425fff3295267a93b29eca7e35cb6bf137e77cb228319c"},
+    {file = "django_modern_rest-0.16.0-cp312-cp312-win_amd64.whl", hash = "sha256:6654d20298dcd645fb99dbd5afe329a9bd8ef394585e6cbe8060da5cbd6b87b7"},
+    {file = "django_modern_rest-0.16.0-cp313-cp313-macosx_11_0_arm64.whl", hash = "sha256:141cf41f2dc1f64bff232945aa10237a5220c960e9c95179d60216b54dc2beb6"},
+    {file = "django_modern_rest-0.16.0-cp313-cp313-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:eb255f9e78c8f551c9f0a31b05a7bd3451c9d9ec909d6b0fec442a1da808f139"},
+    {file = "django_modern_rest-0.16.0-cp313-cp313-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:5fdf21601dbb9f078de22bea44b387d927709fd0043f8fbf67121f22081183a0"},
+    {file = "django_modern_rest-0.16.0-cp313-cp313-musllinux_1_2_aarch64.whl", hash = "sha256:959b3f7ffa9460eb20119fdfbb92c5afe28f86ccf805d949bba433b58f2a4903"},
+    {file = "django_modern_rest-0.16.0-cp313-cp313-musllinux_1_2_x86_64.whl", hash = "sha256:31f0c9498fc7fb562af652c6a1891a58c2ce59bcbfdb7f03b68efb1f17ab5dc9"},
+    {file = "django_modern_rest-0.16.0-cp313-cp313-win_amd64.whl", hash = "sha256:d9c3ef92590fc5f3d2e89579c17e5931e3d46348ef52b39575aff11165635327"},
+    {file = "django_modern_rest-0.16.0-cp314-cp314-macosx_11_0_arm64.whl", hash = "sha256:20c20fcd9895e5c2fc2612d7a0e5199cb5417a664ef466a19d72a90fc0f7c8ad"},
+    {file = "django_modern_rest-0.16.0-cp314-cp314-manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64.whl", hash = "sha256:3c1ac63ee3464379bf05bd381dc5b3d66413ec303a59bb1787f1419a0462d66e"},
+    {file = "django_modern_rest-0.16.0-cp314-cp314-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:bd2ee34e9a30cd043ae4365b7d0c121f06d2844f0d4f1aa6ca466cdde58b5512"},
+    {file = "django_modern_rest-0.16.0-cp314-cp314-musllinux_1_2_aarch64.whl", hash = "sha256:ea087bf88369acab2d68755738c70285034980bd381fee67bb93dcd229365415"},
+    {file = "django_modern_rest-0.16.0-cp314-cp314-musllinux_1_2_x86_64.whl", hash = "sha256:50b97081a85ee119466120be192c223ed5b76082f87399d2840ea5435edcd097"},
+    {file = "django_modern_rest-0.16.0-cp314-cp314-win_amd64.whl", hash = "sha256:010fe97d7b15e74cf15ae4cf86fda83ea3b54ef33ae4a4a92e189a5f2a94756b"},
+    {file = "django_modern_rest-0.16.0-py3-none-any.whl", hash = "sha256:30817d5c17c080bb018f2bf49ef15f0461635a14bef596c93a2f2043e2541559"},
+    {file = "django_modern_rest-0.16.0.tar.gz", hash = "sha256:c16cd35cad4ee19ecc9336be086aa61b51a13ed715a03063fa36be143829b470"},
+]
+
+[package.dependencies]
+django = ">=5,<6.2"
+pydantic = {version = ">=2.12", extras = ["email", "timezone"], optional = true, markers = "extra == \"pydantic\""}
+pydantic-extra-types = {version = "*", optional = true, markers = "extra == \"pydantic\""}
+typing-extensions = ">=4.12"
+
+[package.extras]
+attrs = ["attrs (>=26)", "msgspec (>=0.22)"]
+jwt = ["pyjwt[crypto] (>=2.15)"]
+msgspec = ["msgspec (>=0.22)"]
+openapi = ["openapi-spec-validator (>=0.8)", "polyfactory (>=3.2)", "pyyaml"]
+pydantic = ["pydantic-extra-types", "pydantic[email,timezone] (>=2.12)"]
+
+[[package]]
 name = "django-stubs"
 version = "6.1.2"
 description = "Mypy stubs for Django"
@@ -557,6 +606,27 @@ markdown = ["types-markdown (>=0.1.5)"]
 requests = ["types-requests"]
 
 [[package]]
+name = "dnspython"
+version = "2.9.1"
+description = "DNS toolkit"
+optional = false
+python-versions = ">=3.11"
+groups = ["dev"]
+files = [
+    {file = "dnspython-2.9.1-py3-none-any.whl", hash = "sha256:7c81caf8de1ed57b8cfc7e0ad4f528a0b8ceace473c7eb946df195dc9def751f"},
+    {file = "dnspython-2.9.1.tar.gz", hash = "sha256:9a6d30e55f8dc63e6052597666112bff0586b95a2474a9deda03afbbf820d37a"},
+]
+
+[package.extras]
+dev = ["black (>=26.5)", "coverage (>=7.15)", "hypercorn (>=0.18.0)", "pyright (>=1.1.411)", "pytest (>=9.1)", "pytest-cov (>=7.1)", "quart-trio (>=0.12.0)", "ruff (>=0.16.0)", "sphinx (>=9.1.0) ; python_full_version >= \"3.12.0\"", "sphinx-rtd-theme (>=3.1.0) ; python_full_version >= \"3.12.0\"", "trustme (>=1.2.1)", "ty (>=0.0.85)"]
+dnssec = ["cryptography (>=50)"]
+doh = ["h2 (>=4.4)", "httpcore2 (>=2.13)", "httpx2 (>=2.13)"]
+doq = ["aioquic (>=1.3.0)"]
+idna = ["idna (>=3.20)"]
+trio = ["trio (>=0.34)"]
+wmi = ["wmi (>=1.5.1) ; sys_platform == \"win32\""]
+
+[[package]]
 name = "docker"
 version = "7.2.0"
 description = "A Python library for the Docker Engine API."
@@ -590,6 +660,22 @@ files = [
     {file = "docutils-0.22.4-py3-none-any.whl", hash = "sha256:d0013f540772d1420576855455d050a2180186c91c15779301ac2ccb3eeb68de"},
     {file = "docutils-0.22.4.tar.gz", hash = "sha256:4db53b1fde9abecbb74d91230d32ab626d94f6badfc575d6db9194a49df29968"},
 ]
+
+[[package]]
+name = "email-validator"
+version = "2.3.0"
+description = "A robust email address syntax and deliverability validation library."
+optional = false
+python-versions = ">=3.8"
+groups = ["dev"]
+files = [
+    {file = "email_validator-2.3.0-py3-none-any.whl", hash = "sha256:80f13f623413e6b197ae73bb10bf4eb0908faf509ad8362c5edeb0be7fd450b4"},
+    {file = "email_validator-2.3.0.tar.gz", hash = "sha256:9fc05c37f2f6cf439ff414f8fc46d917929974a82244c20eb10231ba60c54426"},
+]
+
+[package.dependencies]
+dnspython = ">=2.0.0"
+idna = ">=2.0.0"
 
 [[package]]
 name = "executing"
@@ -1547,7 +1633,7 @@ version = "2.14.1"
 description = "Data validation using Python type hints"
 optional = false
 python-versions = ">=3.10"
-groups = ["main", "docs"]
+groups = ["main", "dev", "docs"]
 files = [
     {file = "pydantic-2.14.1-py3-none-any.whl", hash = "sha256:9195d967ec791692a04438115466764fb8b9a27b31f14a760437694f40d6b454"},
     {file = "pydantic-2.14.1.tar.gz", hash = "sha256:94f478203dd03404682a1ada216965651dd74b1d2d5ffd62e00e0837caab5c26"},
@@ -1556,9 +1642,11 @@ markers = {main = "extra == \"fastapi\""}
 
 [package.dependencies]
 annotated-types = ">=0.6.0"
+email-validator = {version = ">=2.0.0", optional = true, markers = "extra == \"email\""}
 pydantic-core = "2.50.1"
 typing-extensions = ">=4.16.0"
 typing-inspection = ">=0.4.4"
+tzdata = {version = "*", optional = true, markers = "platform_system == \"Windows\" and extra == \"timezone\""}
 
 [package.extras]
 email = ["email-validator (>=2.0.0)"]
@@ -1570,7 +1658,7 @@ version = "2.50.1"
 description = "Core functionality for Pydantic validation and serialization"
 optional = false
 python-versions = ">=3.10"
-groups = ["main", "docs"]
+groups = ["main", "dev", "docs"]
 files = [
     {file = "pydantic_core-2.50.1-cp310-cp310-macosx_10_12_x86_64.whl", hash = "sha256:b281a3b0f0822618fe5e3e0d8a2048b6356b14388505dc9374ccffeb69989713"},
     {file = "pydantic_core-2.50.1-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:1fa4c8bc12c1354c5550c0c35c1852c8c1901e89e06561724e03f8d0342e1f87"},
@@ -1721,7 +1809,7 @@ version = "2.11.1"
 description = "Extra Pydantic types."
 optional = false
 python-versions = ">=3.9"
-groups = ["docs"]
+groups = ["dev", "docs"]
 files = [
     {file = "pydantic_extra_types-2.11.1-py3-none-any.whl", hash = "sha256:1722ea2bddae5628ace25f2aa685b69978ef533123e5638cfbddb999e0100ec1"},
     {file = "pydantic_extra_types-2.11.1.tar.gz", hash = "sha256:46792d2307383859e923d8fcefa82108b1a141f8a9c0198982b3832ab5ef1049"},
@@ -2513,7 +2601,7 @@ version = "0.4.4"
 description = "Runtime typing introspection tools"
 optional = false
 python-versions = ">=3.10"
-groups = ["main", "docs"]
+groups = ["main", "dev", "docs"]
 files = [
     {file = "typing_inspection-0.4.4-py3-none-any.whl", hash = "sha256:65b8397ba37ccbce054456aaccddfc91e6e3083c92824df348d96ca832f3f147"},
     {file = "typing_inspection-0.4.4.tar.gz", hash = "sha256:547274fa6b0a561ccf549cc9524b999a578e737d015d8709d021f9d0d13bea47"},
@@ -2741,4 +2829,4 @@ fastapi = ["fastapi"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.12,<4"
-content-hash = "0fdec7b75e7d4e852610a4e11eb2dc7e42af78b0a696e8fa34b2704128351a5a"
+content-hash = "d3c5c5ae191db6e4a29400824cab5450bf4547cea59c7a68e1b57f4fd92c582a"

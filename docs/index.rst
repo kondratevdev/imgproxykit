@@ -3,9 +3,8 @@ imgproxykit
 
 A typed Python toolkit for building imgproxy URLs.
 
-Describe image transformations in Python and generate signed URLs for your
-imgproxy server. Reuse the same settings across product cards, avatars,
-and image previews.
+Define reusable image transformations, generate signed URLs, and create
+named variants for thumbnails, avatars, and previews.
 
 Build your first URL
 --------------------
@@ -35,19 +34,21 @@ Install imgproxykit with Python 3.12 or newer:
 Create a client pointing to your imgproxy server and define a thumbnail
 transformation:
 
-.. note::
-
-    The examples use ``imgproxy.example.com`` for your imgproxy server and
-    ``originals.example.com`` for the original images. Replace these example
-    addresses with your own.
-
 .. literalinclude:: /examples/getting_started/transformations.py
    :language: python
-   :start-at: from imgproxykit
+   :show-output:
+   :lines: 1-13
 
-``thumbnail_url`` is ready to use in an image's ``src`` attribute or an API
-response. Reuse ``thumbnail`` with other source images to apply the same
-300×300 crop and WebP format across your application.
+.. code-annotations::
+
+   1. Public URL of your imgproxy server. Replace it with your own address.
+   2. URL of the original image. Replace it with an image URL accessible
+      to your imgproxy server.
+   3. Build the URL without making a network request. Imgproxy fetches and
+      processes the source image when the generated URL is requested.
+
+Use ``thumbnail_url`` in an image's ``src`` attribute or an API response.
+Reuse ``thumbnail`` with other source images to apply the same transformation.
 
 .. tip::
 
@@ -64,6 +65,8 @@ Find your way
   transformations, processing options, and named variants.
 * :doc:`Django integration <pages/integrations/django>` configures a shared
   client and generates URLs from model file fields.
+* :doc:`Django Modern REST <pages/integrations/dmr>` returns image URLs and
+  variants from typed controllers.
 * :doc:`DRF integration <pages/integrations/drf>` returns image URLs and
   variants from serializer fields.
 * :doc:`FastAPI integration <pages/integrations/fastapi>` registers clients
@@ -94,6 +97,7 @@ Find your way
     :hidden:
 
     pages/integrations/django
+    pages/integrations/dmr
     pages/integrations/drf
     pages/integrations/fastapi
 

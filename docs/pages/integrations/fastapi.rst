@@ -1,14 +1,18 @@
 FastAPI
 =======
 
-The FastAPI integration lets you generate imgproxy URLs in route handlers
-using FastAPI's dependency injection. Register a configured
-:class:`~imgproxykit.Client` once when creating your application, then
-inject it into handlers with ``Depends``. The same client is reused across
-requests, keeping the imgproxy address and signing credentials in one place.
+`FastAPI <https://fastapi.tiangolo.com/>`__ is a Python API framework
+based on type hints, with data validation and OpenAPI schema generation.
+Use imgproxykit's dependency integration to inject a client into route
+handlers and return image URLs and named variants in typed response models.
+
+Explore the `FastAPI tutorial <https://fastapi.tiangolo.com/tutorial/>`__
+and the `project on GitHub <https://github.com/fastapi/fastapi>`__.
 
 Installation
 ------------
+
+In your FastAPI project, install imgproxykit with FastAPI support:
 
 .. md-tab-set::
 
@@ -30,29 +34,43 @@ Installation
 
       pip install 'imgproxykit[fastapi]'
 
-Register Client
----------------
+Register a client
+-----------------
 
 Call :func:`~imgproxykit.integrations.fastapi.add_imgproxy` while creating
 the application. Keep the returned dependency for use in your routes:
 
 .. literalinclude:: /examples/integrations/fastapi/client.py
    :language: python
-   :start-at: from dataclasses
 
-The client is stored on ``app.state.imgproxykit_client``.
-URL generation makes no network requests. Configure signing
-credentials on :class:`~imgproxykit.Client` as described in
-:doc:`../user-guide/client`.
+.. code-annotations::
 
-``ProductImages`` is a standard-library dataclass that declares both the
-response fields and their transformations. ``client.variants()`` returns
-an instance directly, which the enclosing Pydantic ``ProductResponse``
-serializes as a nested object. FastAPI includes its string fields in the
-OpenAPI response schema.
+   1. Register the client once and keep the returned dependency. The client
+      is stored on ``app.state.imgproxykit_client``.
+   2. Inject the registered client into the route handler. The same client
+      is reused across requests.
 
-See :ref:`dataclass-variants` for declaration requirements and shared
-transformations.
+URL generation makes no network requests. See :doc:`../user-guide/client`
+to configure signing credentials.
+
+Return variants
+---------------
+
+Declare image variants as a dataclass and use it as a field in a Pydantic
+response model:
+
+.. literalinclude:: /examples/integrations/fastapi/variants.py
+   :language: python
+
+.. code-annotations::
+
+   1. Associate each URL field with a transformation using ``Annotated``.
+   2. Include the dataclass in the response model. FastAPI documents its
+      string fields in the OpenAPI schema.
+   3. Generate a dataclass instance containing the URLs. Pydantic serializes
+      it as a nested object.
+
+See :ref:`dataclass-variants` for declaration requirements.
 
 Multiple clients
 ----------------
@@ -62,18 +80,23 @@ Register each client separately and use its returned dependency in
 
 .. literalinclude:: /examples/integrations/fastapi/multiple_clients.py
    :language: python
-   :start-at: from typing
 
-The first client uses ``app.state.imgproxykit_client``. The additional
-client uses the attribute supplied through ``name``, here
-``app.state.unsigned_imgproxy``. A name that is already present on
-``app.state`` raises ``ValueError``.
+.. code-annotations::
 
+   1. Register a signed client under the default name. Replace the example
+      key and salt with your imgproxy credentials.
+   2. Give the unsigned client a separate name on ``app.state``.
+   3. Use each registration's returned dependency to inject its client.
+
+Registering a name already present on ``app.state`` raises ``ValueError``.
 Unsigned URLs require an imgproxy server configured to accept them.
 
 Next steps
 ----------
 
-* :doc:`../user-guide/transformations` describes reusable transformations.
+* `FastAPI documentation <https://fastapi.tiangolo.com/>`__
+  covers route handlers, dependencies, validation, and API schemas.
+* `FastAPI on GitHub <https://github.com/fastapi/fastapi>`__
+  provides the source code, issues, and contribution guide.
 * :doc:`../user-guide/variants` shows how to generate several image URLs.
 * :doc:`../api-reference/fastapi` documents the registration function.

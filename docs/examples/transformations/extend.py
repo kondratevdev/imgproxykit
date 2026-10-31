@@ -1,22 +1,15 @@
-"""
-Create new transformations by adding processing options.
-
->>> [option.name for option in base.options]
-['quality', 'format']
->>> [option.name for option in thumbnail.options]
-['quality', 'format', 'resize']
->>> [option.name for option in retina.options]
-['quality', 'format', 'resize', 'dpr']
-"""
-
-from imgproxykit import Transform
+from imgproxykit import Client, Transform
 from imgproxykit.options import Resize
 
-# Share quality and output format across transformations.
-base = Transform(quality=85, format='webp')
+client = Client('http://localhost:8080')
+source_url = 'https://picsum.photos/id/237/1600/1200'
 
-# Add a square crop without changing the base transformation.
-thumbnail = base.extend(Resize.fill(width=300, height=300))
+base = Transform(quality=85, format='webp')  # (1)!
 
-# Create a higher pixel density version of the thumbnail.
-retina = thumbnail.extend(dpr=2)
+thumbnail = base.extend(Resize.fill(width=300, height=300))  # (2)!
+
+retina = thumbnail.extend(dpr=2)  # (3)!
+
+print('Base:', client.url(source_url, transform=base))
+print('Thumbnail:', client.url(source_url, transform=thumbnail))
+print('Retina:', client.url(source_url, transform=retina))
