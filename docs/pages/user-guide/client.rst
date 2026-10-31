@@ -134,21 +134,6 @@ and :meth:`~imgproxykit.Client.variants`.
     generated URLs to browsers and other clients. Use your own credentials
     when connecting to a production server.
 
-.. tip::
-
-    Keep the server on port 8080 running for the remaining chapters.
-    When finished, stop it:
-
-    .. code-block:: bash
-
-        docker stop imgproxy-guide
-
-    If you also started the signing example, stop that container:
-
-    .. code-block:: bash
-
-        docker stop imgproxy-guide-signed
-
 Next steps
 ----------
 
