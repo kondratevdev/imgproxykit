@@ -1,14 +1,12 @@
-from dmr import Controller, Path
+from typing import Final
+
+from dmr import Controller
 from dmr.plugins.pydantic import PydanticFastSerializer
 from pydantic import BaseModel
 
 from imgproxykit.integrations.django import imgproxy_variants
 
-
-class ProductPath(BaseModel):
-    """Identify the product requested by the URL."""
-
-    product_id: int
+_SOURCE_URL: Final = 'https://originals.example.com/photo.jpg'
 
 
 class ProductImages(BaseModel):
@@ -18,22 +16,16 @@ class ProductImages(BaseModel):
     large: str
 
 
-class ProductResponse(BaseModel):
-    """Product and its named image variants."""
+class ImageResponse(BaseModel):
+    """Named image variants."""
 
-    id: int
     images: ProductImages  # (1)!
 
 
-class ProductController(Controller[PydanticFastSerializer]):
-    """Serve a product with its image variants."""
+class ImageController(Controller[PydanticFastSerializer]):
+    """Serve named image variants."""
 
-    def get(self, parsed_path: Path[ProductPath]) -> ProductResponse:
-        """Return a product with its configured image variants."""
-        product_id = parsed_path.product_id
-        source = f'https://originals.example.com/products/{product_id}.jpg'
-        images = imgproxy_variants(source, 'product')  # (2)!
-        return ProductResponse(
-            id=product_id,
-            images=ProductImages(**images),  # (3)!
-        )
+    def get(self) -> ImageResponse:
+        """Return the configured image variants."""
+        images = imgproxy_variants(_SOURCE_URL, 'product')  # (2)!
+        return ImageResponse(images=ProductImages(**images))  # (3)!

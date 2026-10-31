@@ -1,11 +1,18 @@
 FastAPI
 =======
 
-Register an imgproxy client and inject it into FastAPI route handlers with
-``Depends``.
+`FastAPI <https://fastapi.tiangolo.com/>`__ is a Python API framework
+based on type hints, with data validation and OpenAPI schema generation.
+Use imgproxykit's dependency integration to inject a client into route
+handlers and return image URLs and named variants in typed response models.
+
+Explore the `FastAPI tutorial <https://fastapi.tiangolo.com/tutorial/>`__
+and the `project on GitHub <https://github.com/fastapi/fastapi>`__.
 
 Installation
 ------------
+
+In your FastAPI project, install imgproxykit with FastAPI support:
 
 .. md-tab-set::
 
@@ -35,7 +42,6 @@ the application. Keep the returned dependency for use in your routes:
 
 .. literalinclude:: /examples/integrations/fastapi/client.py
    :language: python
-   :lines: 1-28
 
 .. code-annotations::
 
@@ -55,7 +61,6 @@ response model:
 
 .. literalinclude:: /examples/integrations/fastapi/variants.py
    :language: python
-   :lines: 1-40
 
 .. code-annotations::
 
@@ -75,7 +80,6 @@ Register each client separately and use its returned dependency in
 
 .. literalinclude:: /examples/integrations/fastapi/multiple_clients.py
    :language: python
-   :lines: 1-44
 
 .. code-annotations::
 
@@ -90,5 +94,9 @@ Unsigned URLs require an imgproxy server configured to accept them.
 Next steps
 ----------
 
+* `FastAPI documentation <https://fastapi.tiangolo.com/>`__
+  covers route handlers, dependencies, validation, and API schemas.
+* `FastAPI on GitHub <https://github.com/fastapi/fastapi>`__
+  provides the source code, issues, and contribution guide.
 * :doc:`../user-guide/variants` shows how to generate several image URLs.
 * :doc:`../api-reference/fastapi` documents the registration function.

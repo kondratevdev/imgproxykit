@@ -1,13 +1,19 @@
 Django
 ======
 
-Generate imgproxy URLs from source strings and model file fields in Python
-code or Django templates. Configure the client and reusable transformations
-in Django settings, then generate individual image URLs or named sets of
-image variants.
+`Django <https://docs.djangoproject.com/>`__ is a Python web framework.
+Use imgproxykit's shortcuts and template tags to generate image URLs and
+named variants from source strings and model file fields, with the client
+and reusable transformations configured in Django settings.
+
+Explore the `Django getting started guide
+<https://www.djangoproject.com/start/>`__
+and the `project on GitHub <https://github.com/django/django>`__.
 
 Installation
 ------------
+
+In your Django project, install imgproxykit with Django support:
 
 .. md-tab-set::
 
@@ -177,6 +183,10 @@ The setting also accepts a callable directly instead of an import path.
 Next steps
 ----------
 
+* `Django documentation <https://docs.djangoproject.com/>`__
+  covers models, views, templates, and project configuration.
+* `Django on GitHub <https://github.com/django/django>`__
+  provides the source code, issues, and contribution guide.
 * :doc:`dmr` returns image URLs and variants from typed controllers.
 * :doc:`drf` returns image URLs and variants from serializer fields.
 * :doc:`../api-reference/django` documents the client, URL generation functions,

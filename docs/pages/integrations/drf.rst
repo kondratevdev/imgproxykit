@@ -1,11 +1,20 @@
 Django REST Framework
 =====================
 
-Return image URLs and named variants from DRF serializers. Use transformations
-from Django settings or define them directly on serializer fields.
+`Django REST Framework (DRF) <https://www.django-rest-framework.org/>`__
+is a toolkit for building Web APIs with Django. Use imgproxykit's serializer
+fields to return image URLs and named variants, with transformations from
+Django settings or defined directly on the fields.
+
+Explore the `DRF quickstart
+<https://www.django-rest-framework.org/tutorial/quickstart/>`__
+and the `project on GitHub
+<https://github.com/encode/django-rest-framework>`__.
 
 Installation
 ------------
+
+In your DRF project, install imgproxykit with Django REST Framework support:
 
 .. md-tab-set::
 
@@ -124,5 +133,9 @@ See :doc:`django` to configure source resolution.
 Next steps
 ----------
 
+* `DRF documentation <https://www.django-rest-framework.org/>`__
+  covers serializers, views, authentication, and API schemas.
+* `DRF on GitHub <https://github.com/encode/django-rest-framework>`__
+  provides the source code, issues, and contribution guide.
 * :doc:`django` describes shared settings and source resolution.
 * :doc:`../api-reference/drf` documents the serializer fields and arguments.

@@ -77,8 +77,6 @@ for serializer options.
 
    1. Apply ``IMGPROXYKIT['transforms']['thumbnail']`` to the source image.
    2. Return the generated URL as a string in the response model.
-   3. Register the controller with Django's ``path()``. ``Path[ProductPath]``
-      provides the typed product ID to the handler.
 
 See DMR's guides to `controllers
 <https://django-modern-rest.readthedocs.io/en/latest/pages/using-controller/index.html>`__
@@ -90,7 +88,7 @@ Return variants
 ---------------
 
 For several image sizes, use ``imgproxy_variants`` and a nested response model.
-Keep the imports, ``ProductPath``, and route from the previous example,
+Keep the imports and ``_SOURCE_URL`` from the previous example,
 replacing the shortcut import with
 ``from imgproxykit.integrations.django import imgproxy_variants``:
 
@@ -117,8 +115,9 @@ Model file fields
 
 For a product loaded from your database, pass ``product.image`` directly to
 ``imgproxy_url`` in the controller. Here, ``Product`` is your Django model
-with an optional image field, and ``ProductPath`` is defined as above.
-Imports, the Django model, and the route are omitted from this snippet:
+with an optional image field. ``ProductPath`` declares a ``product_id: int``
+path parameter using a Pydantic model. Imports, the Django model, path model,
+and the route are omitted from this snippet:
 
 .. literalinclude:: /examples/integrations/dmr/model_file.py
    :language: python
