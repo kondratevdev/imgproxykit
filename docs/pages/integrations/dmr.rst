@@ -87,14 +87,10 @@ for request parsing and handler definitions.
 Return variants
 ---------------
 
-For several image sizes, use ``imgproxy_variants`` and a nested response model.
-Keep the imports and ``_SOURCE_URL`` from the previous example,
-replacing the shortcut import with
-``from imgproxykit.integrations.django import imgproxy_variants``:
+For several image sizes, use ``imgproxy_variants`` and a nested response model:
 
 .. literalinclude:: /examples/integrations/dmr/variants.py
    :language: python
-   :start-at: class ProductImages
 
 .. code-annotations::
 
@@ -109,27 +105,6 @@ names can vary. A dedicated model describes a fixed set of fields in the API.
 See DMR's `OpenAPI guide
 <https://django-modern-rest.readthedocs.io/en/latest/pages/openapi/openapi.html>`__
 to publish the schema and interactive API documentation.
-
-Model file fields
------------------
-
-For a product loaded from your database, pass ``product.image`` directly to
-``imgproxy_url`` in the controller. Here, ``Product`` is your Django model
-with an optional image field. ``ProductPath`` declares a ``product_id: int``
-path parameter using a Pydantic model. Imports, the Django model, path model,
-and the route are omitted from this snippet:
-
-.. literalinclude:: /examples/integrations/dmr/model_file.py
-   :language: python
-   :start-at: class ProductResponse
-
-.. code-annotations::
-
-   1. Generate a URL only when the file field has an associated file;
-      otherwise return ``None``, serialized as JSON ``null``.
-
-Without the empty-field check, the default source
-resolver raises ``ValueError`` for a field without an associated file.
 
 Source resolution
 -----------------

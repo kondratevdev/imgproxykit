@@ -109,6 +109,13 @@ fields used in the response:
 
 .. code-block:: python
 
+    from rest_framework import serializers
+
+    from imgproxykit.integrations.drf import (
+        ImgproxyURLField,
+        ImgproxyVariantsField,
+    )
+
     image = serializers.ImageField(write_only=True, required=False)  # (1)!
     thumbnail = ImgproxyURLField(source='image', transform='thumbnail')
     images = ImgproxyVariantsField(source='image', variants='product')
