@@ -23,6 +23,7 @@ from sphinx.application import Sphinx
 # We need `imgproxykit` to be importable from here:
 _ROOT = Path(__file__).resolve(strict=True).parent.parent
 sys.path.insert(0, str(_ROOT))
+sys.path.insert(0, str(_ROOT / 'docs' / '_ext'))
 
 
 # -- Project information -----------------------------------------------------
@@ -68,6 +69,7 @@ extensions = [
     'sphinx_autodoc_typehints',
     'sphinx_immaterial',
     'sphinx_iconify',
+    'show_output',
 ]
 
 # If true, Sphinx will warn about all references

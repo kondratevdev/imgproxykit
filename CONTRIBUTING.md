@@ -35,11 +35,6 @@ To run unit tests only:
 make unit
 ```
 
-`make unit` also runs pytest doctests in Python docstrings, `*.rst` files,
-and `README.md`. Write executable examples with `>>>` prompts and expected
-output; ordinary Python code fences are not executed. Leave a blank line after
-the expected output before closing a Markdown code fence.
-
 To run linting:
 
 ```bash

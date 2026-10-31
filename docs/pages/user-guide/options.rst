@@ -19,11 +19,16 @@ Scalar options accept a single value. Pass an option instance to
 
 .. literalinclude:: /examples/options/scalar_options.py
    :language: python
-   :lines: 10-26
+   :lines: 1-17
+   :show-output:
 
-``Quality(85)`` and ``quality=85`` create the same option, as do
-``Format('webp')`` and ``format='webp'``. Both forms can be used together
-in one transformation. Choose whichever fits how you organize your settings.
+.. code-annotations::
+
+   1. Pass scalar options as instances of ``Quality`` and ``Format``.
+   2. Use keyword arguments to create the same options.
+
+Both transformations generate the same URL. Option instances and keyword
+arguments can also be combined in one transformation.
 
 Structured options
 ------------------
@@ -34,16 +39,34 @@ while :class:`~imgproxykit.options.Gravity` selects the crop position:
 
 .. literalinclude:: /examples/options/resize.py
    :language: python
-   :lines: 8-25
+   :lines: 1-15
+   :show-output:
 
-``Resize.fill()`` requests a 300×300 crop, ``Gravity.center()`` keeps the
-center, and ``dpr=2`` requests twice the pixel density. Pass structured
-options as positional arguments to ``Transform``; scalar keywords can
-follow them.
+.. code-annotations::
 
-Omitted arguments use imgproxy's defaults. For example, leaving
-``Resize.enlarge`` unset lets the server decide whether to upscale a small
-source. Explicit ``False`` and zero values are preserved.
+   1. Request a square crop using the fill strategy.
+   2. Keep the center when cropping.
+   3. Request twice the pixel density using a scalar keyword.
+
+Pass structured options as positional arguments; scalar keywords can follow
+them.
+
+Omitted arguments
+-----------------
+
+Omit an argument to leave it to imgproxy. Explicit ``False`` and zero values
+are preserved:
+
+.. literalinclude:: /examples/options/omitted_arguments.py
+   :language: python
+   :lines: 1-14
+   :show-output:
+
+.. code-annotations::
+
+   1. Leave the upscaling setting to the server.
+   2. Explicitly disable upscaling. The path preserves the empty height
+      position and serializes ``False`` as ``0``.
 
 .. _server-presets:
 
@@ -56,13 +79,17 @@ combine them with other options:
 
 .. literalinclude:: /examples/transformations/presets.py
    :language: python
-   :lines: 8-25
+   :lines: 1-15
+   :show-output:
 
-The guide's Docker server defines ``thumbnail`` as a 300×300 crop and
-``small`` as a 96×96 crop. This example references both presets in that
-order and requests quality 85 and WebP output. Imgproxy resolves their
-settings; the library sends the preset names without loading or expanding
-their definitions.
+.. code-annotations::
+
+   1. Reference presets defined on the guide's Docker server:
+      ``thumbnail`` is a 300×300 crop and ``small`` is a 96×96 crop.
+   2. Combine preset references with explicit quality and output format.
+
+The library sends preset names in the supplied order. Imgproxy resolves
+their definitions on the server.
 
 Available options
 -----------------
@@ -77,9 +104,9 @@ list and constructor arguments.
 
 Some options require server configuration. For example, source limit
 options require ``IMGPROXY_ALLOW_SECURITY_OPTIONS=true``. Supported formats
-and processing features
-depend on your imgproxy installation; type annotations do not check server
-capabilities. See the `imgproxy configuration documentation
+and processing features depend on your imgproxy installation; type
+annotations do not check server capabilities. See the
+`imgproxy configuration documentation
 <https://docs.imgproxy.net/latest/configuration/options>`__ for server settings.
 
 Next steps

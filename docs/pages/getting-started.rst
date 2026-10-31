@@ -51,32 +51,43 @@ imgproxykit requires Python 3.12 or newer:
 Build a thumbnail
 -----------------
 
-Connect :class:`~imgproxykit.Client` to the local container and describe a
-thumbnail with :class:`~imgproxykit.Transform`. The source is a public sample
-image; you can replace it with another image URL accessible to imgproxy:
+Connect :class:`~imgproxykit.Client` to the local container and define a
+thumbnail with :class:`~imgproxykit.Transform`:
 
 .. literalinclude:: /examples/getting_started/local_thumbnail.py
    :language: python
-   :start-at: from imgproxykit
+   :show-output:
+   :lines: 1-13
 
-The example prints a URL pointing to your local imgproxy server. Open it in
-your browser to view the 300×300 WebP thumbnail.
+.. code-annotations::
+
+   1. Address of the local imgproxy container started above.
+   2. Public sample image. You can use another image URL accessible to
+      your imgproxy server.
+   3. Generate a URL without making a network request. Imgproxy fetches and
+      processes the source image when the generated URL is requested.
+
+Open the generated URL in your browser to view the image.
 
 Build variants
 --------------
 
-To generate several sizes of the same image, define a set of transformations.
-Reuse ``client`` and ``source_url`` from above, keep quality and format in a
-base transformation, then use :meth:`~imgproxykit.Transform.extend` to
-create a new transformation for each width without changing the base:
+Define a transformation for each size. Use
+:meth:`~imgproxykit.Transform.extend` to share quality and format across
+variants:
 
 .. literalinclude:: /examples/getting_started/variants.py
    :language: python
-   :start-at: from imgproxykit
+   :show-output:
+   :lines: 1-16
 
-The example prints three URLs for widths of 320, 640, and 1280 pixels.
-Open them to compare the sizes; each image keeps the source proportions
-and uses the shared WebP format and quality setting.
+.. code-annotations::
+
+   1. Shared quality and output format for all variants.
+   2. Add a width to the shared options without changing ``base``.
+
+Each variant uses the shared quality and format with its own width.
+Open the generated URLs to compare them.
 
 .. tip::
 
@@ -85,9 +96,6 @@ and uses the shared WebP format and quality setting.
     .. code-block:: bash
 
         docker stop imgproxy-test
-
-You've learned how to build image URLs and variants. Next, explore client
-configuration and more ways to compose transformations.
 
 Next steps
 ----------

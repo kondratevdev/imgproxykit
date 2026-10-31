@@ -1,21 +1,13 @@
-"""
-Resize an image and select its output format.
-
->>> thumbnail_url.split('/unsafe/')[1].split('/')[0:2]
-['resize:fill:300:300', 'format:webp']
-"""
-
 from imgproxykit import Client, Transform
 from imgproxykit.options import Resize
 
-# Public URL of your imgproxy server.
-client = Client('https://imgproxy.example.com')
-source_url = 'https://originals.example.com/photo.jpg'
+client = Client('https://imgproxy.example.com')  # (1)!
+source_url = 'https://originals.example.com/photo.jpg'  # (2)!
 
 thumbnail = Transform(
     Resize.fill(width=300, height=300),
     format='webp',
 )
 
-# Build the URL; imgproxy processes the image when the URL is requested.
-thumbnail_url = client.url(source=source_url, transform=thumbnail)
+thumbnail_url = client.url(source=source_url, transform=thumbnail)  # (3)!
+print(thumbnail_url)

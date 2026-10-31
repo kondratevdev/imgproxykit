@@ -4,14 +4,13 @@ from imgproxykit.integrations.django import SettingsDict
 thumbnail = Transform(width=300, height=300, format='webp')
 
 IMGPROXYKIT: SettingsDict = {
-    'client': {
+    'client': {  # (1)!
         'base_url': 'https://imgproxy.example.com',
-        # Use your server's key and salt.
-        'key': '736563726574',
+        'key': '736563726574',  # (2)!
         'salt': '73616c74',
     },
-    'transforms': {'thumbnail': thumbnail},
-    'variants': {
+    'transforms': {'thumbnail': thumbnail},  # (3)!
+    'variants': {  # (4)!
         'product': {
             'small': thumbnail,
             'large': Transform(width=1280, format='webp'),

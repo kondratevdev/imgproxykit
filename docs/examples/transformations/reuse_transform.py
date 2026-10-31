@@ -1,23 +1,8 @@
-"""
-Reuse processing options for different source images.
-
->>> len(thumbnail_urls)
-2
->>> thumbnail_urls[0] != thumbnail_urls[1]
-True
->>> all(
-...     '/resize:fill:300:300/format:webp/' in thumbnail_url
-...     for thumbnail_url in thumbnail_urls
-... )
-True
-"""
-
 from imgproxykit import Client, Transform
 from imgproxykit.options import Resize
 
 client = Client('http://localhost:8080')
-# Reuse the same transformation for multiple source images.
-thumbnail = Transform(
+thumbnail = Transform(  # (1)!
     Resize.fill(width=300, height=300),
     format='webp',
 )
@@ -31,4 +16,4 @@ thumbnail_urls = [
     for source_url in source_urls
 ]
 
-print(thumbnail_urls)
+print(*thumbnail_urls, sep='\n')

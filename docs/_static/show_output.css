@@ -1,0 +1,11 @@
+/* Keep long generated URLs inside the result panel. */
+.md-typeset details.show_output {
+    min-width: 0;
+    max-width: 100%;
+}
+
+.md-typeset details.show_output pre {
+    max-width: 100%;
+    overflow-x: auto;
+    white-space: pre;
+}

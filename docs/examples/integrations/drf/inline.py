@@ -1,28 +1,10 @@
-"""
-Serialize an image using inline transformations.
-
->>> from django.test import override_settings
->>> with override_settings(
-...     IMGPROXYKIT={
-...         'client': {'base_url': 'https://imgproxy.example.com'},
-...     }
-... ):
-...     product = ProductSerializer({
-...         'image': 'https://originals.example.com/42.jpg'
-...     })
-...     images = product.data
->>> images['thumbnail'].startswith('https://imgproxy.example.com/unsafe/')
-True
->>> '/width:160/height:160/' in images['thumbnail']
-True
->>> list(images['images'])
-['small', 'large']
-"""
-
 from rest_framework import serializers
 
 from imgproxykit import Transform
-from imgproxykit.integrations.drf import ImgproxyURLField, ImgproxyVariantsField
+from imgproxykit.integrations.drf import (
+    ImgproxyURLField,
+    ImgproxyVariantsField,
+)
 
 
 class ProductSerializer(serializers.Serializer[dict[str, str]]):
@@ -30,11 +12,11 @@ class ProductSerializer(serializers.Serializer[dict[str, str]]):
 
     thumbnail = ImgproxyURLField(
         source='image',
-        transform=Transform(width=160, height=160),
+        transform=Transform(width=160, height=160),  # (1)!
     )
     images = ImgproxyVariantsField(
         source='image',
-        variants={
+        variants={  # (2)!
             'small': Transform(width=320),
             'large': Transform(width=1280),
         },
