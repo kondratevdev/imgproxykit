@@ -8,12 +8,10 @@ from imgproxykit import Client, Transform
 from imgproxykit.integrations.fastapi import add_imgproxy
 
 _SOURCE_URL: Final = 'https://originals.example.com/photo.jpg'
+_BASE: Final = Transform(format='webp')
 
 app = FastAPI()
-
 get_imgproxy = add_imgproxy(app, Client('https://imgproxy.example.com'))
-
-_BASE: Final = Transform(format='webp')
 
 
 @dataclass(frozen=True, slots=True)

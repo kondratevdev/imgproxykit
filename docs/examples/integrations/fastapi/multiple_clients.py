@@ -9,7 +9,6 @@ from imgproxykit.integrations.fastapi import add_imgproxy
 _SOURCE_URL: Final = 'https://originals.example.com/photo.jpg'
 
 app = FastAPI()
-
 get_signed_imgproxy = add_imgproxy(  # (1)!
     app,
     Client(
