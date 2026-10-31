@@ -21,7 +21,7 @@
 - [x] Immutable, reusable transforms combining typed options and scalar arguments
 - [x] Variants: generate multiple image URLs from a reusable set of transforms
 - [x] Support for named presets configured on your `imgproxy` server
-- [x] `FastAPI`, `Django`, `Django REST Framework` integration
+- [x] `Django`, `Django Modern REST`, `Django REST Framework`, `FastAPI` integration
 
 ---------
 
