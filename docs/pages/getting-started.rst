@@ -38,7 +38,7 @@ imgproxykit requires Python 3.12 or newer:
         docker run -d --rm \
           --name imgproxy-test \
           -p 127.0.0.1:8080:8080 \
-          ghcr.io/imgproxy/imgproxy:latest
+          ghcr.io/imgproxy/imgproxy:v4.0.0
 
     The examples below connect to this container at ``http://localhost:8080``.
     It accepts unsigned URLs without additional configuration.

@@ -2,7 +2,7 @@
 # make integration
 services:
   imgproxy:
-    image: ghcr.io/imgproxy/imgproxy:v3.31.0
+    image: ghcr.io/imgproxy/imgproxy:v4.0.0
     ports:
       - "127.0.0.1:10002:8080"
     environment:

@@ -27,7 +27,8 @@
 
 ## Installation
 
-Requires **Python 3.12+** and a running [imgproxy](https://github.com/imgproxy/imgproxy) server.
+Requires **Python 3.12+**. A running [imgproxy](https://github.com/imgproxy/imgproxy)
+server is needed to serve images from the generated URLs.
 
 ```bash
 pip install imgproxykit
@@ -72,7 +73,7 @@ The generated URL has this structure, with the source URL encoded as URL-safe Ba
 https://imgproxy.example.com/unsafe/resize:fill:300:300/quality:80/format:webp/<encoded-source>
 ```
 
-`thumbnail_url` points to a 300×300 `webp` thumbnail cropped to fill the dimensions.
+`thumbnail_url` points to a cropped `webp` thumbnail.
 
 ### Variants
 

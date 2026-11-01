@@ -35,7 +35,6 @@ class Resize(Option):  # noqa: WPS214
 
     See `imgproxy resize
     <https://docs.imgproxy.net/usage/processing#resize>`_.
-
     """
 
     width: int | None = None

@@ -84,19 +84,6 @@ class Transform:
             **kwargs: Scalar processing arguments, such as ``quality=85``
                 or ``format='webp'``. Converted to option instances and
                 appended in keyword order.
-
-        Examples:
-            Combine a resize option with scalar quality and format options:
-
-            >>> from imgproxykit import Transform
-            >>> from imgproxykit.options import Resize
-            >>> thumbnail = Transform(
-            ...     Resize.fill(width=96, height=96),
-            ...     quality=85,
-            ...     format='webp',
-            ... )
-            >>> [option.name for option in thumbnail.options]
-            ['resize', 'quality', 'format']
         """
         # Keep variadic options while initializing a frozen dataclass.
         # Bypassing __setattr__ is safe until initialization is finished.
@@ -116,15 +103,10 @@ class Transform:
         order. Repeated options are retained without merging or replacing them.
 
         Args:
-            *options: Additional processing option instances.
-            **kwargs: Additional scalar processing arguments.
-
-        Examples:
-            >>> base = Transform(quality=85, format='webp')
-            >>> retina = base.extend(dpr=2)
-            >>> [option.name for option in base.options]
-            ['quality', 'format']
-            >>> [option.name for option in retina.options]
-            ['quality', 'format', 'dpr']
+            *options: Processing option instances in serialization order.
+                Repeated options are retained without merging.
+            **kwargs: Scalar processing arguments, such as ``quality=85``
+                or ``format='webp'``. Converted to option instances and
+                appended in keyword order.
         """
         return Transform(*self.options, *options, **kwargs)

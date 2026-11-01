@@ -10,7 +10,7 @@ We use [Poetry](https://github.com/python-poetry/poetry) to manage dependencies.
 To install them:
 
 ```bash
-poetry install
+poetry install --all-extras
 ```
 
 The commands below use `poetry run`, so you do not need to activate
@@ -57,7 +57,7 @@ These checks also run in CI.
 To install the documentation dependencies and build the HTML documentation:
 
 ```bash
-poetry install --with docs
+poetry install --all-extras --with docs
 make docs
 ```
 
