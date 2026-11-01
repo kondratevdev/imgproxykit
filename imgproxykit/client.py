@@ -20,18 +20,12 @@ class Client:
     Build imgproxy URLs from Python transforms or server presets.
 
     Stores the imgproxy address and signing configuration for reuse across
-    images. Each call to :meth:`url` returns a URL string; imgproxy loads
-    the source and processes the image when that URL is requested.
+    images. Imgproxy loads the source and processes the image when
+    that URL is requested.
 
     Pass processing options through :class:`~imgproxykit.Transform` as
     option instances or scalar keyword arguments. Preset options reference
     names configured on the imgproxy server.
-
-    Subclass this client and override :attr:`path_serializer_cls`,
-    :attr:`url_signer_cls`, or :attr:`variants_resolver_cls` to customize
-    path construction, signing, or dataclass declaration resolution.
-    Each client creates its own serializer and signer. A variants resolver
-    is created for each dataclass declaration passed to :meth:`variants`.
     """
 
     __slots__ = (
@@ -112,8 +106,6 @@ class Client:
             signature_size: Positive digest byte count to encode. Must match
                 the server's `IMGPROXY_SIGNATURE_SIZE
                 <https://docs.imgproxy.net/latest/configuration/options#url-signature>`__.
-                Defaults to ``32``.
-                Values of 32 or more use the full digest.
             unsigned_marker: URL marker used when key and salt are omitted.
                 Defaults to ``'unsafe'``. With server signing enabled,
                 configure this marker in `IMGPROXY_TRUSTED_SIGNATURES
@@ -122,12 +114,10 @@ class Client:
                 and their arguments. Must match the server's
                 `IMGPROXY_ARGUMENTS_SEPARATOR
                 <https://docs.imgproxy.net/latest/configuration/options#miscellaneous>`__.
-                Defaults to ``':'``.
             source_encoding: Source URL representation: ``'base64'`` or
                 ``'plain'`` with full percent-encoding. See
                 `imgproxy source URLs
                 <https://docs.imgproxy.net/usage/processing#source-url>`__.
-                Defaults to ``'base64'``.
             use_short_options: Use short processing option aliases when
                 available, falling back to full names. Defaults to ``False``.
 
@@ -136,7 +126,8 @@ class Client:
                 credential is supplied, either is empty or invalid hex,
                 or ``signature_size`` is not positive, even in unsigned mode.
 
-        Examples:
+        Usage:
+
             Create an unsigned client:
 
             >>> from imgproxykit import Client

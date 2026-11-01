@@ -43,12 +43,12 @@ class PathSerializer:
                 and their arguments. Must match the server's
                 `IMGPROXY_ARGUMENTS_SEPARATOR
                 <https://docs.imgproxy.net/latest/configuration/options#miscellaneous>`__.
-            use_short_options: Use short aliases when available,
-                otherwise full names.
             source_encoding: Source URL representation: ``'base64'`` without
                 padding or ``'plain'`` with full UTF-8 percent-encoding.
                 See `imgproxy source URLs
                 <https://docs.imgproxy.net/usage/processing#source-url>`_.
+            use_short_options: Use short aliases when available,
+                otherwise full names.
         """
         self._argument_separator = argument_separator
         self._use_short_options = use_short_options
@@ -74,28 +74,6 @@ class PathSerializer:
                 Encoded according to ``source_encoding``.
             transform: Reusable processing options and optional output format.
                 Omit or pass ``None`` to add no processing options.
-
-        Returns:
-            Unsigned path beginning with ``/``, ready for signing.
-            Contains neither the imgproxy address nor a signature segment.
-
-        Examples:
-            Build a square WebP thumbnail path:
-
-            >>> from imgproxykit import Transform
-            >>> from imgproxykit.serialization import PathSerializer
-            >>> from imgproxykit.options import Resize
-            >>> serializer = PathSerializer(
-            ...     argument_separator=':',
-            ...     use_short_options=False,
-            ...     source_encoding='base64',
-            ... )
-            >>> thumbnail = Transform(
-            ...     Resize.fill(width=96, height=96),
-            ...     format='webp',
-            ... )
-            >>> serializer('s3://images/photo.jpg', transform=thumbnail)
-            '/resize:fill:96:96/format:webp/czM6Ly9pbWFnZXMvcGhvdG8uanBn'
         """
         options: tuple[str, ...] = ()
         if transform is not None:

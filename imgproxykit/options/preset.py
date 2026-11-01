@@ -39,14 +39,14 @@ class Preset(Option):
         Args:
             *names: Server preset names in imgproxy protocol order.
 
-        Examples:
+        Usage:
+
             Reference a single preset, then several in order:
 
             >>> Preset('thumbnail').arguments
             ('thumbnail',)
             >>> Preset('thumbnail', 'watermarked').arguments
             ('thumbnail', 'watermarked')
-
         """
         # Keep variadic names while initializing a frozen dataclass.
         # Bypassing __setattr__ is safe until initialization is finished.

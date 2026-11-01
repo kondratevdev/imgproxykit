@@ -41,8 +41,6 @@ class DataclassVariantsResolver:
         Raises:
             TypeError: If the declaration contains unsupported fields,
                 invalid field annotations, or ambiguous transformations.
-            NameError: If a forward reference in the annotations cannot
-                be resolved in the model's defining namespace.
         """
         hints = self._resolve_annotations()
         return {
