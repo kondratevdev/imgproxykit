@@ -112,6 +112,10 @@ qualname_overrides = {
     'imgproxykit.options.base.ScalarOption.arguments': (
         'imgproxykit.options.Option.arguments'
     ),
+    # Option overrides of validate link to the public base API.
+    'imgproxykit.options.base.Option.validate': (
+        'imgproxykit.options.Option.validate'
+    ),
 }
 
 

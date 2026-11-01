@@ -1,3 +1,4 @@
+import math
 from dataclasses import dataclass
 from typing import ClassVar, override
 
@@ -18,6 +19,9 @@ class Zoom(Option):
             ``factor_y`` is omitted.
         factor_y: Optional vertical multiplier.
 
+    Raises:
+        ValueError: If a factor is not a finite number greater than zero.
+
     Usage:
 
     >>> option = Zoom(factor_x=2)
@@ -36,6 +40,19 @@ class Zoom(Option):
 
     name: ClassVar[str] = 'zoom'
     short_name: ClassVar[str | None] = 'z'
+
+    @override
+    def validate(self) -> None:
+        """Require finite factors greater than zero."""
+        factors = {'factor_x': self.factor_x, 'factor_y': self.factor_y}
+        for axis, factor in factors.items():
+            if factor is None:
+                continue
+            if not (math.isfinite(factor) and factor > 0):
+                raise ValueError(
+                    f'Zoom {axis} must be a finite number greater than zero, '
+                    f'got {factor!r}',
+                )
 
     @property
     @override
