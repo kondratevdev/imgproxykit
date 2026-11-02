@@ -77,7 +77,7 @@ pytest-randomly = "^5.0"
 # Integration tests and image assertions:
 pillow = ">=13.0.0,<14"
 testcontainers = ">=4.15,<5"
-zapros = ">=0.22.0,<0.23"
+zapros = ">=0.23.0,<0.24"
 
 # Django integration typing and tests:
 django-modern-rest = { version = ">=0.16,<0.17", extras = [ "pydantic" ] }
