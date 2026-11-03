@@ -73,6 +73,7 @@ pytest = "^9.1"
 pytest-asyncio = ">=1.4.1,<2"
 pytest-cov = "^7.1"
 pytest-randomly = "^5.0"
+time-machine = ">=3.6,<4"
 
 # Integration tests and image assertions:
 pillow = ">=13.0.0,<14"
@@ -311,6 +312,7 @@ filterwarnings = [ "error" ]
 # pytest-asyncio configuration:
 # https://pytest-asyncio.readthedocs.io/en/stable/reference/configuration.html
 asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
 # Django settings:
 DJANGO_SETTINGS_MODULE = "server.settings"
 
