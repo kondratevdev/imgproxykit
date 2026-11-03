@@ -6,10 +6,7 @@ image, including its dimensions, quality, and output format. Pass it to
 :class:`~imgproxykit.Client` when building a URL, and reuse the same
 transformation across different source images.
 
-.. tip::
-
-    Use the :ref:`local Docker server <user-guide-docker>` on port 8080 for
-    the examples in this chapter.
+.. include:: /_includes/local-imgproxy.rst
 
 Create a transformation
 -----------------------

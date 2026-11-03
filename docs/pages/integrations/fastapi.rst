@@ -70,7 +70,8 @@ response model:
    3. Generate a dataclass instance containing the URLs. Pydantic serializes
       it as a nested object.
 
-See :ref:`dataclass-variants` for declaration requirements.
+See the Dataclass tab in :ref:`Generate variants <dataclass-variants>`
+for declaration requirements.
 
 Multiple clients
 ----------------

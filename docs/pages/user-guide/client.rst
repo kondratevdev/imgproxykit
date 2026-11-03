@@ -7,22 +7,7 @@ source images and transformations.
 
 .. _user-guide-docker:
 
-.. tip::
-
-    Start this container to try examples. Run an example and open the printed
-    URL in your browser.
-
-    .. code-block:: bash
-
-        docker run -d --rm \
-          --name imgproxy-guide \
-          -p 127.0.0.1:8080:8080 \
-          -e 'IMGPROXY_ALLOW_SECURITY_OPTIONS=true' \
-          -e 'IMGPROXY_PRESETS=thumbnail=resize:fill:300:300,small=resize:fill:96:96' \
-          ghcr.io/imgproxy/imgproxy:v4.0.0
-
-    This server accepts unsigned URLs and enables the presets and security
-    options used in the guide.
+.. include:: /_includes/local-imgproxy.rst
 
 Build a URL
 -----------
@@ -93,10 +78,12 @@ to use percent-encoding with imgproxy's ``/plain/`` marker:
 Sign URLs
 ---------
 
-.. tip::
+The signing example uses ``http://localhost:8081`` with signature checks enabled.
 
-    Start this container to try the signing example on port 8081.
-    Run the example and open the printed URL in your browser.
+.. admonition:: Run imgproxy with URL signing
+    :collapsible: closed
+
+    Start this container, then run the example and open the printed URL:
 
     .. code-block:: bash
 
