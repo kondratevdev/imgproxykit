@@ -90,6 +90,22 @@ See `imgproxy resizing type
 <https://docs.imgproxy.net/usage/processing#resizing-type>`_.
 """
 
+type ResizingAlgorithmType = Literal[
+    'nearest',
+    'linear',
+    'cubic',
+    'lanczos2',
+    'lanczos3',
+]
+"""
+Resizing algorithms for :class:`~imgproxykit.options.ResizingAlgorithm`.
+
+Requires imgproxy Pro. The server default is ``lanczos3``.
+
+See `imgproxy resizing algorithm
+<https://docs.imgproxy.net/usage/processing#resizing-algorithm>`_.
+"""
+
 type AnchorPosition = Literal[
     'no',
     'so',

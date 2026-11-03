@@ -47,6 +47,9 @@ from imgproxykit.options.preset import Preset as Preset
 from imgproxykit.options.quality import Quality as Quality
 from imgproxykit.options.raw import Raw as Raw
 from imgproxykit.options.resize import Resize as Resize
+from imgproxykit.options.resizing_algorithm import (
+    ResizingAlgorithm as ResizingAlgorithm,
+)
 from imgproxykit.options.resizing_type import ResizingType as ResizingType
 from imgproxykit.options.return_attachment import (
     ReturnAttachment as ReturnAttachment,

@@ -219,6 +219,12 @@ Resize
 .. autoclass:: imgproxykit.options.Resize
    :members:
 
+ResizingAlgorithm
+~~~~~~~~~~~~~~~~~
+
+.. autoclass:: imgproxykit.options.ResizingAlgorithm
+   :members:
+
 ResizingType
 ~~~~~~~~~~~~
 
