@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import ClassVar, override
+from typing import ClassVar, Self, override
 
 from imgproxykit.options.base import Option
 from imgproxykit.types import Argument
@@ -14,6 +14,9 @@ class Trim(Option):
     the full image into memory and is unsupported for animated images.
     Omitted settings remain ``None``.
 
+    Use :meth:`transparent` to trim transparent borders without specifying
+    imgproxy's transparency key color.
+
     Attributes:
         threshold: Color similarity tolerance.
         color: Optional hex background color; ``FF00FF`` selects
@@ -27,8 +30,7 @@ class Trim(Option):
     >>> option.arguments
     (10, 'ffffff', True, None)
 
-    See `imgproxy trim
-    <https://docs.imgproxy.net/usage/processing#trim>`_.
+    See `imgproxy trim <https://docs.imgproxy.net/usage/processing#trim>`_.
     """
 
     threshold: float
@@ -38,6 +40,30 @@ class Trim(Option):
 
     name: ClassVar[str] = 'trim'
     short_name: ClassVar[str | None] = 't'
+    transparency_key: ClassVar[str] = 'FF00FF'
+
+    @classmethod
+    def transparent(
+        cls,
+        *,
+        threshold: float,
+        equal_hor: bool | None = None,
+        equal_ver: bool | None = None,
+    ) -> Self:
+        """
+        Trim transparent borders with optional symmetry on each axis.
+
+        Uses imgproxy's magenta transparency key. Omitted symmetry flags
+        remain ``None``; explicit ``False`` values are preserved.
+
+        See `imgproxy trim <https://docs.imgproxy.net/usage/processing#trim>`_.
+        """
+        return cls(
+            threshold=threshold,
+            color=cls.transparency_key,
+            equal_hor=equal_hor,
+            equal_ver=equal_ver,
+        )
 
     @property
     @override
