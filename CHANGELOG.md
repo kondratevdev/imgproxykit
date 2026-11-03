@@ -12,6 +12,8 @@ but with a deprecation period.
 
 ### Features
 
+- Added `Expires.at()` and `Expires.after()` factories for timezone-aware
+  deadlines and relative lifetimes, #118
 - Added dataclass support to `Client.variants()`: declare URL fields with
   `Annotated[str, Transform(...)]` and pass the class to receive a typed
   instance, #108
