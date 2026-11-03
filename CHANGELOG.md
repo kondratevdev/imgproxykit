@@ -12,6 +12,8 @@ but with a deprecation period.
 
 ### Features
 
+- Added `Trim.transparent()` to trim transparent borders with optional
+  symmetry flags without specifying imgproxy's transparency key color, #119
 - Added `Expires.at()` and `Expires.after()` factories for timezone-aware
   deadlines and relative lifetimes, #118
 - Added dataclass support to `Client.variants()`: declare URL fields with
