@@ -29,22 +29,7 @@ imgproxykit requires Python 3.12 or newer:
 
       pip install imgproxykit
 
-.. tip::
-
-    To try the examples locally, start a test imgproxy container with Docker:
-
-    .. code-block:: bash
-
-        docker run -d --rm \
-          --name imgproxy-test \
-          -p 127.0.0.1:8080:8080 \
-          ghcr.io/imgproxy/imgproxy:v4.0.0
-
-    The examples below connect to this container at ``http://localhost:8080``.
-    It accepts unsigned URLs without additional configuration.
-
-    See the `imgproxy installation guide
-    <https://docs.imgproxy.net/latest/installation>`__ for other setup options.
+.. include:: /_includes/local-imgproxy.rst
 
 .. _quick-start:
 
@@ -88,14 +73,6 @@ variants:
 
 Each variant uses the shared quality and format with its own width.
 Open the generated URLs to compare them.
-
-.. tip::
-
-    When finished, stop the test container:
-
-    .. code-block:: bash
-
-        docker stop imgproxy-test
 
 Next steps
 ----------

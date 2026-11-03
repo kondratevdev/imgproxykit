@@ -6,10 +6,7 @@ quality, and crop position. Import option classes from ``imgproxykit.options``
 and combine their instances in a :class:`~imgproxykit.Transform`. Simple
 settings can also be passed as keyword arguments.
 
-.. tip::
-
-    Use the :ref:`local Docker server <user-guide-docker>` on port 8080 for
-    the examples in this chapter.
+.. include:: /_includes/local-imgproxy.rst
 
 Scalar options
 --------------
@@ -68,39 +65,14 @@ are preserved:
    2. Explicitly disable upscaling. The path preserves the empty height
       position and serializes ``False`` as ``0``.
 
-.. _server-presets:
-
-Server presets
---------------
-
-:class:`~imgproxykit.options.Preset` references processing settings defined
-on the imgproxy server. Pass preset names as positional arguments and
-combine them with other options:
-
-.. literalinclude:: /examples/transformations/presets.py
-   :language: python
-   :lines: 1-15
-   :show-output:
-
-.. code-annotations::
-
-   1. Reference presets defined on the guide's Docker server:
-      ``thumbnail`` is a 300×300 crop and ``small`` is a 96×96 crop.
-   2. Combine preset references with explicit quality and output format.
-
-The library sends preset names in the supplied order. Imgproxy resolves
-their definitions on the server.
-
 Available options
 -----------------
 
-Built-in options cover resizing and cropping, formats and quality, effects,
-metadata, source limits, and URL behavior. For example,
-:class:`~imgproxykit.options.Blur` adds blur,
-:class:`~imgproxykit.options.Background` sets a background color, and
-:class:`~imgproxykit.options.Filename` sets the download filename.
-See the :doc:`Options API reference <../api-reference/options>` for the full
-list and constructor arguments.
+The following built-in options are available in the free edition of imgproxy.
+Select an option to see its constructor and examples in the API reference,
+or follow its imgproxy link for processing behavior and server defaults.
+
+.. include:: /_includes/free-options.rst
 
 Some options require server configuration. For example, source limit
 options require ``IMGPROXY_ALLOW_SECURITY_OPTIONS=true``. Supported formats
