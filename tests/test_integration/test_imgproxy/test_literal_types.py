@@ -10,11 +10,11 @@ from imgproxykit.types import (
     FormatType,
     GravityType,
     ResizeType,
-    WatermarkPosition,
 )
+from tests.fixtures.imgproxy import override_imgproxy_env
 from tests.test_integration.test_imgproxy.assertions import assert_image
 
-_SOURCE: Final = 'local:///pattern.png'
+_SOURCE: Final = 'local:///color-quadrants-80x60.png'
 _WIDTH: Final = 80
 _HEIGHT: Final = 60
 
@@ -45,11 +45,6 @@ _HEIGHT: Final = 60
         options.Raw(value=False),
         options.Expires(value=0),
         options.ReturnAttachment(value=False),
-        options.MaxSrcResolution(value=1),
-        options.MaxSrcFileSize(value=0),
-        options.MaxAnimationFrames(value=1),
-        options.MaxAnimationFrameResolution(value=1),
-        options.MaxResultDimension(value=0),
         options.Size(width=_WIDTH, height=_HEIGHT),
         options.Zoom(factor_x=1),
         options.Extend(value=False),
@@ -67,7 +62,6 @@ _HEIGHT: Final = 60
         options.Gravity(position='ce'),
         options.DPR(1),
         options.Quality(1),
-        options.Watermark(opacity=1),
     ],
 )
 def test_option_type(
@@ -83,7 +77,32 @@ def test_option_type(
     )
 
     response = http_client.get(url)
-    assert_image(response.read(), size=(_WIDTH, _HEIGHT))
+    assert_image(response, size=(_WIDTH, _HEIGHT))
+
+
+@override_imgproxy_env(IMGPROXY_ALLOW_SECURITY_OPTIONS='true')
+@pytest.mark.parametrize(
+    'option',
+    [
+        options.MaxSrcResolution(value=1),
+        options.MaxSrcFileSize(value=0),
+        options.MaxAnimationFrames(value=1),
+        options.MaxAnimationFrameResolution(value=1),
+        options.MaxResultDimension(value=0),
+    ],
+)
+def test_security_option_type(
+    imgproxy_client: Client,
+    http_client: zapros.Client,
+    *,
+    option: options.Option,
+) -> None:
+    """Ensure that imgproxy recognizes security options when enabled."""
+    url = imgproxy_client.url(_SOURCE, transform=Transform(option))
+
+    response = http_client.get(url)
+
+    assert_image(response, size=(_WIDTH, _HEIGHT))
 
 
 @pytest.mark.parametrize('output_format', get_args(FormatType.__value__))
@@ -100,7 +119,7 @@ def test_format_type(
     url = imgproxy_client.url(_SOURCE, transform=transform)
 
     response = http_client.get(url)
-    assert_image(response.read(), size=(_WIDTH, _HEIGHT))
+    assert_image(response, size=(_WIDTH, _HEIGHT))
 
 
 @pytest.mark.parametrize(
@@ -129,7 +148,7 @@ def test_position(
 
     response = http_client.get(url)
 
-    assert_image(response.read(), size=(_WIDTH, _HEIGHT))
+    assert_image(response, size=(_WIDTH, _HEIGHT))
 
 
 @pytest.mark.parametrize('mode', get_args(ResizeType.__value__))
@@ -147,25 +166,7 @@ def test_resize_type(
 
     response = http_client.get(url)
 
-    assert_image(response.read(), size=(_WIDTH, _HEIGHT))
-
-
-@pytest.mark.parametrize('position', get_args(WatermarkPosition.__value__))
-def test_watermark_position(
-    imgproxy_client: Client,
-    http_client: zapros.Client,
-    *,
-    position: WatermarkPosition,
-) -> None:
-    """Ensure that imgproxy accepts every declared watermark position."""
-    transform = Transform(
-        options.Watermark(opacity=1, position=position),
-    )
-    url = imgproxy_client.url(_SOURCE, transform=transform)
-
-    response = http_client.get(url)
-
-    assert_image(response.read(), size=(_WIDTH, _HEIGHT))
+    assert_image(response, size=(_WIDTH, _HEIGHT))
 
 
 def test_invalid_literal_value(

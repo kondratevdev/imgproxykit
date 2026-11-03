@@ -1,19 +1,31 @@
+from http import HTTPStatus
 from io import BytesIO
 
+import zapros
 from PIL import Image
 
+type Size = tuple[int, int]
 type Position = tuple[int, int]
 type Color = tuple[int, int, int]
 
 
 def assert_image(
-    image_bytes: bytes,
+    response: zapros.Response,
     *,
-    size: tuple[int, int],
+    status: int = HTTPStatus.OK,
+    size: Size,
     format: str | None = None,  # noqa: A002
     pixels: dict[Position, Color] | None = None,
 ) -> None:
-    """Ensure that binary content contains the expected image."""
+    """
+    Ensure that an imgproxy response has the expected status and image.
+
+    Include the response body when the status differs from the expected one.
+    Decode the image only after checking the status.
+    """
+    image_bytes = response.read()
+    assert response.status == status, image_bytes.decode(errors='replace')
+
     with Image.open(BytesIO(image_bytes)) as image:
         image.load()
 
