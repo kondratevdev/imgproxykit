@@ -1,6 +1,6 @@
 import pytest
 
-from imgproxykit.options import Extend
+from imgproxykit.options import Extend, Gravity
 from imgproxykit.serialization import PathSerializer
 
 
@@ -9,15 +9,13 @@ from imgproxykit.serialization import PathSerializer
     [
         (Extend(value=False), 'extend:0'),
         (
-            Extend(
-                value=True,
-                gravity='fp',
-                offset_x=0.25,
-                offset_y=0.75,
-            ),
+            Extend(value=True, gravity=Gravity.focus(x=0.25, y=0.75)),
             'extend:1:fp:0.25:0.75',
         ),
-        (Extend(value=True, offset_y=0), 'extend:1:::0'),
+        (
+            Extend(value=True, gravity=Gravity.center(offset_y=0)),
+            'extend:1:ce::0',
+        ),
     ],
 )
 def test_extend(

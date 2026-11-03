@@ -1,6 +1,6 @@
 import pytest
 
-from imgproxykit.options import ExtendAspectRatio
+from imgproxykit.options import ExtendAspectRatio, Gravity
 from imgproxykit.serialization import PathSerializer
 
 
@@ -11,15 +11,13 @@ from imgproxykit.serialization import PathSerializer
         (
             ExtendAspectRatio(
                 value=True,
-                gravity='fp',
-                offset_x=0.25,
-                offset_y=0.75,
+                gravity=Gravity.focus(x=0.25, y=0.75),
             ),
             'extend_aspect_ratio:1:fp:0.25:0.75',
         ),
         (
-            ExtendAspectRatio(value=True, offset_y=0),
-            'extend_aspect_ratio:1:::0',
+            ExtendAspectRatio(value=True, gravity=Gravity.center(offset_y=0)),
+            'extend_aspect_ratio:1:ce::0',
         ),
     ],
 )

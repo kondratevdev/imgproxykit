@@ -90,7 +90,7 @@ See `imgproxy resizing type
 <https://docs.imgproxy.net/usage/processing#resizing-type>`_.
 """
 
-type Position = Literal[
+type AnchorPosition = Literal[
     'no',
     'so',
     'ea',
@@ -100,13 +100,17 @@ type Position = Literal[
     'soea',
     'sowe',
     'ce',
-    'sm',
-    'fp',
 ]
-"""
-Gravity codes for :class:`~imgproxykit.options.Gravity` and
-:class:`~imgproxykit.options.Crop`.
+"""Ordinary image anchors shared by gravity and watermark placement."""
 
-See `imgproxy gravity
-<https://docs.imgproxy.net/usage/processing#gravity>`_.
+type ExtendGravityType = AnchorPosition | Literal['fp']
+"""Canvas extension anchors, including focus points but excluding smart mode."""
+
+type GravityType = ExtendGravityType | Literal['sm']
+"""
+Gravity codes for :class:`~imgproxykit.options.Gravity`.
+
+Crop accepts all gravity types; canvas extension excludes smart gravity.
+
+See `imgproxy gravity <https://docs.imgproxy.net/usage/processing#gravity>`_.
 """

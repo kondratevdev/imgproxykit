@@ -1,8 +1,11 @@
 from dataclasses import dataclass
-from typing import ClassVar, override
+from typing import TYPE_CHECKING, ClassVar, override
 
 from imgproxykit.options.base import Option
-from imgproxykit.types import Argument, Position
+from imgproxykit.types import Argument, ExtendGravityType
+
+if TYPE_CHECKING:
+    from imgproxykit.options.gravity import Gravity
 
 
 @dataclass(frozen=True, slots=True, kw_only=True)
@@ -15,13 +18,13 @@ class Extend(Option):
 
     Attributes:
         value: Whether canvas extension is enabled.
-        gravity: Canvas anchor, such as ``ce``, ``so``, or ``fp``.
-        offset_x: Horizontal gravity offset or focus X coordinate.
-        offset_y: Vertical gravity offset or focus Y coordinate.
+        gravity: Canvas anchor and offsets supplied as a Gravity option.
+            Smart gravity is unsupported.
 
     Usage:
 
-    >>> option = Extend(value=True, gravity='so')
+    >>> from imgproxykit.options import Gravity
+    >>> option = Extend(value=True, gravity=Gravity.bottom())
     >>> option.arguments
     (True, 'so', None, None)
 
@@ -30,9 +33,7 @@ class Extend(Option):
     """
 
     value: bool
-    gravity: Position | None = None
-    offset_x: float | None = None
-    offset_y: float | None = None
+    gravity: 'Gravity[ExtendGravityType] | None' = None
 
     name: ClassVar[str] = 'extend'
     short_name: ClassVar[str | None] = 'ex'
@@ -43,7 +44,10 @@ class Extend(Option):
         """Positional arguments in imgproxy protocol order."""
         return (
             self.value,
-            self.gravity,
-            self.offset_x,
-            self.offset_y,
+            *(
+                # Gravity type, horizontal offset, vertical offset.
+                (None, None, None)
+                if self.gravity is None
+                else self.gravity.arguments
+            ),
         )

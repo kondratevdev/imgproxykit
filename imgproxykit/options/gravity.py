@@ -1,12 +1,25 @@
 from dataclasses import dataclass
-from typing import ClassVar, Self, override
+from typing import ClassVar, Generic, Literal, final, override
+
+from typing_extensions import TypeVar
 
 from imgproxykit.options.base import Option
-from imgproxykit.types import Argument, Position
+from imgproxykit.types import Argument, GravityType
+
+_GravityT_co = TypeVar(
+    '_GravityT_co',
+    bound=GravityType,
+    covariant=True,
+    default=GravityType,
+)
 
 
+# NOTE: For now, keep one generic class with static factories so each factory
+# returns an exact position type and Extend options can exclude smart gravity.
+# Factories construct Gravity directly, so subclassing is disabled for now.
+@final
 @dataclass(frozen=True, slots=True, kw_only=True)
-class Gravity(Option):  # noqa: WPS214
+class Gravity(Option, Generic[_GravityT_co]):  # noqa: WPS214
     """
     Choose the image area retained when cropping.
 
@@ -33,112 +46,104 @@ class Gravity(Option):  # noqa: WPS214
     <https://docs.imgproxy.net/usage/processing#gravity>`_.
     """
 
-    position: Position
+    position: _GravityT_co
     offset_x: float | None = None
     offset_y: float | None = None
 
     name: ClassVar[str] = 'gravity'
     short_name: ClassVar[str | None] = 'g'
 
-    @classmethod
+    # Static factories preserve the exact position independently of the class.
+    @staticmethod
     def center(
-        cls,
         *,
         offset_x: float | None = None,
         offset_y: float | None = None,
-    ) -> Self:
+    ) -> 'Gravity[Literal["ce"]]':
         """Anchor cropping to the center with optional offsets."""
-        return cls(position='ce', offset_x=offset_x, offset_y=offset_y)
+        return Gravity(position='ce', offset_x=offset_x, offset_y=offset_y)
 
-    @classmethod
+    @staticmethod
     def top(
-        cls,
         *,
         offset_x: float | None = None,
         offset_y: float | None = None,
-    ) -> Self:
+    ) -> 'Gravity[Literal["no"]]':
         """Anchor cropping to the top edge with optional offsets."""
-        return cls(position='no', offset_x=offset_x, offset_y=offset_y)
+        return Gravity(position='no', offset_x=offset_x, offset_y=offset_y)
 
-    @classmethod
+    @staticmethod
     def bottom(
-        cls,
         *,
         offset_x: float | None = None,
         offset_y: float | None = None,
-    ) -> Self:
+    ) -> 'Gravity[Literal["so"]]':
         """Anchor cropping to the bottom edge with optional offsets."""
-        return cls(position='so', offset_x=offset_x, offset_y=offset_y)
+        return Gravity(position='so', offset_x=offset_x, offset_y=offset_y)
 
-    @classmethod
+    @staticmethod
     def left(
-        cls,
         *,
         offset_x: float | None = None,
         offset_y: float | None = None,
-    ) -> Self:
+    ) -> 'Gravity[Literal["we"]]':
         """Anchor cropping to the left edge with optional offsets."""
-        return cls(position='we', offset_x=offset_x, offset_y=offset_y)
+        return Gravity(position='we', offset_x=offset_x, offset_y=offset_y)
 
-    @classmethod
+    @staticmethod
     def right(
-        cls,
         *,
         offset_x: float | None = None,
         offset_y: float | None = None,
-    ) -> Self:
+    ) -> 'Gravity[Literal["ea"]]':
         """Anchor cropping to the right edge with optional offsets."""
-        return cls(position='ea', offset_x=offset_x, offset_y=offset_y)
+        return Gravity(position='ea', offset_x=offset_x, offset_y=offset_y)
 
-    @classmethod
+    @staticmethod
     def top_left(
-        cls,
         *,
         offset_x: float | None = None,
         offset_y: float | None = None,
-    ) -> Self:
+    ) -> 'Gravity[Literal["nowe"]]':
         """Anchor cropping to the top-left corner with optional offsets."""
-        return cls(position='nowe', offset_x=offset_x, offset_y=offset_y)
+        return Gravity(position='nowe', offset_x=offset_x, offset_y=offset_y)
 
-    @classmethod
+    @staticmethod
     def top_right(
-        cls,
         *,
         offset_x: float | None = None,
         offset_y: float | None = None,
-    ) -> Self:
+    ) -> 'Gravity[Literal["noea"]]':
         """Anchor cropping to the top-right corner with optional offsets."""
-        return cls(position='noea', offset_x=offset_x, offset_y=offset_y)
+        return Gravity(position='noea', offset_x=offset_x, offset_y=offset_y)
 
-    @classmethod
+    @staticmethod
     def bottom_left(
-        cls,
         *,
         offset_x: float | None = None,
         offset_y: float | None = None,
-    ) -> Self:
+    ) -> 'Gravity[Literal["sowe"]]':
         """Anchor cropping to the bottom-left corner with optional offsets."""
-        return cls(position='sowe', offset_x=offset_x, offset_y=offset_y)
+        return Gravity(position='sowe', offset_x=offset_x, offset_y=offset_y)
 
-    @classmethod
+    @staticmethod
     def bottom_right(
-        cls,
         *,
         offset_x: float | None = None,
         offset_y: float | None = None,
-    ) -> Self:
+    ) -> 'Gravity[Literal["soea"]]':
         """Anchor cropping to the bottom-right corner with optional offsets."""
-        return cls(position='soea', offset_x=offset_x, offset_y=offset_y)
+        return Gravity(position='soea', offset_x=offset_x, offset_y=offset_y)
 
-    @classmethod
-    def smart(cls) -> Self:
+    @staticmethod
+    def smart() -> 'Gravity[Literal["sm"]]':
         """Let imgproxy select the most interesting image area."""
-        return cls(position='sm')
+        return Gravity(position='sm')
 
-    @classmethod
-    def focus(cls, *, x: float, y: float) -> Self:  # noqa: WPS111
+    @staticmethod
+    def focus(*, x: float, y: float) -> 'Gravity[Literal["fp"]]':  # noqa: WPS111
         """Center cropping on focus coordinates in the range [0, 1]."""
-        return cls(position='fp', offset_x=x, offset_y=y)
+        return Gravity(position='fp', offset_x=x, offset_y=y)
 
     @property
     @override
