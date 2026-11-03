@@ -12,6 +12,11 @@ but with a deprecation period.
 
 ### Features
 
+- Added `Watermark` factories for anchor positions and repeated tiling
+  with optional spacing, #120
+- `Crop`, `Extend`, and `ExtendAspectRatio` now accept `Gravity` instances
+  to configure anchors and offsets. Gravity types prevent using smart
+  gravity for canvas extension during static type checking, #120
 - Added `Trim.transparent()` to trim transparent borders with optional
   symmetry flags without specifying imgproxy's transparency key color, #119
 - Added `Expires.at()` and `Expires.after()` factories for timezone-aware
@@ -39,6 +44,11 @@ but with a deprecation period.
 
 ### Breaking changes
 
+- Removed string gravity codes and separate `offset_x` / `offset_y` arguments
+  from `Crop`, `Extend`, and `ExtendAspectRatio`. Pass a `Gravity` instance,
+  such as `gravity=Gravity.center(offset_x=10)`, instead, #120
+- Renamed `imgproxykit.types.Position` to `GravityType`.
+  `Gravity` is now generic and final; subclassing is no longer supported, #120
 - `PathSerializer` now requires the `source_encoding` keyword-only argument.
   Custom path serializer constructors must accept it. Pass `'base64'` to
   retain the previous source URL representation, #106
