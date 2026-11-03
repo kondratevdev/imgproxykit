@@ -38,7 +38,11 @@ class ImgproxyURLField(serializers.URLField):
             raise ValueError('write_only must be False for ImgproxyURLField.')
 
         kwargs.setdefault('allow_null', True)
-        super().__init__(read_only=True, write_only=False, **kwargs)
+        super().__init__(  # pyright: ignore[reportUnknownMemberType]
+            read_only=True,
+            write_only=False,
+            **kwargs,
+        )
         self.transform = transform
 
     # Empty sources produce None, which URLField's return type excludes.
