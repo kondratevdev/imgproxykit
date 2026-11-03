@@ -8,6 +8,15 @@ After `Development Status :: 4 - Beta` we will still break things
 but with a deprecation period.
 
 
+## 0.6.0 WIP
+
+### Misc
+
+- Improved the user guide with grouped processing option tables linking to
+  the API reference and imgproxy documentation, tabbed variant examples,
+  and shared collapsible instructions for running imgproxy locally, #125
+
+
 ## 0.5.0
 
 ### Features
