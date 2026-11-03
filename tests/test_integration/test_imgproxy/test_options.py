@@ -5,9 +5,15 @@ import zapros
 
 from imgproxykit import Client, Transform
 from imgproxykit.options import Background, Crop, Flip, Gravity, Padding
-from tests.test_integration.test_imgproxy.assertions import assert_image
+from tests.test_integration.test_imgproxy.assertions import (
+    Color,
+    Position,
+    Size,
+    assert_image,
+)
 
-_SOURCE: Final = 'local:///pattern.png'
+_SOURCE: Final = 'local:///color-quadrants-80x60.png'
+_WHITE: Final = (255, 255, 255)
 _RED: Final = (255, 0, 0)
 _GREEN: Final = (0, 255, 0)
 _BLUE: Final = (0, 0, 255)
@@ -36,7 +42,7 @@ def test_flip(
     http_client: zapros.Client,
     *,
     option: Flip,
-    colors: tuple[tuple[int, int, int], ...],
+    colors: tuple[Color, ...],
 ) -> None:
     """Ensure that flip axes affect the expected image quadrants."""
     transform = Transform(option, format='png')
@@ -45,20 +51,31 @@ def test_flip(
     response = http_client.get(url)
 
     assert_image(
-        response.read(),
+        response,
         size=(80, 60),
         pixels=dict(zip(_POSITIONS, colors, strict=True)),
     )
 
 
-def test_crop(imgproxy_client: Client, http_client: zapros.Client) -> None:
-    """Ensure that crop gravity selects the bottom right source quadrant."""
+@pytest.mark.parametrize(
+    ('gravity', 'color'),
+    [
+        (Gravity.top_left(), _RED),
+        (Gravity.top_right(), _GREEN),
+        (Gravity.bottom_left(), _BLUE),
+        (Gravity.bottom_right(), _YELLOW),
+    ],
+)
+def test_crop(
+    imgproxy_client: Client,
+    http_client: zapros.Client,
+    *,
+    gravity: Gravity,
+    color: Color,
+) -> None:
+    """Ensure that gravity factories select the expected source quadrant."""
     transform = Transform(
-        Crop(
-            width=_CROP_WIDTH,
-            height=_CROP_HEIGHT,
-            gravity=Gravity.bottom_right(),
-        ),
+        Crop(width=_CROP_WIDTH, height=_CROP_HEIGHT, gravity=gravity),
         format='png',
     )
     url = imgproxy_client.url(_SOURCE, transform=transform)
@@ -66,52 +83,96 @@ def test_crop(imgproxy_client: Client, http_client: zapros.Client) -> None:
     response = http_client.get(url)
 
     assert_image(
-        response.read(),
+        response,
         size=(_CROP_WIDTH, _CROP_HEIGHT),
-        pixels={(10, 10): _YELLOW, (30, 20): _YELLOW},
+        pixels={(10, 10): color, (30, 20): color},
     )
 
 
-def test_padding(imgproxy_client: Client, http_client: zapros.Client) -> None:
-    """Ensure that padding follows CSS side order and uses the background."""
-    transform = Transform(
-        Padding(top=1, right=2, bottom=3, left=4),
-        Background(color='ffffff'),
-        format='png',
-    )
+@pytest.mark.parametrize(
+    ('padding', 'size', 'pixels'),
+    [
+        (
+            Padding(top=1, right=2, bottom=3, left=4),
+            (86, 64),
+            {
+                (0, 0): _WHITE,
+                (3, 10): _WHITE,
+                (4, 1): _RED,
+                (83, 60): _YELLOW,
+                (84, 10): _WHITE,
+                (10, 61): _WHITE,
+            },
+        ),
+        (
+            Padding.all(2),
+            (84, 64),
+            {
+                (10, 1): _WHITE,
+                (1, 10): _WHITE,
+                (2, 2): _RED,
+                (81, 61): _YELLOW,
+                (82, 10): _WHITE,
+                (10, 62): _WHITE,
+            },
+        ),
+        (
+            Padding.symmetric(horizontal=3, vertical=2),
+            (86, 64),
+            {
+                (10, 1): _WHITE,
+                (2, 10): _WHITE,
+                (3, 2): _RED,
+                (82, 61): _YELLOW,
+                (83, 10): _WHITE,
+                (10, 62): _WHITE,
+            },
+        ),
+    ],
+)
+def test_padding(
+    imgproxy_client: Client,
+    http_client: zapros.Client,
+    *,
+    padding: Padding,
+    size: Size,
+    pixels: dict[Position, Color],
+) -> None:
+    """Ensure that padding constructors and factories place all four edges."""
+    transform = Transform(padding, Background.hex('ffffff'), format='png')
     url = imgproxy_client.url(_SOURCE, transform=transform)
 
     response = http_client.get(url)
 
-    assert_image(
-        response.read(),
-        size=(86, 64),
-        pixels={
-            (0, 0): (255, 255, 255),
-            (3, 10): (255, 255, 255),
-            (4, 1): _RED,
-            (83, 60): _YELLOW,
-            (84, 10): (255, 255, 255),
-            (10, 61): (255, 255, 255),
-        },
-    )
+    assert_image(response, size=size, pixels=pixels)
 
 
-@pytest.mark.parametrize('color', ['0000ff', _BLUE])
+@pytest.mark.parametrize(
+    'background',
+    [
+        Background(color='0000ff'),
+        Background(color=_BLUE),
+        Background.hex('0000ff'),
+        Background.rgb(red=0, green=0, blue=255),
+    ],
+)
 def test_background(
     imgproxy_client: Client,
     http_client: zapros.Client,
     *,
-    color: str | tuple[int, int, int],
+    background: Background,
 ) -> None:
-    """Ensure that both background forms fill transparent source pixels."""
-    transform = Transform(Background(color=color), format='png')
-    url = imgproxy_client.url('local:///transparent.png', transform=transform)
+    """Ensure that background constructors and factories fill transparency."""
+    transform = Transform(background, format='png')
+    url = imgproxy_client.url(
+        'local:///red-center-transparent-80x60.png',
+        transform=transform,
+    )
 
     response = http_client.get(url)
 
     assert_image(
-        response.read(),
+        response,
         size=(80, 60),
         pixels={(0, 0): _BLUE, (40, 30): _RED},
     )

@@ -28,10 +28,13 @@ def test_content_disposition(
         format='png',
     )
 
-    url = imgproxy_client.url('local:///source.png', transform=transform)
+    url = imgproxy_client.url(
+        'local:///solid-red-640x480.png',
+        transform=transform,
+    )
     response = http_client.get(url)
 
-    assert_image(response.read(), size=(640, 480))
+    assert_image(response, size=(640, 480))
     headers = Message()
     headers['Content-Disposition'] = response.headers['Content-Disposition']
     assert headers.get_content_disposition() == disposition

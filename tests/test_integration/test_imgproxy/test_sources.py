@@ -9,8 +9,8 @@ def test_unicode_source(
     http_client: zapros.Client,
 ) -> None:
     """Ensure that source names retain Unicode and spaces through encoding."""
-    url = imgproxy_client.url('local:///café photo.png')
+    url = imgproxy_client.url('local:///utf8 café.png')
 
     response = http_client.get(url)
 
-    assert_image(response.read(), size=(640, 480))
+    assert_image(response, size=(640, 480))

@@ -26,7 +26,7 @@ def test_invalid_credentials(
     changed[credential] = '00'
     client = Client(imgproxy_url, **changed)
 
-    response = http_client.get(client.url('local:///source.png'))
+    response = http_client.get(client.url('local:///solid-red-640x480.png'))
 
     assert response.status == HTTPStatus.FORBIDDEN, response.text
 
@@ -35,7 +35,10 @@ def test_invalid_credentials(
     ('original', 'replacement'),
     [
         (':fill:160:120', ':fill:80:60'),
-        ('bG9jYWw6Ly8vc291cmNlLnBuZw', 'bG9jYWw6Ly8vcGF0dGVybi5wbmc'),
+        (
+            'bG9jYWw6Ly8vc29saWQtcmVkLTY0MHg0ODAucG5n',
+            'bG9jYWw6Ly8vY29sb3ItcXVhZHJhbnRzLTgweDYwLnBuZw',
+        ),
         (':png/', ':webp/'),
     ],
 )
@@ -51,11 +54,14 @@ def test_modified_path(
         Resize(width=_WIDTH, height=_HEIGHT, mode='fill'),
         format='png',
     )
-    url = imgproxy_client.url('local:///source.png', transform=transform)
+    url = imgproxy_client.url(
+        'local:///solid-red-640x480.png',
+        transform=transform,
+    )
 
     response = http_client.get(url)
 
-    assert_image(response.read(), size=(_WIDTH, _HEIGHT))
+    assert_image(response, size=(_WIDTH, _HEIGHT))
     assert original in url
 
     response = http_client.get(url.replace(original, replacement))
@@ -66,6 +72,6 @@ def test_unsigned_url(imgproxy_url: str, http_client: zapros.Client) -> None:
     """Ensure that a server requiring signatures rejects unsigned URLs."""
     client = Client(imgproxy_url)
 
-    response = http_client.get(client.url('local:///source.png'))
+    response = http_client.get(client.url('local:///solid-red-640x480.png'))
 
     assert response.status == HTTPStatus.FORBIDDEN, response.text

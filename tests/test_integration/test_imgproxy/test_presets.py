@@ -3,9 +3,17 @@ import zapros
 
 from imgproxykit import Client, Transform
 from imgproxykit.options import Preset
-from tests.test_integration.test_imgproxy.assertions import assert_image
+from tests.fixtures.imgproxy import override_imgproxy_env
+from tests.test_integration.test_imgproxy.assertions import (
+    Size,
+    assert_image,
+)
 
 
+# Different preset sizes make their ordering observable.
+@override_imgproxy_env(
+    IMGPROXY_PRESETS='thumbnail=resize:fill:160:120,small=resize:fill:80:60',
+)
 @pytest.mark.parametrize(
     ('presets', 'size'),
     [
@@ -19,14 +27,14 @@ def test_presets(
     http_client: zapros.Client,
     *,
     presets: tuple[str, ...],
-    size: tuple[int, int],
+    size: Size,
 ) -> None:
     """Ensure that server presets follow supplied order."""
     url = imgproxy_client.url(
-        'local:///source.png',
+        'local:///solid-red-640x480.png',
         transform=Transform(Preset(*presets)),
     )
 
     response = http_client.get(url)
 
-    assert_image(response.read(), size=size)
+    assert_image(response, size=size)
