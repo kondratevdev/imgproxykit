@@ -69,6 +69,7 @@ extensions = [
     'sphinx_autodoc_typehints',
     'sphinx_immaterial',
     'sphinx_iconify',
+    'sphinx_design',
     'show_output',
 ]
 
@@ -206,6 +207,7 @@ html_theme_options = {
 # relative to this directory. They are copied after the builtin static files,
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ['_static']
+html_css_files = ['landing.css']
 
 
 def resolve_canonical_names(app: Sphinx, doctree: Node) -> None:

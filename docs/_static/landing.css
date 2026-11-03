@@ -1,0 +1,106 @@
+/* Center the landing page without stretching prose across the viewport. */
+.md-content:has(.landing-description) {
+    --sd-color-primary: var(--md-primary-fg-color);
+    --sd-color-primary-text: var(--md-primary-bg-color);
+
+    width: 100%;
+    max-width: 44rem;
+    margin-inline: auto;
+}
+
+.md-content:has(.landing-description) h1 {
+    text-align: center;
+    margin-bottom: 0.65rem;
+    color: var(--md-default-fg-color);
+    font-size: clamp(2rem, 6vw, 2.8rem);
+    font-weight: 650;
+    letter-spacing: -0.04em;
+}
+
+.landing-description {
+    margin-inline: auto;
+    text-align: center;
+    max-width: 34rem;
+    margin-bottom: 1.2rem;
+    color: var(--md-default-fg-color--light);
+}
+
+.md-typeset .landing-footer {
+    margin-top: 2rem;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--md-default-fg-color--lightest);
+    color: var(--md-default-fg-color--light);
+    font-size: 0.7rem;
+}
+
+.landing-badges,
+.md-typeset .landing-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 0.4rem;
+}
+
+.landing-badges {
+    margin-block: 0 1.4rem;
+}
+
+.md-typeset .landing-actions p,
+.landing-badges p {
+    margin: 0;
+}
+
+.landing-badges img {
+    display: block;
+    height: 20px;
+}
+
+.md-typeset .landing-feature {
+    background-color: transparent;
+    border: 1px solid var(--md-default-fg-color--lightest);
+    border-radius: 0.4rem;
+    color: var(--md-default-fg-color);
+    transition: border-color 150ms ease, background-color 150ms ease;
+}
+
+.md-typeset .landing-feature:hover,
+.md-typeset .landing-feature:focus-within {
+    border-color: var(--md-accent-fg-color);
+    background-color: var(--md-code-bg-color);
+}
+
+.md-typeset .landing-feature .sd-card-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.landing-feature .si-icon-inline {
+    color: var(--md-primary-fg-color);
+    margin-right: 0.25rem;
+}
+
+.md-typeset .landing-actions .sd-btn {
+    padding: 0.5em 1.2em;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+
+.md-typeset .landing-integrations ul {
+    padding: 0;
+    margin-left: 0;
+    list-style: none;
+}
+
+.md-typeset .landing-integrations li {
+    margin: 0.4rem 0;
+}
+
+.landing-integrations li > p {
+    margin: 0;
+    color: var(--md-default-fg-color--light);
+}
+
+.landing-integrations a {
+    font-weight: 600;
+}
