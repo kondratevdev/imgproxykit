@@ -5,7 +5,11 @@ Types
 
 .. autodata:: imgproxykit.types.FormatType
 
-.. autodata:: imgproxykit.types.Position
+.. autodata:: imgproxykit.types.AnchorPosition
+
+.. autodata:: imgproxykit.types.ExtendGravityType
+
+.. autodata:: imgproxykit.types.GravityType
 
 .. autodata:: imgproxykit.types.ResizeType
 

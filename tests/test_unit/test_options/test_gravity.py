@@ -4,22 +4,18 @@ import pytest
 
 from imgproxykit.options import Gravity
 from imgproxykit.serialization import PathSerializer
-from imgproxykit.types import Position
+from imgproxykit.types import GravityType
 
 
 @pytest.mark.parametrize(
     ('option', 'expected'),
     [
         (Gravity(position='ce'), 'gravity:ce'),
+        (Gravity(position='no', offset_y=0), 'gravity:no::0'),
         (
-            Gravity(
-                position='fp',
-                offset_x=0.25,
-                offset_y=0.75,
-            ),
+            Gravity(position='fp', offset_x=0.25, offset_y=0.75),
             'gravity:fp:0.25:0.75',
         ),
-        (Gravity(position='no', offset_y=0), 'gravity:no::0'),
     ],
 )
 def test_gravity(
@@ -62,7 +58,7 @@ def test_anchor_factories(
     path_serializer: PathSerializer,
     *,
     factory: Callable[..., Gravity],
-    position: Position,
+    position: GravityType,
     offsets: dict[str, float],
     suffix: str,
 ) -> None:

@@ -6,8 +6,9 @@ import zapros
 
 from imgproxykit import Client, Transform, options
 from imgproxykit.types import (
+    AnchorPosition,
     FormatType,
-    Position,
+    GravityType,
     ResizeType,
     WatermarkPosition,
 )
@@ -102,21 +103,26 @@ def test_format_type(
     assert_image(response.read(), size=(_WIDTH, _HEIGHT))
 
 
-@pytest.mark.parametrize('position', get_args(Position.__value__))
+@pytest.mark.parametrize(
+    'position',
+    [*get_args(AnchorPosition.__value__), 'fp', 'sm'],
+)
 def test_position(
     imgproxy_client: Client,
     http_client: zapros.Client,
     *,
-    position: Position,
+    position: GravityType,
 ) -> None:
     """Ensure that imgproxy accepts every declared crop gravity."""
     transform = Transform(
         options.Crop(
             width=_WIDTH,
             height=_HEIGHT,
-            gravity=position,
-            offset_x=0.5 if position == 'fp' else None,
-            offset_y=0.5 if position == 'fp' else None,
+            gravity=options.Gravity(
+                position=position,
+                offset_x=0.5 if position == 'fp' else None,
+                offset_y=0.5 if position == 'fp' else None,
+            ),
         ),
     )
     url = imgproxy_client.url(_SOURCE, transform=transform)

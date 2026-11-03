@@ -4,7 +4,7 @@ import pytest
 import zapros
 
 from imgproxykit import Client, Transform
-from imgproxykit.options import Background, Crop, Flip, Padding
+from imgproxykit.options import Background, Crop, Flip, Gravity, Padding
 from tests.test_integration.test_imgproxy.assertions import assert_image
 
 _SOURCE: Final = 'local:///pattern.png'
@@ -54,7 +54,11 @@ def test_flip(
 def test_crop(imgproxy_client: Client, http_client: zapros.Client) -> None:
     """Ensure that crop gravity selects the bottom right source quadrant."""
     transform = Transform(
-        Crop(width=_CROP_WIDTH, height=_CROP_HEIGHT, gravity='soea'),
+        Crop(
+            width=_CROP_WIDTH,
+            height=_CROP_HEIGHT,
+            gravity=Gravity.bottom_right(),
+        ),
         format='png',
     )
     url = imgproxy_client.url(_SOURCE, transform=transform)
