@@ -7,6 +7,7 @@ from django.db.models.fields.files import FieldFile
 from imgproxykit.integrations.django.client import get_client
 from imgproxykit.integrations.django.settings import Settings, get_config
 from imgproxykit.integrations.django.sources import resolve_source
+from imgproxykit.internal.types import VariantsResult
 from imgproxykit.transform import Transform
 
 if TYPE_CHECKING:
@@ -61,7 +62,7 @@ def imgproxy_variants[VariantSet: DataclassInstance](
 def imgproxy_variants[Key: str](
     source: str | FieldFile,
     variants: Mapping[Key, Transform] | type['DataclassInstance'] | str,
-) -> dict[Key, str] | dict[str, str] | 'DataclassInstance':
+) -> VariantsResult[Key]:
     """
     Build named image URLs using Django's configured client.
 
