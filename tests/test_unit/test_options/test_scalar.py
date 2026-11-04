@@ -44,8 +44,10 @@ def test_subclass_does_not_replace_option() -> None:
         _StrictQuality(80)
 
     transform = Transform(quality=80)
-    assert transform.options[0].__class__ is Quality
-    assert transform.options[0].value == 80
+    opt = transform.options[0]
+    assert opt.__class__ is Quality
+    assert isinstance(opt, Quality)
+    assert opt.value == 80
 
 
 def test_explicit_replace_updates_registry(
