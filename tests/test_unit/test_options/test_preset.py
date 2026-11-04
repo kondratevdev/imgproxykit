@@ -59,7 +59,7 @@ def test_preset_empty_name_raises_value_error() -> None:
 
 
 @pytest.mark.parametrize('reserved', ['#', '?', '/', ':'])
-def test_preset_reserved_characters_raise_value_error(reserved: str) -> None:
+def test_preset_reserved_chars_raise_error(reserved: str) -> None:
     """Ensure reserved characters in preset name raise ValueError."""
     with pytest.raises(
         ValueError,
@@ -68,7 +68,7 @@ def test_preset_reserved_characters_raise_value_error(reserved: str) -> None:
         Preset(f'thumb{reserved}v1')
 
 
-def test_custom_arguments_separator_conflict_raises_value_error() -> None:
+def test_custom_arg_separator_conflict_raises() -> None:
     """Ensure argument containing configured separator raises ValueError."""
     serializer = PathSerializer(
         arguments_separator='@',
