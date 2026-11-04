@@ -28,5 +28,8 @@ async def get_product(
     imgproxy: Annotated[Client, Depends(get_imgproxy)],
 ) -> ProductResponse:
     """Return named image variants."""
-    images = imgproxy.variants(_PRODUCT_IMAGE, variants=_PRODUCT_VARIANTS)  # (2)!
+    images = imgproxy.variants(
+        _PRODUCT_IMAGE,
+        variants=_PRODUCT_VARIANTS,
+    )  # (2)!
     return ProductResponse(images=images)

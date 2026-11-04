@@ -10,8 +10,18 @@ but with a deprecation period.
 
 ## 0.6.0 WIP
 
+### Features
+
+- Added dataclass variant declarations to Django's `imgproxy_variants()`
+  and `IMGPROXYKIT['variants']`. Passing a class directly returns a typed
+  instance; named sets always return dictionaries. DRF's
+  `ImgproxyVariantsField` accepts the same declarations and returns
+  dictionaries of URLs, #127
+
 ### Misc
 
+- Updated Django, DRF, FastAPI, and DMR integration guides with tabbed
+  examples for transformations and variant declarations, #127
 - Improved the user guide with grouped processing option tables linking to
   the API reference and imgproxy documentation, tabbed variant examples,
   and shared collapsible instructions for running imgproxy locally, #125
