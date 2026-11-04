@@ -79,4 +79,3 @@ def test_verify_unsigned_signature(unsigned_url_signer: UrlSigner) -> None:
     """Ensure that verify checks unsigned marker correctly."""
     assert unsigned_url_signer.verify('/any/path', 'unsafe') is True
     assert unsigned_url_signer.verify('/any/path', 'invalid') is False
-
