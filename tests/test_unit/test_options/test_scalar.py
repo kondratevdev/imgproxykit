@@ -15,8 +15,7 @@ class _StrictQuality(Quality):
     @override
     def validate(self) -> None:
         """Validate value bound."""
-        if self.value > 50:
-            raise ValueError('custom restriction')
+        raise ValueError('custom restriction')
 
 
 def _set_custom_name(namespace: dict[str, object]) -> None:
