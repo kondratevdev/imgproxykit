@@ -1,12 +1,17 @@
 from collections.abc import Mapping
-from typing import overload
+from dataclasses import asdict, is_dataclass
+from typing import TYPE_CHECKING, overload
 
 from django.db.models.fields.files import FieldFile
 
 from imgproxykit.integrations.django.client import get_client
 from imgproxykit.integrations.django.settings import Settings, get_config
 from imgproxykit.integrations.django.sources import resolve_source
+from imgproxykit.internal.types import VariantsResult
 from imgproxykit.transform import Transform
+
+if TYPE_CHECKING:
+    from _typeshed import DataclassInstance
 
 
 def imgproxy_url(
@@ -34,6 +39,13 @@ def imgproxy_url(
 
 
 @overload
+def imgproxy_variants(
+    source: str | FieldFile,
+    variants: str,
+) -> dict[str, str]: ...
+
+
+@overload
 def imgproxy_variants[Key: str](
     source: str | FieldFile,
     variants: Mapping[Key, Transform],
@@ -41,26 +53,28 @@ def imgproxy_variants[Key: str](
 
 
 @overload
-def imgproxy_variants(
+def imgproxy_variants[VariantSet: DataclassInstance](
     source: str | FieldFile,
-    variants: str,
-) -> dict[str, str]: ...
+    variants: type[VariantSet],
+) -> VariantSet: ...
 
 
 def imgproxy_variants[Key: str](
     source: str | FieldFile,
-    variants: Mapping[Key, Transform] | str,
-) -> dict[Key, str] | dict[str, str]:
+    variants: Mapping[Key, Transform] | type['DataclassInstance'] | str,
+) -> VariantsResult[Key]:
     """
     Build named image URLs using Django's configured client.
 
     Args:
         source: Source URI or model file field, resolved once for all variants.
-        variants: Transformation mapping or set name from
-            ``IMGPROXYKIT['variants']``.
+        variants: Transformation mapping, dataclass class,
+            or set name from ``IMGPROXYKIT['variants']``.
 
     Returns:
         URLs in variant order. Direct mappings preserve their key type.
+        Dataclass classes passed directly produce instances of that class.
+        Named sets always produce dictionaries of URLs.
 
     Raises:
         KeyError: If a named variant set is not configured.
@@ -68,10 +82,13 @@ def imgproxy_variants[Key: str](
     """
     client = get_client()
 
-    # Resolve the source inside each branch so named sets are looked up first.
-    # Only one branch runs, so the resolver is called once per invocation.
+    # 1. For a mapping or dataclass class, return the client result as is.
+    # 2. For a set name, read its declaration from settings first.
+    # 3. Resolve the source once, then build the URLs.
+    # 4. Always return a dict for a set name, even if it uses a dataclass.
     if not isinstance(variants, str):
         return client.variants(resolve_source(source), variants=variants)
 
     configured = get_config()[Settings.variants.value][variants]  # pyright: ignore[reportTypedDictNotRequiredAccess]
-    return client.variants(resolve_source(source), variants=configured)
+    images = client.variants(resolve_source(source), variants=configured)
+    return asdict(images) if is_dataclass(images) else images

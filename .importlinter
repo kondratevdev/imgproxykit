@@ -24,7 +24,7 @@ layers =
   options
   types
   # Shared low-level utilities:
-  internal.encoding
+  internal.encoding | internal.types
 
 [importlinter:contract:options-independence]
 name = Concrete processing options must be independent

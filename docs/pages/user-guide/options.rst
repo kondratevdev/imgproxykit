@@ -16,7 +16,6 @@ Scalar options accept a single value. Pass an option instance to
 
 .. literalinclude:: /examples/options/scalar_options.py
    :language: python
-   :lines: 1-17
    :show-output:
 
 .. code-annotations::
@@ -36,7 +35,6 @@ while :class:`~imgproxykit.options.Gravity` selects the crop position:
 
 .. literalinclude:: /examples/options/resize.py
    :language: python
-   :lines: 1-15
    :show-output:
 
 .. code-annotations::
@@ -56,7 +54,6 @@ are preserved:
 
 .. literalinclude:: /examples/options/omitted_arguments.py
    :language: python
-   :lines: 1-14
    :show-output:
 
 .. code-annotations::

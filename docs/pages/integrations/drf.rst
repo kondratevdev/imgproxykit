@@ -47,95 +47,116 @@ variant sets, and source resolver are shared with the :doc:`Django integration
 
 .. literalinclude:: /examples/integrations/django/settings.py
    :language: python
-   :lines: 1-19
 
 .. code-annotations::
 
    1. Configure the shared client. ``base_url`` is required.
    2. Use your server's hex-encoded key and salt, or omit both if the server
       accepts unsigned URLs.
-   3. Optional named transformations shared with the Django integration.
+   3. Optional named transformations.
    4. Optional named sets of transformations for generating variants.
 
-Serializer fields
+Generate URLs
+-------------
+
+Use :class:`~imgproxykit.integrations.drf.ImgproxyURLField` with a named
+transformation or a ``Transform`` object. Set ``source`` to the original
+image field:
+
+.. tab-set::
+
+    .. tab-item:: Named transform
+
+        Use a transformation name from ``IMGPROXYKIT['transforms']``:
+
+        .. literalinclude:: /examples/integrations/drf/url.py
+           :language: python
+
+        .. code-annotations::
+
+           1. Select ``IMGPROXYKIT['transforms']['thumbnail']``.
+
+    .. tab-item:: Transform
+
+        Pass a ``Transform`` object directly:
+
+        .. literalinclude:: /examples/integrations/drf/inline_url.py
+           :language: python
+
+        .. code-annotations::
+
+           1. Define the thumbnail transformation on the field.
+
+Omit ``transform`` to generate a URL without processing options.
+
+Generate variants
 -----------------
 
-Use :class:`~imgproxykit.integrations.drf.ImgproxyURLField` for one URL
-and :class:`~imgproxykit.integrations.drf.ImgproxyVariantsField` for named
-variants. Set ``source`` to the original image field:
+Use :class:`~imgproxykit.integrations.drf.ImgproxyVariantsField` with a named
+set, a mapping, or a dataclass class to generate several URLs for the same
+source:
 
-.. literalinclude:: /examples/integrations/drf/serializer.py
-   :language: python
-   :lines: 1-19
+Both fields are read-only. ``ImgproxyVariantsField`` returns a dictionary of
+URLs for all three declaration styles.
 
-.. code-annotations::
+.. tab-set::
 
-   1. Use the named transformation from
-      ``IMGPROXYKIT['transforms']['thumbnail']``.
-   2. Use the named variant set from ``IMGPROXYKIT['variants']['product']``.
+    .. tab-item:: Named set
+
+        Use a set name from ``IMGPROXYKIT['variants']``:
+
+        .. literalinclude:: /examples/integrations/drf/variants.py
+           :language: python
+
+        .. code-annotations::
+
+           1. Select ``IMGPROXYKIT['variants']['product']``.
+
+        The configured set can be a mapping or a dataclass class.
+
+    .. tab-item:: Mapping
+
+        Pass a mapping of names and transformations directly:
+
+        .. literalinclude:: /examples/integrations/drf/mapping_variants.py
+           :language: python
+
+        .. code-annotations::
+
+           1. Map variant names to their transformations.
+
+    .. tab-item:: Dataclass
+
+        Pass a dataclass class to reuse a typed variant declaration:
+
+        .. literalinclude:: /examples/integrations/drf/dataclass_variants.py
+           :language: python
+
+        .. code-annotations::
+
+           1. Associate each URL field with a transformation using ``Annotated``.
+           2. Return the generated URLs as a dictionary.
+
+        The field's schema remains a dictionary of URLs. Dataclass field names are
+        not automatically exposed as named properties in the API schema.
+
+        See the Dataclass tab in :ref:`Generate variants <dataclass-variants>`
+        for declaration requirements.
 
 For a ``ModelSerializer``, use the model's file field as ``source`` and include
-the generated fields in ``Meta.fields``. Request context is not required.
-
-.. note::
-
-    Both fields are read-only. Empty strings, ``None``, and model file
-    fields without an associated file produce ``null``. Empty sources
-    are not passed to the source resolver.
-
-Inline transformations
-----------------------
-
-Pass a :class:`~imgproxykit.Transform` or a mapping of transformations
-directly instead of referring to Django settings by name:
-
-.. literalinclude:: /examples/integrations/drf/inline.py
-   :language: python
-   :lines: 1-23
-
-.. code-annotations::
-
-   1. Pass a ``Transform`` directly instead of a configured name.
-   2. Map variant names to their transformations.
-
-Omit ``transform`` from ``ImgproxyURLField`` to generate a URL without
-processing options. ``ImgproxyVariantsField`` always requires ``variants``.
-
-File uploads
-------------
-
-Use a standard DRF ``ImageField`` to accept uploads, alongside the generated
-fields used in the response:
-
-.. code-block:: python
-
-    from rest_framework import serializers
-
-    from imgproxykit.integrations.drf import (
-        ImgproxyURLField,
-        ImgproxyVariantsField,
-    )
-
-    image = serializers.ImageField(write_only=True, required=False)  # (1)!
-    thumbnail = ImgproxyURLField(source='image', transform='thumbnail')
-    images = ImgproxyVariantsField(source='image', variants='product')
-
-.. code-annotations::
-
-   1. Accept uploads with a standard DRF field. The generated fields remain
-      read-only and appear in the response.
-
-In a ``ModelSerializer``, include all three fields in ``Meta.fields``.
-Configure an appropriate parser for the upload endpoint, as described in
-`DRF's file upload documentation
-<https://www.django-rest-framework.org/api-guide/fields/#file-upload-fields>`__.
+the generated fields in ``Meta.fields``.
 
 Source resolution
 -----------------
 
-Nonempty sources use the Django source resolver. Strings are passed unchanged;
-file fields use ``.url``. Relative URLs are not expanded using the request.
-See :doc:`django` to configure source resolution.
+Both fields read the value selected by ``source``, such as ``source='image'``.
+
+.. tip::
+
+    Empty strings, ``None``, and model file fields without an associated file
+    return ``null``. The source resolver is not called for these values.
+
+.. include:: /_includes/django-source-resolution.rst
 
 Next steps
 ----------

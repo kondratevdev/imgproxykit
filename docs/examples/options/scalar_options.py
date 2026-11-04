@@ -8,7 +8,10 @@ optimized = Transform(
     Quality(85),  # (1)!
     Format('webp'),
 )
-keyword_optimized = Transform(quality=85, format='webp')  # (2)!
+keyword_optimized = Transform(
+    quality=85,  # (2)!
+    format='webp',
+)
 
 image_url = client.url(source=source_url, transform=optimized)
 keyword_url = client.url(source=source_url, transform=keyword_optimized)

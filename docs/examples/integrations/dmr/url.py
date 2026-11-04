@@ -21,4 +21,4 @@ class ImageController(Controller[PydanticFastSerializer]):
     def get(self) -> ImageResponse:
         """Return a transformed image URL."""
         image = imgproxy_url(_SOURCE_URL, 'thumbnail')  # (1)!
-        return ImageResponse(image=image)  # (2)!
+        return ImageResponse(image=image)

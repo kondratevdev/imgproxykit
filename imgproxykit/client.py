@@ -1,6 +1,7 @@
 from collections.abc import Mapping
 from typing import TYPE_CHECKING, ClassVar, overload
 
+from imgproxykit.internal.types import VariantsResult
 from imgproxykit.serialization import PathSerializer
 from imgproxykit.signing import UrlSigner
 from imgproxykit.transform import Transform
@@ -9,10 +10,6 @@ from imgproxykit.variants import DataclassVariantsResolver
 
 if TYPE_CHECKING:
     from _typeshed import DataclassInstance
-
-type _VariantsResult[Key: str] = (
-    dict[Key, str] | dict[str, str] | DataclassInstance
-)
 
 
 class Client:
@@ -210,7 +207,7 @@ class Client:
         source: str,
         *,
         variants: Mapping[Key, Transform] | type['DataclassInstance'],
-    ) -> _VariantsResult[Key]:
+    ) -> VariantsResult[Key]:
         """
         Build named URLs for one source using complete transformations.
 

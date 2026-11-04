@@ -6,23 +6,22 @@ from pydantic import BaseModel
 from imgproxykit import Client, Transform
 from imgproxykit.integrations.fastapi import add_imgproxy
 
-_SOURCE_URL: Final = 'https://originals.example.com/photo.jpg'
-_THUMBNAIL: Final = Transform(width=300, format='webp')
+_PRODUCT_IMAGE: Final = 'https://media.example.com/products/42.jpg'
 
 app = FastAPI()
-get_imgproxy = add_imgproxy(app, Client('https://imgproxy.example.com'))  # (1)!
+get_imgproxy = add_imgproxy(app, Client('https://imgproxy.example.com'))
 
 
-class ImageResponse(BaseModel):
-    """Generated image URL."""
+class ProductResponse(BaseModel):
+    """Product image URL."""
 
-    image: str
+    thumbnail: str
 
 
-@app.get('/image')
-async def get_image(
-    imgproxy: Annotated[Client, Depends(get_imgproxy)],  # (2)!
-) -> ImageResponse:
+@app.get('/products/42')
+async def get_product(
+    imgproxy: Annotated[Client, Depends(get_imgproxy)],  # (1)!
+) -> ProductResponse:
     """Return a transformed image URL."""
-    image = imgproxy.url(_SOURCE_URL, transform=_THUMBNAIL)
-    return ImageResponse(image=image)
+    thumbnail = imgproxy.url(_PRODUCT_IMAGE, transform=Transform(width=160))
+    return ProductResponse(thumbnail=thumbnail)
