@@ -1,5 +1,7 @@
-from typing import Final
+from dataclasses import dataclass
+from typing import Annotated, Final, assert_type
 
+from django.conf import LazySettings
 from inline_snapshot import snapshot
 
 from imgproxykit import Transform
@@ -39,3 +41,32 @@ def test_variants() -> None:
         'large': 'https://example.com/unsafe/width:1280/'
         'aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
     })
+
+
+@dataclass(frozen=True, slots=True)
+class _Images:
+    """Declare typed image variants for Django and DRF."""
+
+    small: Annotated[str, Transform(width=160)]
+
+
+def test_dataclass_variants(settings: LazySettings) -> None:
+    """Preserve direct dataclasses and return dictionaries for named sets."""
+    settings.IMGPROXYKIT = {
+        'client': {'base_url': 'https://example.com'},
+        'variants': {'product': _Images},
+    }
+    source = 'https://example.com/photo.jpg'
+
+    images = imgproxy_variants(source, _Images)
+    assert_type(images, _Images)
+    assert images == snapshot(
+        _Images(
+            small='https://example.com/unsafe/width:160/'
+            'aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
+        )
+    )
+
+    urls = imgproxy_variants(source, 'product')
+    assert_type(urls, dict[str, str])
+    assert urls == {'small': images.small}

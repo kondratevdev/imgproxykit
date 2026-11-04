@@ -25,7 +25,6 @@ names, or a dataclass for a named result with URL attributes.
 
         .. literalinclude:: /examples/variants/basic.py
            :language: python
-           :lines: 1-16
            :show-output:
            :output-language: python
 
@@ -38,14 +37,13 @@ names, or a dataclass for a named result with URL attributes.
         Access URLs by name, such as ``product_urls['small']``, or pass the dictionary
         to a template or API response.
 
-    .. tab-item:: Typed mapping
+    .. tab-item:: Typed Mapping
 
         Annotate the input mapping with a ``Literal`` union to check variant names
         when accessing the generated URLs:
 
         .. literalinclude:: /examples/variants/typed.py
            :language: python
-           :lines: 1-20
            :show-output:
            :output-language: python
 
@@ -67,7 +65,6 @@ names, or a dataclass for a named result with URL attributes.
 
         .. literalinclude:: /examples/variants/dataclass.py
            :language: python
-           :lines: 1-27
            :show-output:
            :output-language: python
 
@@ -89,8 +86,8 @@ names, or a dataclass for a named result with URL attributes.
         and pass the result of ``client.variants()`` to that field. See the
         :doc:`FastAPI example <../integrations/fastapi>`.
 
-Reuse a variant set
--------------------
+Reuse variant set
+-----------------
 
 Define a set once and reuse it across source images. Keep shared settings
 in a base transformation and use :meth:`~imgproxykit.Transform.extend` to
@@ -98,7 +95,6 @@ add a width for each variant:
 
 .. literalinclude:: /examples/variants/reusable_sets.py
    :language: python
-   :lines: 1-20
    :show-output:
    :output-language: python
 

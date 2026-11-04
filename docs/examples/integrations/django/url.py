@@ -11,4 +11,5 @@ with override_settings(IMGPROXYKIT=IMGPROXYKIT):
 
     source = 'https://media.example.com/products/42.jpg'
     image_url = imgproxy_url(source, 'thumbnail')  # (1)!
+
     print(image_url)

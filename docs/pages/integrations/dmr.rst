@@ -48,7 +48,6 @@ the :doc:`Django integration <django>`:
 
 .. literalinclude:: /examples/integrations/django/settings.py
    :language: python
-   :lines: 1-19
 
 .. code-annotations::
 
@@ -58,60 +57,116 @@ the :doc:`Django integration <django>`:
    3. Define the ``thumbnail`` transformation used by the URL example.
    4. Define the ``product`` variant set used by the variants example.
 
-Return an image URL
--------------------
+Generate URLs
+-------------
 
 Generate a URL with ``imgproxy_url`` and return it in a Pydantic response model.
 URL generation makes no network requests; imgproxy processes the image when
 its URL is requested.
 
-The examples use ``PydanticFastSerializer`` for JSON requests and responses.
+The examples use ``PydanticFastSerializer`` with Pydantic response models.
 See DMR's `Pydantic plugin guide
 <https://django-modern-rest.readthedocs.io/en/latest/pages/plugins.html#pydanticfastserializer>`__
 for serializer options.
 
-.. literalinclude:: /examples/integrations/dmr/url.py
-   :language: python
+.. tab-set::
 
-.. code-annotations::
+    .. tab-item:: Named transform
 
-   1. Apply ``IMGPROXYKIT['transforms']['thumbnail']`` to the source image.
-   2. Return the generated URL as a string in the response model.
+        Use a transformation name from ``IMGPROXYKIT['transforms']``:
 
-See DMR's guides to `controllers
-<https://django-modern-rest.readthedocs.io/en/latest/pages/using-controller/index.html>`__
-and `path parameters
-<https://django-modern-rest.readthedocs.io/en/latest/pages/components/path.html>`__
-for request parsing and handler definitions.
+        .. literalinclude:: /examples/integrations/dmr/url.py
+           :language: python
 
-Return variants
----------------
+        .. code-annotations::
 
-For several image sizes, use ``imgproxy_variants`` and a nested response model:
+           1. Select ``IMGPROXYKIT['transforms']['thumbnail']``.
 
-.. literalinclude:: /examples/integrations/dmr/variants.py
-   :language: python
+    .. tab-item:: Transform
 
-.. code-annotations::
+        Pass a ``Transform`` object directly:
 
-   1. Expose ``small`` and ``large`` as named fields in the response model
-      and its OpenAPI schema.
-   2. Generate URLs with ``IMGPROXYKIT['variants']['product']``.
-   3. Validate the generated mapping against the response model. Keep its
-      fields in sync with the configured variant names.
+        .. literalinclude:: /examples/integrations/dmr/inline_url.py
+           :language: python
 
-Use ``images: dict[str, str]`` and return the mapping directly when variant
-names can vary. A dedicated model describes a fixed set of fields in the API.
-See DMR's `OpenAPI guide
-<https://django-modern-rest.readthedocs.io/en/latest/pages/openapi/openapi.html>`__
-to publish the schema and interactive API documentation.
+        .. code-annotations::
+
+           1. Define the thumbnail transformation directly in the call.
+
+Omit the transformation argument to generate a URL without processing options.
+
+Generate variants
+-----------------
+
+Use ``imgproxy_variants`` with a named set, a mapping, or a dataclass class
+to generate several URLs for the same source:
+
+.. tab-set::
+
+    .. tab-item:: Named set
+
+        Use a set name from ``IMGPROXYKIT['variants']`` and validate the generated
+        dictionary with a nested response model:
+
+        .. literalinclude:: /examples/integrations/dmr/variants.py
+           :language: python
+
+        .. code-annotations::
+
+           1. Declare the expected variant names in the response model.
+           2. Select ``IMGPROXYKIT['variants']['product']``. Named sets always return
+              a dictionary, even when configured with a dataclass class.
+           3. Build the response model from the generated dictionary.
+
+    .. tab-item:: Mapping
+
+        Pass a mapping of names and transformations directly:
+
+        .. literalinclude:: /examples/integrations/dmr/mapping_variants.py
+           :language: python
+
+        .. code-annotations::
+
+           1. Declare the expected variant names in the response model.
+           2. Map variant names to their transformations.
+           3. Build the response model from the generated dictionary.
+
+    .. tab-item:: Dataclass
+
+        Pass a dataclass class to get an instance with typed URL fields:
+
+        .. literalinclude:: /examples/integrations/dmr/dataclass_variants.py
+           :language: python
+
+        .. code-annotations::
+
+           1. Associate each URL field with a transformation using ``Annotated``.
+           2. Include the dataclass in the Pydantic response model.
+           3. Generate a ``ProductImages`` instance and return it in the response.
+              Pydantic serializes it as a nested object.
+
+        See the Dataclass tab in :ref:`Generate variants <dataclass-variants>`
+        for declaration requirements.
+
+Use a dataclass or a Pydantic model for a fixed set of variants. Their named
+URL fields appear in the OpenAPI schema. If variant names can vary, use
+``images: dict[str, str]`` and return the generated dictionary directly.
 
 Source resolution
 -----------------
 
-Both shortcuts use the shared Django source resolver: strings are passed
-unchanged and model file fields use ``.url``. Relative URLs are not expanded
-automatically. See :doc:`django` to configure relative URLs and storage URIs.
+Both ``imgproxy_url`` and ``imgproxy_variants`` accept a source string or a
+model file field, such as ``product.image``.
+
+.. include:: /_includes/django-source-resolution.rst
+
+.. warning::
+
+    Django shortcuts pass empty values to the source resolver too. The default
+    resolver returns an empty string as it is, but a model file field without
+    an associated file raises ``ValueError``.
+    Check for an associated file before calling a shortcut if the image
+    is optional.
 
 Next steps
 ----------

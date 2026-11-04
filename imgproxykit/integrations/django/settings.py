@@ -1,6 +1,6 @@
 import enum
 from collections.abc import Callable, Mapping
-from typing import Any, Final, Required, final
+from typing import TYPE_CHECKING, Any, Final, Required, final
 
 from django.core.exceptions import ImproperlyConfigured
 from django.db.models.fields.files import FieldFile
@@ -8,6 +8,10 @@ from typing_extensions import TypedDict
 
 from imgproxykit.transform import Transform
 from imgproxykit.types import SourceEncoding
+
+if TYPE_CHECKING:
+    from _typeshed import DataclassInstance
+
 
 #: Django setting containing the imgproxy client configuration.
 IMGPROXYKIT_SETTINGS: Final = 'IMGPROXYKIT'
@@ -68,7 +72,7 @@ class SettingsDict(TypedDict, total=False, closed=True):
     #: Named Python transformations, distinct from imgproxy server presets.
     transforms: Mapping[str, Transform]
     #: Named sets of transformations; objects can be shared with transforms.
-    variants: Mapping[str, Mapping[str, Transform]]
+    variants: Mapping[str, Mapping[str, Transform] | type['DataclassInstance']]
     #: Convert the original source to a URI, including empty file fields.
     source_resolver: Callable[[str | FieldFile], str] | str
 

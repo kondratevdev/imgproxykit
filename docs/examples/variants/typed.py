@@ -15,6 +15,6 @@ products: dict[ProductKeys, Transform] = {
 }
 
 product_urls = client.variants(source=source_url, variants=products)
-assert_type(product_urls, dict[ProductKeys, str])  # (2)!
 
+assert_type(product_urls, dict[ProductKeys, str])  # (2)!
 pprint(product_urls, sort_dicts=False)

@@ -4,6 +4,9 @@ from typing import Annotated, assert_type
 
 from imgproxykit import Client, Transform
 
+client = Client('http://localhost:8080')
+source_url = 'https://picsum.photos/id/237/1600/1200'
+
 base = Transform(quality=85, format='webp')
 
 
@@ -16,12 +19,8 @@ class ProductImages:
     large: Annotated[str, base.extend(width=1280)]
 
 
-client = Client('http://localhost:8080')
-source_url = 'https://picsum.photos/id/237/1600/1200'
-
 product_urls = client.variants(source_url, variants=ProductImages)  # (2)!
 
-assert_type(product_urls, ProductImages)
-assert_type(product_urls.small, str)
-
+assert_type(product_urls, ProductImages)  # True
+assert_type(product_urls.small, str)  # True
 pprint(product_urls)

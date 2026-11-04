@@ -7,8 +7,7 @@ from pydantic import BaseModel
 from imgproxykit import Client, Transform
 from imgproxykit.integrations.fastapi import add_imgproxy
 
-_SOURCE_URL: Final = 'https://originals.example.com/photo.jpg'
-_BASE: Final = Transform(format='webp')
+_PRODUCT_IMAGE: Final = 'https://media.example.com/products/42.jpg'
 
 app = FastAPI()
 get_imgproxy = add_imgproxy(app, Client('https://imgproxy.example.com'))
@@ -18,20 +17,20 @@ get_imgproxy = add_imgproxy(app, Client('https://imgproxy.example.com'))
 class ProductImages:
     """Declare the image response fields and their transformations."""
 
-    thumbnail: Annotated[str, _BASE.extend(width=320)]  # (1)!
-    preview: Annotated[str, _BASE.extend(width=1280)]
+    small: Annotated[str, Transform(width=320)]  # (1)!
+    large: Annotated[str, Transform(width=1280)]
 
 
-class ImageResponse(BaseModel):
+class ProductResponse(BaseModel):
     """Named image variants."""
 
-    images: ProductImages  # (2)!
+    images: ProductImages
 
 
-@app.get('/image')
-async def get_image(
+@app.get('/products/42')
+async def get_product(
     imgproxy: Annotated[Client, Depends(get_imgproxy)],
-) -> ImageResponse:
+) -> ProductResponse:
     """Return named image variants."""
-    images = imgproxy.variants(_SOURCE_URL, variants=ProductImages)  # (3)!
-    return ImageResponse(images=images)
+    images = imgproxy.variants(_PRODUCT_IMAGE, variants=ProductImages)  # (2)!
+    return ProductResponse(images=images)

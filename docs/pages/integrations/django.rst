@@ -56,7 +56,6 @@ Define ``IMGPROXYKIT`` in your Django settings:
 
 .. literalinclude:: /examples/integrations/django/settings.py
    :language: python
-   :lines: 1-19
 
 .. code-annotations::
 
@@ -76,7 +75,7 @@ transformation name from ``IMGPROXYKIT['transforms']``:
 
 .. literalinclude:: /examples/integrations/django/url.py
    :language: python
-   :lines: 10-14
+   :lines: 10-15
    :dedent: 4
    :show-output:
 
@@ -90,24 +89,79 @@ argument to generate a URL without processing options.
 Generate variants
 -----------------
 
-Use ``imgproxy_variants`` with a set name from ``IMGPROXYKIT['variants']``
+Use ``imgproxy_variants`` with a named set, a mapping, or a dataclass class
 to generate several URLs for the same source:
 
-.. literalinclude:: /examples/integrations/django/variants.py
-   :language: python
-   :lines: 10-16
-   :dedent: 4
-   :show-output:
-   :output-language: python
+.. tab-set::
 
-.. code-annotations::
+    .. tab-item:: Named set
 
-   1. Select ``IMGPROXYKIT['variants']['product']`` and generate a URL
-      for each configured name.
+        Use ``imgproxy_variants`` with a set name from ``IMGPROXYKIT['variants']``
+        to generate several URLs for the same source:
 
-The result is a dictionary of URLs with the configured variant names as keys.
-You can also pass a dictionary of names and ``Transform`` objects directly
-instead of a set name.
+        .. literalinclude:: /examples/integrations/django/variants.py
+           :language: python
+           :lines: 10-17
+           :dedent: 4
+           :show-output:
+           :output-language: python
+
+        .. code-annotations::
+
+           1. Select ``IMGPROXYKIT['variants']['product']`` and generate a URL
+              for each configured name.
+
+        The result is a dictionary of URLs with the configured variant names as keys.
+
+    .. tab-item:: Mapping
+
+        Pass a mapping of names and transformations directly:
+
+        .. literalinclude:: /examples/integrations/django/mapping_variants.py
+           :language: python
+           :lines: 10-
+           :dedent: 4
+           :show-output:
+           :output-language: python
+
+        .. code-annotations::
+
+           1. Map variant names to their transformations.
+
+        The result is a dictionary of URLs with the same keys as the input mapping.
+
+    .. tab-item:: Dataclass
+
+        Pass a dataclass class to get an instance with typed URL fields:
+
+        .. literalinclude:: /examples/integrations/django/dataclass_variants.py
+           :language: python
+           :lines: 10-
+           :dedent: 4
+           :show-output:
+           :output-language: python
+
+        .. code-annotations::
+
+           1. Associate each URL field with a transformation using ``Annotated``.
+           2. Return a ``ProductImages`` instance with a generated URL in each field.
+              Passing the class directly preserves its type for static type checking.
+
+        You can also register the class as a named set in Django settings:
+
+        .. code-block:: python
+
+            IMGPROXYKIT = {
+                # ...
+                'variants': {'product': ProductImages},
+            }
+
+        Calling ``imgproxy_variants(source, 'product')`` always returns a dictionary,
+        even when the configured set is a dataclass class. Template access such as
+        ``images.small`` works with both dictionaries and dataclass instances.
+
+        See the Dataclass tab in :ref:`Generate variants <dataclass-variants>`
+        for declaration requirements.
 
 Templates
 ---------
@@ -161,7 +215,6 @@ Define a resolver in ``myapp/images.py``:
 
 .. literalinclude:: /examples/integrations/django/source_resolver.py
    :language: python
-   :lines: 1-13
    :show-output:
 
 .. code-annotations::

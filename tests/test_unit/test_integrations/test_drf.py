@@ -9,11 +9,13 @@ except ImportError:  # pragma: no cover
         allow_module_level=True,
     )
 
-from typing import Any
+from dataclasses import dataclass
+from typing import Annotated, Any
 
 from django.conf import LazySettings
 from django.db.models import ImageField, Model
 from django.db.models.fields.files import FieldFile
+from inline_snapshot import snapshot
 
 from imgproxykit import Transform
 from imgproxykit.integrations.drf import ImgproxyURLField, ImgproxyVariantsField
@@ -129,3 +131,27 @@ def test_image_urls(
         'url': expected,
         'images': {'small': expected},
     }
+
+
+@dataclass(frozen=True, slots=True)
+class _Images:
+    """Declare typed image variants for DRF."""
+
+    small: Annotated[str, Transform(width=160)]
+
+
+@pytest.mark.parametrize('named', [False, True])
+def test_dataclass_variants(settings: LazySettings, *, named: bool) -> None:
+    """Return dictionaries for direct and named dataclass declarations."""
+    settings.IMGPROXYKIT = {
+        'client': {'base_url': 'https://example.com'},
+        'variants': {'product': _Images},
+    }
+    field = ImgproxyVariantsField(variants='product' if named else _Images)
+
+    urls = field.to_representation('https://example.com/photo.jpg')
+
+    assert urls == snapshot({
+        'small': 'https://example.com/unsafe/width:160/'
+        'aHR0cHM6Ly9leGFtcGxlLmNvbS9waG90by5qcGc',
+    })

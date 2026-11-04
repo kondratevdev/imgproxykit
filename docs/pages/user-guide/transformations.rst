@@ -17,7 +17,6 @@ keyword arguments:
 .. literalinclude:: /examples/transformations/create_transform.py
    :language: python
    :show-output:
-   :lines: 1-15
 
 .. code-annotations::
 
@@ -36,7 +35,6 @@ Define a transformation once and use it with different source images:
 .. literalinclude:: /examples/transformations/reuse_transform.py
    :language: python
    :show-output:
-   :lines: 1-19
 
 .. code-annotations::
 
@@ -54,7 +52,6 @@ with additional options:
 .. literalinclude:: /examples/transformations/extend.py
    :language: python
    :show-output:
-   :lines: 1-15
 
 .. code-annotations::
 
@@ -72,7 +69,6 @@ To combine reusable groups, pass another transformation's unpacked
 .. literalinclude:: /examples/transformations/composition.py
    :language: python
    :show-output:
-   :lines: 1-12
 
 .. code-annotations::
 

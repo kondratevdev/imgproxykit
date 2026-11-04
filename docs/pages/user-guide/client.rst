@@ -22,7 +22,6 @@ as ``transform`` to :meth:`~imgproxykit.Client.url`:
 .. literalinclude:: /examples/client/url.py
    :language: python
    :show-output:
-   :lines: 1-13
 
 .. code-annotations::
 
@@ -37,7 +36,6 @@ To generate a URL without explicit processing options, omit ``transform``:
 .. literalinclude:: /examples/client/default_url.py
    :language: python
    :show-output:
-   :lines: 1-7
 
 Imgproxy applies its server defaults.
 
@@ -49,7 +47,6 @@ Set ``use_short_options=True`` to use aliases such as ``w`` and ``q``:
 .. literalinclude:: /examples/client/short_options.py
    :language: python
    :show-output:
-   :lines: 1-10
 
 .. code-annotations::
 
@@ -67,7 +64,6 @@ to use percent-encoding with imgproxy's ``/plain/`` marker:
 .. literalinclude:: /examples/client/plain_source.py
    :language: python
    :show-output:
-   :lines: 1-10
 
 .. code-annotations::
 
@@ -105,7 +101,6 @@ Use the same hex-encoded values configured in your server's
 .. literalinclude:: /examples/client/signed_url.py
    :language: python
    :show-output:
-   :lines: 1-11
 
 .. code-annotations::
 

@@ -34,63 +34,91 @@ In your FastAPI project, install imgproxykit with FastAPI support:
 
       pip install 'imgproxykit[fastapi]'
 
-Register a client
------------------
+Configuration
+-------------
 
 Call :func:`~imgproxykit.integrations.fastapi.add_imgproxy` while creating
 the application. Keep the returned dependency for use in your routes:
+
+.. literalinclude:: /examples/integrations/fastapi/settings.py
+   :language: python
+
+The same client is reused across requests. See :doc:`../user-guide/client`
+to configure signing credentials.
+
+Generate URLs
+-------------
+
+Use ``Client.url`` to generate a URL and return it in a Pydantic response
+model:
 
 .. literalinclude:: /examples/integrations/fastapi/client.py
    :language: python
 
 .. code-annotations::
 
-   1. Register the client once and keep the returned dependency. The client
-      is stored on ``app.state.imgproxykit_client``.
-   2. Inject the registered client into the route handler. The same client
-      is reused across requests.
+   1. Inject the registered client into the route handler.
 
-URL generation makes no network requests. See :doc:`../user-guide/client`
-to configure signing credentials.
+Pass a ``Transform`` object to configure processing options. Omit ``transform``
+to generate a URL without processing options. URL generation makes no network
+requests.
 
-Return variants
----------------
+Generate variants
+-----------------
 
-Declare image variants as a dataclass and use it as a field in a Pydantic
-response model:
+Use ``Client.variants`` with a mapping or a dataclass class to generate
+several URLs for the same source:
 
-.. literalinclude:: /examples/integrations/fastapi/variants.py
-   :language: python
+.. tab-set::
 
-.. code-annotations::
+    .. tab-item:: Mapping
 
-   1. Associate each URL field with a transformation using ``Annotated``.
-   2. Include the dataclass in the response model. FastAPI documents its
-      string fields in the OpenAPI schema.
-   3. Generate a dataclass instance containing the URLs. Pydantic serializes
-      it as a nested object.
+        Pass a mapping of names and transformations and use a dictionary field
+        in the response model:
 
-See the Dataclass tab in :ref:`Generate variants <dataclass-variants>`
-for declaration requirements.
+        .. literalinclude:: /examples/integrations/fastapi/mapping_variants.py
+           :language: python
+
+        .. code-annotations::
+
+           1. Map variant names to their transformations.
+           2. Return the generated dictionary in the response model.
+
+    .. tab-item:: Dataclass
+
+        Declare image variants as a dataclass and use it as a field in a Pydantic
+        response model:
+
+        .. literalinclude:: /examples/integrations/fastapi/variants.py
+           :language: python
+
+        .. code-annotations::
+
+           1. Associate each URL field with a transformation using ``Annotated``.
+           2. Return a ``ProductImages`` instance in the response model.
+
+        See the Dataclass tab in :ref:`Generate variants <dataclass-variants>`
+        for declaration requirements.
+
+Use a dataclass for a fixed set of variants with named fields in the OpenAPI
+schema. Use a mapping when variant names can vary.
 
 Multiple clients
 ----------------
 
-Register each client separately and use its returned dependency in
-``Depends``. This example injects both a signed and an unsigned client:
+Give each client a unique ``name`` to register multiple clients on the same
+application. Each call returns a dependency for that client:
 
 .. literalinclude:: /examples/integrations/fastapi/multiple_clients.py
    :language: python
 
 .. code-annotations::
 
-   1. Register a signed client under the default name. Replace the example
-      key and salt with your imgproxy credentials.
-   2. Give the unsigned client a separate name on ``app.state``.
-   3. Use each registration's returned dependency to inject its client.
+   1. Use a different name for each client. Add more clients the same way.
+   2. Inject each client with its returned dependency.
 
-Registering a name already present on ``app.state`` raises ``ValueError``.
-Unsigned URLs require an imgproxy server configured to accept them.
+Names must be unique within the application. Reusing a name raises
+``ValueError``.
 
 Next steps
 ----------

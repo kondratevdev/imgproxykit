@@ -42,7 +42,6 @@ thumbnail with :class:`~imgproxykit.Transform`:
 .. literalinclude:: /examples/getting_started/local_thumbnail.py
    :language: python
    :show-output:
-   :lines: 1-13
 
 .. code-annotations::
 
@@ -64,7 +63,6 @@ variants:
 .. literalinclude:: /examples/getting_started/variants.py
    :language: python
    :show-output:
-   :lines: 1-16
 
 .. code-annotations::
 

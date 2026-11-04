@@ -13,4 +13,5 @@ with override_settings(IMGPROXYKIT=IMGPROXYKIT):
 
     source = 'https://media.example.com/products/42.jpg'
     images = imgproxy_variants(source, 'product')  # (1)!
+
     pprint(images, sort_dicts=False)

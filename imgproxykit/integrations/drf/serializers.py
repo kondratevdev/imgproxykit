@@ -1,11 +1,15 @@
 from collections.abc import Mapping
-from typing import Any, override
+from dataclasses import asdict, is_dataclass
+from typing import TYPE_CHECKING, Any, override
 
 from django.db.models.fields.files import FieldFile
 from rest_framework import serializers
 
 from imgproxykit.integrations.django import imgproxy_url, imgproxy_variants
 from imgproxykit.transform import Transform
+
+if TYPE_CHECKING:
+    from _typeshed import DataclassInstance
 
 
 class ImgproxyURLField(serializers.URLField):
@@ -66,9 +70,10 @@ class ImgproxyVariantsField(serializers.DictField):
     all variants. Empty sources return ``None`` without calling the resolver.
     ``read_only`` must be ``True`` and ``write_only`` must be ``False``.
     ``child`` cannot be supplied; variant values always use a URL field.
+    Dataclass results are converted to dictionaries of URLs.
 
     Args:
-        variants: Transformation mapping or set name from
+        variants: Transformation mapping, dataclass class, or set name from
             ``IMGPROXYKIT['variants']``.
         **kwargs: DRF field options. ``allow_null`` defaults to ``True``.
     """
@@ -76,7 +81,7 @@ class ImgproxyVariantsField(serializers.DictField):
     def __init__(
         self,
         *,
-        variants: Mapping[str, Transform] | str,
+        variants: Mapping[str, Transform] | type['DataclassInstance'] | str,
         **kwargs: Any,
     ) -> None:
         """Configure the variants and DRF field options."""
@@ -114,4 +119,5 @@ class ImgproxyVariantsField(serializers.DictField):
         if not value:
             return None
 
-        return imgproxy_variants(value, self.variants)
+        images = imgproxy_variants(value, self.variants)
+        return asdict(images) if is_dataclass(images) else images
