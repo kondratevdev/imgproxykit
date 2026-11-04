@@ -1,10 +1,30 @@
+import types
 from dataclasses import dataclass
-from typing import ClassVar
 
 import pytest
 
 from imgproxykit import Transform
 from imgproxykit.options import Quality, ScalarOption
+
+
+@dataclass(frozen=True, slots=True)
+class _StrictQuality(Quality):
+    """Subclass without replace for test."""
+
+    def validate(self) -> None:
+        """Validate value bound."""
+        if self.value > 50:
+            raise ValueError('custom restriction')
+
+
+def _set_custom_name(namespace: dict[str, object]) -> None:
+    """Set custom scalar name in namespace."""
+    namespace['name'] = 'custom-scalar-test'
+
+
+def _set_conflict_name(namespace: dict[str, object]) -> None:
+    """Set conflicting scalar name in namespace."""
+    namespace['name'] = 'quality'
 
 
 def test_unknown_scalar_option() -> None:
@@ -16,62 +36,50 @@ def test_unknown_scalar_option() -> None:
         ScalarOption.from_kwarg('unknown', value=True)
 
 
-def test_inherited_subclass_does_not_replace_registered_option() -> None:
+def test_subclass_does_not_replace_option() -> None:
     """Ensure defining subclass does not implicitly replace option."""
-
-    @dataclass(frozen=True, slots=True)
-    class StrictQuality(Quality):
-        def validate(self) -> None:
-            if self.value > 50:
-                raise ValueError('custom restriction')
-
-    # Instantiating StrictQuality directly applies its custom validator
     with pytest.raises(ValueError, match='custom restriction'):
-        StrictQuality(80)
+        _StrictQuality(80)
 
-    # Transform(quality=80) continues to use the built-in Quality option
     transform = Transform(quality=80)
-    assert type(transform.options[0]) is Quality
+    assert transform.options[0].__class__ is Quality
     assert transform.options[0].value == 80
 
 
-def test_explicit_replace_updates_registry() -> None:
+def test_explicit_replace_updates_registry(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
     """Ensure explicit replace=True replaces registered option in Transform."""
+    monkeypatch.setitem(ScalarOption._registry, 'quality', Quality)
+    custom = types.new_class('CustomQuality', (Quality,), {'replace': True})
 
-    @dataclass(frozen=True, slots=True)
-    class CustomQuality(Quality, replace=True):
-        pass
-
-    try:
-        transform = Transform(quality=80)
-        assert type(transform.options[0]) is CustomQuality
-    finally:
-        # Restore original Quality registration
-        ScalarOption._registry['quality'] = Quality
+    transform = Transform(quality=80)
+    assert transform.options[0].__class__ is custom
 
 
-def test_custom_new_scalar_option_registration() -> None:
-    """Ensure new scalar option is registered and usable in from_kwarg."""
+def test_custom_scalar_options(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Ensure custom option registration and conflict prevention work."""
+    monkeypatch.delitem(
+        ScalarOption._registry,
+        'custom_scalar_test',
+        raising=False,
+    )
+    custom = types.new_class(
+        'CustomScalar',
+        (ScalarOption[int],),
+        exec_body=_set_custom_name,
+    )
+    opt = ScalarOption.from_kwarg('custom_scalar_test', 42)
+    assert opt.__class__ is custom
+    assert opt.value == 42
 
-    @dataclass(frozen=True, slots=True)
-    class CustomScalar(ScalarOption[int]):
-        name: ClassVar[str] = 'custom-scalar-test'
-
-    try:
-        opt = ScalarOption.from_kwarg('custom_scalar_test', 42)
-        assert isinstance(opt, CustomScalar)
-        assert opt.value == 42
-    finally:
-        ScalarOption._registry.pop('custom_scalar_test', None)
-
-
-def test_conflicting_custom_option_name_raises_value_error() -> None:
-    """Ensure conflicting custom option names raise error without replace."""
     expected_msg = (
         r"Scalar option keyword 'quality' is already registered by Quality\. "
         r'Pass replace=True to override it\.'
     )
     with pytest.raises(ValueError, match=expected_msg):
-
-        class ConflictingOption(ScalarOption[int]):
-            name: ClassVar[str] = 'quality'
+        types.new_class(
+            'ConflictingOption',
+            (ScalarOption[int],),
+            exec_body=_set_conflict_name,
+        )
