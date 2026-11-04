@@ -1,5 +1,6 @@
 import types
 from dataclasses import dataclass
+from typing import override
 
 import pytest
 
@@ -11,6 +12,7 @@ from imgproxykit.options import Quality, ScalarOption
 class _StrictQuality(Quality):
     """Subclass without replace for test."""
 
+    @override
     def validate(self) -> None:
         """Validate value bound."""
         if self.value > 50:
