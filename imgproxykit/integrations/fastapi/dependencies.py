@@ -27,7 +27,7 @@ def add_imgproxy(
 
     Returns:
         An async dependency returning the registered client. URL generation
-        remains synchronous and makes no network requests.
+        remains synchronous.
 
     Raises:
         ValueError: If the application's state already has this attribute.

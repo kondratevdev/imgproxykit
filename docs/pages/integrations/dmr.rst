@@ -61,8 +61,6 @@ Generate URLs
 -------------
 
 Generate a URL with ``imgproxy_url`` and return it in a Pydantic response model.
-URL generation makes no network requests; imgproxy processes the image when
-its URL is requested.
 
 The examples use ``PydanticFastSerializer`` with Pydantic response models.
 See DMR's `Pydantic plugin guide

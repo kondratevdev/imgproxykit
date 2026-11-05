@@ -95,6 +95,8 @@ nitpick_ignore = [
     (_PY_CLASS, 'collections.abc.Callable'),
     (_PY_CLASS, 'collections.abc.Awaitable'),
     (_PY_CLASS, 'fastapi.applications.FastAPI'),
+    (_PY_CLASS, 'litestar.config.app.AppConfig'),
+    ('py:meth', 'litestar.plugins.base.InitPlugin.on_app_init'),
     (_PY_CLASS, 'starlette.requests.Request'),
 ]
 

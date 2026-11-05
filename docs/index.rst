@@ -131,6 +131,8 @@ Integrations
 
     * :doc:`FastAPI <pages/integrations/fastapi>` — client registration and dependency injection.
 
+    * :doc:`Litestar <pages/integrations/litestar>` — client registration and dependency injection.
+
 .. container:: landing-footer
 
     Python 3.12+ · Requires an imgproxy server to serve images.
@@ -163,6 +165,7 @@ Integrations
     pages/integrations/dmr
     pages/integrations/drf
     pages/integrations/fastapi
+    pages/integrations/litestar
 
 .. toctree::
     :maxdepth: 2
