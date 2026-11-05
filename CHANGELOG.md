@@ -20,6 +20,11 @@ but with a deprecation period.
   `ImgproxyVariantsField` accepts the same declarations and returns
   dictionaries of URLs, #127
 
+### Breaking changes
+
+- Removed the `Option.validate` hook. imgproxy validates processing option
+  values when it handles the generated URL, #131
+
 ### Misc
 
 - Updated Django, DRF, FastAPI, and DMR integration guides with tabbed

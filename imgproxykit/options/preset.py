@@ -51,7 +51,6 @@ class Preset(Option):
         # Keep variadic names while initializing a frozen dataclass.
         # Bypassing __setattr__ is safe until initialization is finished.
         object.__setattr__(self, 'names', names)
-        self.validate()
 
     @property
     @override
