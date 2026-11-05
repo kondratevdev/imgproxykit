@@ -12,6 +12,8 @@ but with a deprecation period.
 
 ### Features
 
+- Added Litestar integration with `ImgproxyPlugin`. Install with
+  `pip install 'imgproxykit[litestar]'`, #130
 - Added dataclass variant declarations to Django's `imgproxy_variants()`
   and `IMGPROXYKIT['variants']`. Passing a class directly returns a typed
   instance; named sets always return dictionaries. DRF's

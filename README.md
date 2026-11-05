@@ -21,7 +21,7 @@
 - [x] Immutable, reusable transforms combining typed options and scalar arguments
 - [x] Variants: generate multiple image URLs from a reusable set of transforms
 - [x] Support for named presets configured on your `imgproxy` server
-- [x] `Django`, `Django Modern REST`, `Django REST Framework`, `FastAPI` integration
+- [x] `Django`, `Django Modern REST`, `Django REST Framework`, `FastAPI`, `Litestar` integration
 
 ---------
 
@@ -41,7 +41,7 @@ There are several included extras:
 - `'imgproxykit[drf]'` provides [Django REST Framework integration](https://imgproxykit.readthedocs.io/en/latest/pages/integrations/drf.html)
   with serializer fields for image URLs and named variants
 - `'imgproxykit[fastapi]'` provides [FastAPI integration](https://imgproxykit.readthedocs.io/en/latest/pages/integrations/fastapi.html)
-  with client registration and dependency injection
+- `'imgproxykit[litestar]'` provides [Litestar integration](https://imgproxykit.readthedocs.io/en/latest/pages/integrations/litestar.html)
 
 ## Examples
 

@@ -48,8 +48,8 @@ thumbnail with :class:`~imgproxykit.Transform`:
    1. Address of the local imgproxy container started above.
    2. Public sample image. You can use another image URL accessible to
       your imgproxy server.
-   3. Generate a URL without making a network request. Imgproxy fetches and
-      processes the source image when the generated URL is requested.
+   3. Generate a URL. Imgproxy fetches and processes the source image
+      when the generated URL is requested.
 
 Open the generated URL in your browser to view the image.
 

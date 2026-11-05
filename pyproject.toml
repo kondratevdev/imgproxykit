@@ -26,6 +26,7 @@ dependencies = [
 django = [ "django>=5.2,<7" ]
 drf = [ "django>=5.2,<7", "djangorestframework>=3.16,<4" ]
 fastapi = [ "fastapi>=0.135.2,<1" ]
+litestar = [ "litestar>=2.24,<3" ]
 
 [[project.authors]]
 name = "Alexander Kondratev"
@@ -114,6 +115,9 @@ quote-style = "single"
 docstring-code-format = true
 
 [tool.ruff.lint.per-file-ignores]
+# Litestar handlers intentionally run in the event loop without awaiting I/O.
+"test_apps/litestar/*.py" = [ "RUF029" ]
+"docs/examples/integrations/litestar/*.py" = [ "RUF029" ]
 "tests/*.py" = [
   "S101",   # allow assert statements in tests
   "SLF001", # allow tests to inspect private members

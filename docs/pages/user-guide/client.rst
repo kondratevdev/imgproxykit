@@ -26,8 +26,8 @@ as ``transform`` to :meth:`~imgproxykit.Client.url`:
 .. code-annotations::
 
    1. Address of the local imgproxy container started above.
-   2. Generate a URL without making a network request. Imgproxy fetches and
-      processes the source image when the generated URL is requested.
+   2. Generate a URL. Imgproxy fetches and processes the source image
+      when the generated URL is requested.
 
 Use ``thumbnail_url`` in an image's ``src`` attribute or an API response.
 

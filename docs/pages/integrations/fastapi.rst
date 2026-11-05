@@ -60,8 +60,7 @@ model:
    1. Inject the registered client into the route handler.
 
 Pass a ``Transform`` object to configure processing options. Omit ``transform``
-to generate a URL without processing options. URL generation makes no network
-requests.
+to generate a URL without processing options.
 
 Generate variants
 -----------------

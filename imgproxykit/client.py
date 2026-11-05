@@ -179,8 +179,7 @@ class Client:
 
         Returns:
             The complete imgproxy URL, signed when credentials were supplied
-            or containing the unsigned marker otherwise. No network request
-            is made.
+            or containing the unsigned marker otherwise.
         """
         path = self._path_serializer(source, transform=transform)
         signature = self._url_signer(path)
@@ -224,7 +223,6 @@ class Client:
             An empty mapping produces an empty dictionary.
             A dataclass class produces a new instance of that exact class,
             with a generated URL in every field.
-            No network request is made.
         """
         transforms = (
             variants
