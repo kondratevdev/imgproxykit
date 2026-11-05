@@ -23,7 +23,7 @@ but with a deprecation period.
 ### Breaking changes
 
 - Removed the `Option.validate` hook. imgproxy validates processing option
-  values when it handles the generated URL, #
+  values when it handles the generated URL, #131
 
 ### Misc
 
