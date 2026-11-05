@@ -28,7 +28,6 @@ def test_zoom(
     'invalid_factor',
     [
         0,
-        0.0,
         -1,
         -0.5,
         float('nan'),
@@ -49,7 +48,6 @@ def test_zoom_invalid_factor_x(invalid_factor: float) -> None:
     'invalid_factor',
     [
         0,
-        0.0,
         -1,
         -0.5,
         float('nan'),
