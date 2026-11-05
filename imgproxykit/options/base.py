@@ -41,22 +41,6 @@ class Option(ABC):
     argument. Use ``name`` when no short alias is defined.
     """
 
-    def __post_init__(self) -> None:
-        """Validate option arguments at construction time."""
-        self.validate()
-
-    def validate(self) -> None:  # noqa: B027
-        """
-        Validate option arguments.
-
-        Override this method to enforce server-independent constraints.
-        The default implementation does nothing.
-
-        Raises:
-            ValueError: If option arguments are invalid.
-        """
-        # TODO: Add per option validation
-
     @property
     @abstractmethod
     def arguments(self) -> tuple[Argument, ...]:
@@ -106,16 +90,12 @@ class ScalarOption[ValueT: Argument](Option):
         """
         Construct a registered scalar option from a Transform keyword.
 
-        The concrete option constructor handles value validation and
-        protocol-specific encoding, just as with positional options.
-
         Args:
             name: Python keyword name of a registered scalar option.
             value: Value passed to the concrete option constructor.
 
         Raises:
             TypeError: If the keyword does not identify a scalar option.
-            ValueError: If the concrete option rejects the supplied value.
         """
         option_cls = cls._registry.get(name)
         if option_cls is None:
