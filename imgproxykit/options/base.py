@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
-from typing import Any, ClassVar, override
+from typing import ClassVar, override
 
 from imgproxykit.types import Argument
 
@@ -47,17 +47,10 @@ class Option(ABC):
         """Positional arguments in imgproxy protocol order."""
 
 
-type _ScalarRegistry = dict[str, type[ScalarOption[Any]]]
-
-
 @dataclass(frozen=True, slots=True)
 class ScalarOption[ValueT: Argument](Option):
     """
     Base class for processing options accepting one scalar value.
-
-    Subclasses are registered automatically using their processing option
-    name, with hyphens replaced by underscores. This allows passing scalar
-    values directly to :class:`~imgproxykit.Transform` as keyword arguments.
 
     Concrete subclasses specify the value type and processing option name.
     Override :attr:`arguments` when the option requires custom encoding.
@@ -68,47 +61,8 @@ class ScalarOption[ValueT: Argument](Option):
 
     value: ValueT
 
-    _registry: ClassVar[_ScalarRegistry] = {}
-
-    @override
-    def __init_subclass__(cls) -> None:
-        """Register a concrete scalar option for keyword construction."""
-        # Explicit super is required because slots=True replaces this class.
-        super(ScalarOption, cls).__init_subclass__()  # noqa: WPS608
-        # Slotted dataclasses create a replacement class. Register it again
-        # so keyword construction uses the final class, including its slots.
-        ScalarOption._registry[cls._get_kwarg_name()] = cls
-
     @property
     @override
     def arguments(self) -> tuple[Argument, ...]:
         """Positional arguments in imgproxy protocol order."""
         return (self.value,)
-
-    @classmethod
-    def from_kwarg(cls, name: str, value: Argument) -> 'ScalarOption[Any]':
-        """
-        Construct a registered scalar option from a Transform keyword.
-
-        Args:
-            name: Python keyword name of a registered scalar option.
-            value: Value passed to the concrete option constructor.
-
-        Raises:
-            TypeError: If the keyword does not identify a scalar option.
-        """
-        option_cls = cls._registry.get(name)
-        if option_cls is None:
-            raise TypeError(
-                f'Unknown scalar processing option {name!r}. '
-                'Transform keyword arguments must name a registered scalar '
-                'option. '
-                'Pass complex processing options as positional Option '
-                'instances.',
-            )
-        return option_cls(value)
-
-    @classmethod
-    def _get_kwarg_name(cls) -> str:
-        """Convert the processing option name to its Python keyword name."""
-        return cls.name.replace('-', '_')

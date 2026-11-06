@@ -12,10 +12,13 @@ and options accepting structured values use keyword-only arguments, except
 :class:`~imgproxykit.options.Preset`, which accepts preset names as positional
 arguments.
 
-Base option
------------
+Base options
+------------
 
 .. autoclass:: imgproxykit.options.Option
+   :members:
+
+.. autoclass:: imgproxykit.options.ScalarOption
    :members:
 
 Built-in options
