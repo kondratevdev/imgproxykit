@@ -14,6 +14,10 @@
 
 </div>
 
+> Build [imgproxy](https://imgproxy.net/) URLs with typed Python options and
+> reusable transformations. Define image settings once, compose them for
+> different use cases, and generate named variants from a single source.
+
 ## Features
 
 - [x] Fully typed and checked with `mypy`, `pyright`, `ty` and `pyrefly` in strict modes
@@ -37,15 +41,17 @@ pip install imgproxykit
 There are several included extras:
 
 - `'imgproxykit[django]'` provides [Django integration](https://imgproxykit.readthedocs.io/en/latest/pages/integrations/django.html)
-  with settings, shortcuts, and template tags
+  with shortcuts, template tags, and client configuration through Django settings
 - `'imgproxykit[drf]'` provides [Django REST Framework integration](https://imgproxykit.readthedocs.io/en/latest/pages/integrations/drf.html)
   with serializer fields for image URLs and named variants
 - `'imgproxykit[fastapi]'` provides [FastAPI integration](https://imgproxykit.readthedocs.io/en/latest/pages/integrations/fastapi.html)
+  with a dependency for injecting the client into route handlers
 - `'imgproxykit[litestar]'` provides [Litestar integration](https://imgproxykit.readthedocs.io/en/latest/pages/integrations/litestar.html)
+  with a plugin that injects the client into route handlers
 
 ## Examples
 
-### Single URL
+### Generate a thumbnail URL
 
 Build a URL for a cropped `webp` thumbnail:
 
@@ -75,7 +81,7 @@ https://imgproxy.example.com/unsafe/resize:fill:300:300/quality:80/format:webp/<
 
 `thumbnail_url` points to a cropped `webp` thumbnail.
 
-### Variants
+### Generate image variants
 
 Build variants by extending a shared transform with a width for each size:
 
@@ -99,8 +105,16 @@ Build variants by extending a shared transform with a width for each size:
 
 ```
 
-`product_urls` contains a URL for each size, all using the shared quality
-and `webp` format.
+`product_urls` maps each variant name to its generated URL
+(shown here with the encoded source abbreviated):
+
+```text
+{
+    'small': 'https://imgproxy.example.com/unsafe/quality:85/format:webp/width:320/<encoded-source>',
+    'medium': 'https://imgproxy.example.com/unsafe/quality:85/format:webp/width:640/<encoded-source>',
+    'large': 'https://imgproxy.example.com/unsafe/quality:85/format:webp/width:1280/<encoded-source>',
+}
+```
 
 ## Next steps
 
