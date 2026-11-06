@@ -67,7 +67,7 @@ Build a URL for a cropped `webp` thumbnail:
 
 ```
 
-The generated URL has this structure, with the source URL encoded as URL-safe Base64:
+The generated URL has this structure, with the source URL encoded as URL-safe `base64`:
 
 ```text
 https://imgproxy.example.com/unsafe/resize:fill:300:300/quality:80/format:webp/<encoded-source>
@@ -100,7 +100,7 @@ Build variants by extending a shared transform with a width for each size:
 ```
 
 `product_urls` contains a URL for each size, all using the shared quality
-and WebP format.
+and `webp` format.
 
 ## Next steps
 
