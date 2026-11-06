@@ -5,7 +5,7 @@ requires = [ "poetry-core>=2" ]
 
 [project]
 name = "imgproxykit"
-version = "0.5.0"
+version = "0.6.0"
 description = "A typed Python toolkit for building imgproxy URLs"
 readme = "README.md"
 keywords = [
