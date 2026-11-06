@@ -14,7 +14,7 @@ but with a deprecation period.
 
 - Added `Transform.keyword_option_resolver_cls` to customize how built-in
   keyword options are constructed. `Transform.extend()` preserves the
-  subclass and its resolver.
+  subclass and its resolver, #136
 - Added Litestar integration with `ImgproxyPlugin`. Install with
   `pip install 'imgproxykit[litestar]'`, #130
 - Added dataclass variant declarations to Django's `imgproxy_variants()`
@@ -26,20 +26,20 @@ but with a deprecation period.
 ### Breaking changes
 
 - Renamed the `cachebuster` keyword to `cache_buster` in `Transform` and
-  `Transform.extend()`. The imgproxy option name remains `cachebuster`.
+  `Transform.extend()`, #136
 - Reserved transform keyword arguments for built-in options. Pass custom
-  `ScalarOption` subclasses as positional instances.
+  `ScalarOption` subclasses as positional instances, #136
 - Replaced `imgproxykit.transform.ScalarOptions` with
-  `imgproxykit.keyword_options.KeywordOptions`.
-- Removed `ScalarOption.from_kwarg()`. Use
-  `KeywordOptionResolver.from_kwarg()` for built-in keywords.
+  `imgproxykit.keyword_options.KeywordOptions`, #136
+- Removed `ScalarOption.from_kwarg()`. Use `KeywordOptionResolver.from_kwarg()`
+  for built-in keywords, #136
 - Removed the `Option.validate` hook. imgproxy validates processing option
   values when it handles the generated URL, #131
 
 ### Misc
 
 - Documented how to define custom processing options with `ScalarOption`
-  and `Option`, with an example combining them with built-in keywords.
+  and `Option`, with an example combining them with built-in keywords, #136
 - Updated Django, DRF, FastAPI, and DMR integration guides with tabbed
   examples for transformations and variant declarations, #127
 - Improved the user guide with grouped processing option tables linking to
