@@ -3,7 +3,7 @@ Options
 
 Options define individual processing settings, such as image dimensions,
 quality, and crop position. Import option classes from ``imgproxykit.options``
-and combine their instances in a :class:`~imgproxykit.Transform`. Simple
+and combine their instances in a :class:`~imgproxykit.Transform`. Built-in scalar
 settings can also be passed as keyword arguments.
 
 .. include:: /_includes/local-imgproxy.rst
@@ -12,7 +12,7 @@ Scalar options
 --------------
 
 Scalar options accept a single value. Pass an option instance to
-``Transform``, or use the equivalent keyword argument:
+``Transform``, or use the equivalent keyword argument for a built-in option:
 
 .. literalinclude:: /examples/options/scalar_options.py
    :language: python
@@ -61,6 +61,41 @@ are preserved:
    1. Leave the upscaling setting to the server.
    2. Explicitly disable upscaling. The path preserves the empty height
       position and serializes ``False`` as ``0``.
+
+Custom options
+--------------
+
+Use a custom option to generate URLs for processing features your imgproxy
+server supports, such as an option from imgproxy Pro or a custom build.
+
+In this example, ``color_boost`` and ``border`` are hypothetical option names.
+The example prints a URL. To process the image, use names and arguments
+supported by your server.
+
+.. literalinclude:: /examples/options/custom_options.py
+   :language: python
+   :show-output:
+
+.. code-annotations::
+
+   1. Subclass :class:`~imgproxykit.options.ScalarOption` to inherit the
+      single-value constructor and argument handling.
+   2. Subclass :class:`~imgproxykit.options.Option` and return arguments
+      in the order expected by imgproxy.
+   3. Pass custom instances positionally to ``Transform`` or
+      ``extend()``.
+
+.. warning::
+
+   Keyword arguments are reserved for built-in options. Pass a custom option
+   as an instance, for example ``Transform(ColorBoost(25))``.
+   ``Transform(color_boost=25)`` raises ``TypeError``.
+
+Set ``name`` to the server's option name. If the server also recognizes a
+short alias, set ``short_name`` for clients configured with
+``use_short_options=True``. String arguments are inserted into the path
+verbatim. Use the representation required by the option if a value contains
+a slash or the configured argument separator.
 
 Available options
 -----------------

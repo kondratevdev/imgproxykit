@@ -1,6 +1,6 @@
 import pytest
 
-from imgproxykit.options import ScalarOption
+from imgproxykit.keyword_options import KeywordOptionResolver
 
 
 def test_unknown_scalar_option() -> None:
@@ -9,4 +9,4 @@ def test_unknown_scalar_option() -> None:
         TypeError,
         match="Unknown scalar processing option 'unknown'",
     ):
-        ScalarOption.from_kwarg('unknown', value=True)
+        KeywordOptionResolver.from_kwarg('unknown', value=True)
