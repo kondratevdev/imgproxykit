@@ -78,7 +78,9 @@ time-machine = ">=3.6,<4"
 
 # Integration tests and image assertions:
 pillow = ">=13.0.0,<14"
+pyyaml = ">=6,<7"
 testcontainers = ">=4.15,<5"
+types-pyyaml = ">=6,<7"
 zapros = ">=0.24.0,<0.25"
 
 # Django integration typing and tests:

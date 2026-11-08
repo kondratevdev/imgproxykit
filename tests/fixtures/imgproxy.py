@@ -2,17 +2,16 @@ from collections.abc import Callable, Iterator, Mapping
 from contextlib import ExitStack
 from functools import cache
 from pathlib import Path
-from typing import Final
+from typing import Final, cast
 
 import pytest
+import yaml
 from testcontainers.core.container import DockerContainer
 from testcontainers.core.wait_strategies import HttpWaitStrategy
 
 from imgproxykit import Client
 from tests.fixtures.credentials import Credentials
 
-# PreserveHDR requires imgproxy 4; pin the version for repeatable tests.
-_IMAGE: Final = 'ghcr.io/imgproxy/imgproxy:v4.0.0'
 _PORT: Final = 8080
 # solid-red-640x480.png: resizing, formats, and response headers.
 # color-quadrants-80x60.png: red/green above blue/yellow, for crop and flip.
@@ -24,10 +23,17 @@ type _Environment = frozenset[tuple[str, str]]
 type _ServerFactory = Callable[[_Environment], str]
 
 
+def _get_imgproxy_image() -> str:
+    """Read the pinned image shared with the manual Compose playground."""
+    compose_path = Path(__file__).resolve().parents[2] / 'docker-compose.yaml'
+    compose = yaml.safe_load(compose_path.read_text(encoding='utf-8'))
+    return cast(str, compose['services']['imgproxy']['image'])
+
+
 def _create_container(env: Mapping[str, str]) -> DockerContainer:
     """Build an imgproxy container with test images and explicit environment."""
     return (
-        DockerContainer(_IMAGE)
+        DockerContainer(_get_imgproxy_image())
         .with_envs(**env)
         .with_exposed_ports(_PORT)
         .with_copy_into_container(_IMAGES, '/data')
