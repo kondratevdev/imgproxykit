@@ -13,14 +13,14 @@ but with a deprecation period.
 ### Features
 
 - `KeywordOptionResolver.from_kwarg()` now preserves the input value type
-  in its `ScalarOption` return annotation.
+  in its `ScalarOption` return annotation, #138
 
 ### Breaking changes
 
 - Moved `KeywordOptions` and `KeywordOptionResolver` from
   `imgproxykit.keyword_options` to `imgproxykit.transform`.
   Update imports to use the new module; `imgproxykit.keyword_options`
-  has been removed.
+  has been removed, #138
 
 
 ## 0.6.0
