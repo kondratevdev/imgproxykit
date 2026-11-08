@@ -1,6 +1,6 @@
 import pytest
 
-from imgproxykit.keyword_options import KeywordOptionResolver
+from imgproxykit.transform import KeywordOptionResolver
 
 
 def test_unknown_scalar_option() -> None:
