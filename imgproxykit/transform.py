@@ -1,9 +1,104 @@
 from dataclasses import dataclass
 from itertools import starmap
-from typing import ClassVar, Unpack
+from typing import (
+    Annotated,
+    Any,
+    ClassVar,
+    Unpack,
+    get_args,
+    get_type_hints,
+)
 
-from imgproxykit.keyword_options import KeywordOptionResolver, KeywordOptions
-from imgproxykit.options import Option
+from typing_extensions import TypedDict
+
+from imgproxykit import options as opts
+from imgproxykit.types import Argument, FormatType, ResizeType
+
+type _ScalarOptionClass = type[opts.ScalarOption[Any]]
+
+
+def _resolve_classes() -> dict[str, _ScalarOptionClass]:
+    hints = get_type_hints(KeywordOptions, include_extras=True)
+    classes = {}
+    for keyword, annotation in hints.items():
+        _, option_cls = get_args(annotation)
+        classes[keyword] = option_cls
+    return classes  # pyright: ignore[reportUnknownVariableType]
+
+
+class KeywordOptions(TypedDict, total=False, closed=True):
+    """
+    Built-in scalar keyword arguments for :class:`~imgproxykit.Transform`.
+
+    All keywords are optional and are also accepted by
+    :meth:`~imgproxykit.Transform.extend`. Each field declares the value type
+    and carries the corresponding option class in its ``Annotated`` metadata.
+
+    The field name is the Python keyword. The option class defines the name
+    used in the URL. For example, ``cache_buster="v2"`` creates a
+    ``CacheBuster`` option with the URL segment ``cachebuster:v2`` when using
+    the default separator and full option names.
+
+    Pass custom processing options as positional
+    :class:`~imgproxykit.options.Option` instances.
+    """
+
+    auto_rotate: Annotated[bool, opts.AutoRotate]
+    blur: Annotated[float, opts.Blur]
+    cache_buster: Annotated[str, opts.CacheBuster]
+    dpr: Annotated[float, opts.DPR]
+    enforce_thumbnail: Annotated[bool, opts.EnforceThumbnail]
+    enlarge: Annotated[bool, opts.Enlarge]
+    expires: Annotated[int, opts.Expires]
+    filename: Annotated[str, opts.Filename]
+    format: Annotated[FormatType, opts.Format]
+    height: Annotated[int, opts.Height]
+    keep_copyright: Annotated[bool, opts.KeepCopyright]
+    max_animation_frame_resolution: Annotated[
+        float,
+        opts.MaxAnimationFrameResolution,
+    ]
+    max_animation_frames: Annotated[int, opts.MaxAnimationFrames]
+    max_bytes: Annotated[int, opts.MaxBytes]
+    max_result_dimension: Annotated[int, opts.MaxResultDimension]
+    max_src_file_size: Annotated[int, opts.MaxSrcFileSize]
+    max_src_resolution: Annotated[float, opts.MaxSrcResolution]
+    min_height: Annotated[int, opts.MinHeight]
+    min_width: Annotated[int, opts.MinWidth]
+    pixelate: Annotated[int, opts.Pixelate]
+    preserve_hdr: Annotated[bool, opts.PreserveHDR]
+    quality: Annotated[int, opts.Quality]
+    raw: Annotated[bool, opts.Raw]
+    resizing_type: Annotated[ResizeType, opts.ResizingType]
+    return_attachment: Annotated[bool, opts.ReturnAttachment]
+    rotate: Annotated[int, opts.Rotate]
+    sharpen: Annotated[float, opts.Sharpen]
+    strip_color_profile: Annotated[bool, opts.StripColorProfile]
+    strip_metadata: Annotated[bool, opts.StripMetadata]
+    width: Annotated[int, opts.Width]
+
+
+class KeywordOptionResolver:
+    """Resolve built-in scalar options from Transform keywords."""
+
+    __slots__ = ()
+
+    _classes: ClassVar[dict[str, _ScalarOptionClass]] = _resolve_classes()
+
+    @classmethod
+    def from_kwarg[KwargValueT: Argument](
+        cls,
+        keyword: str,
+        value: KwargValueT,
+    ) -> opts.ScalarOption[KwargValueT]:
+        """Construct a built-in option from a Transform keyword."""
+        option_cls = cls._classes.get(keyword)
+        if option_cls is None:
+            raise TypeError(
+                f'Unknown scalar processing option {keyword!r}. '
+                'Pass custom options as positional arguments.',
+            )
+        return option_cls(value)
 
 
 @dataclass(frozen=True, slots=True, init=False)
@@ -32,11 +127,11 @@ class Transform:
         KeywordOptionResolver
     )
 
-    options: tuple[Option, ...]
+    options: tuple[opts.Option, ...]
 
     def __init__(
         self,
-        *options: Option,
+        *options: opts.Option,
         **kwargs: Unpack[KeywordOptions],
     ) -> None:
         """
@@ -61,7 +156,7 @@ class Transform:
 
     def extend(
         self,
-        *options: Option,
+        *options: opts.Option,
         **kwargs: Unpack[KeywordOptions],
     ) -> 'Transform':
         """
