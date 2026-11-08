@@ -2,7 +2,7 @@ from collections.abc import Callable, Iterator, Mapping
 from contextlib import ExitStack
 from functools import cache
 from pathlib import Path
-from typing import Final, cast
+from typing import Final
 
 import pytest
 import yaml
@@ -12,6 +12,9 @@ from testcontainers.core.wait_strategies import HttpWaitStrategy
 from imgproxykit import Client
 from tests.fixtures.credentials import Credentials
 
+_COMPOSE_PATH: Final = (
+    Path(__file__).resolve().parents[2] / 'docker-compose.yaml'
+)
 _PORT: Final = 8080
 # solid-red-640x480.png: resizing, formats, and response headers.
 # color-quadrants-80x60.png: red/green above blue/yellow, for crop and flip.
@@ -25,9 +28,8 @@ type _ServerFactory = Callable[[_Environment], str]
 
 def _get_imgproxy_image() -> str:
     """Read the pinned image shared with the manual Compose playground."""
-    compose_path = Path(__file__).resolve().parents[2] / 'docker-compose.yaml'
-    compose = yaml.safe_load(compose_path.read_text(encoding='utf-8'))
-    return cast(str, compose['services']['imgproxy']['image'])
+    compose = yaml.safe_load(_COMPOSE_PATH.read_text(encoding='utf-8'))
+    return compose['services']['imgproxy']['image']  # type: ignore[no-any-return]
 
 
 def _create_container(env: Mapping[str, str]) -> DockerContainer:
