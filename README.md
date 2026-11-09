@@ -101,12 +101,10 @@ Build variants by extending a shared transform with a width for each size:
 >>> source_url = 'https://originals.example.com/products/backpack.jpg'
 >>> # Build one URL per variant for the same source image.
 >>> product_urls = client.variants(source=source_url, variants=products)
->>> small_url = product_urls['small']  # Access a URL by its variant name.
 
 ```
 
-`product_urls` maps each variant name to its generated URL
-(shown here with the encoded source abbreviated):
+`product_urls` maps each variant name to its generated URL:
 
 ```text
 {
