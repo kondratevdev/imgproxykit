@@ -84,7 +84,7 @@ types-pyyaml = ">=6,<7"
 zapros = ">=0.24.0,<0.25"
 
 # Django integration typing and tests:
-django-modern-rest = { version = ">=0.16,<0.17", extras = [ "pydantic" ] }
+django-modern-rest = { version = ">=0.17.0,<0.18", extras = [ "pydantic" ] }
 django-stubs = "^6.1"
 djangorestframework-stubs = "^3.18"
 pytest-django = ">=4.12,<5"
