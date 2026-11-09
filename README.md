@@ -40,8 +40,9 @@ pip install imgproxykit
 
 There are several included extras:
 
-- `'imgproxykit[django]'` provides [Django integration](https://imgproxykit.readthedocs.io/en/latest/pages/integrations/django.html)
-  with shortcuts, template tags, and client configuration through Django settings
+- `'imgproxykit[django]'` provides [Django](https://imgproxykit.readthedocs.io/en/latest/pages/integrations/django.html)
+  and [Django-Modern-REST](https://github.com/wemake-services/django-modern-rest)
+  integrations with shortcuts, template tags, and client configuration through Django settings
 - `'imgproxykit[drf]'` provides [Django REST Framework integration](https://imgproxykit.readthedocs.io/en/latest/pages/integrations/drf.html)
   with serializer fields for image URLs and named variants
 - `'imgproxykit[fastapi]'` provides [FastAPI integration](https://imgproxykit.readthedocs.io/en/latest/pages/integrations/fastapi.html)
