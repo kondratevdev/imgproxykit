@@ -81,7 +81,7 @@ pillow = ">=13.0.0,<14"
 pyyaml = ">=6,<7"
 testcontainers = ">=4.15,<5"
 types-pyyaml = ">=6,<7"
-zapros = ">=0.24.0,<0.25"
+zapros = ">=0.25.0,<0.26"
 
 # Django integration typing and tests:
 django-modern-rest = { version = ">=0.17.0,<0.18", extras = [ "pydantic" ] }
