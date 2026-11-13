@@ -60,7 +60,7 @@ wemake-python-styleguide = "^1.8"
 
 # Static type checking:
 mypy = "^2.4"
-pyrefly = ">=1,<2"
+pyrefly = ">=1.4.1,<2"
 pyright = ">=1.1,<2"
 # TODO: relax the pin after a stable `ty` release:
 ty = "==0.0.98"
